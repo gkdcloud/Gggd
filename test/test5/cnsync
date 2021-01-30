@@ -56,7 +56,7 @@ if [[ $action == "brook" ]]; then
         Restart_gost
         echo -e "\033[32m brook/vnet/gost文件已更新 \033[0m"
   elif [[ $action == "test" ]]; then
-        echo -e "echo -e "\033[31m 红色字 \033[0m""
+        echo -e "\033[32m $github_test \033[0m"
   fi
 else
 	echo -e "\033[31m 远端通信失败，程序中止 \033[0m"
