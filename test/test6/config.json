@@ -1,0 +1,33 @@
+{
+    "Debug": true,
+    "Retries": 0,
+    "ServeNodes": [
+        "tcp://:33880",
+        "udp://:33880"
+    ],
+    "ChainNodes": [
+        "relay+tls://40.83.89.85:443"
+    ],
+    "Routes": [
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:33881",
+                "udp://:33881"
+            ],
+            "ChainNodes": [
+                "relay+tls://203.66.65.72:443"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22882",
+                "udp://:22882"
+            ],
+            "ChainNodes": [
+                "relay+tls://cmhk.liyun.edu.pl:22892"
+            ]
+        }
+    ]
+}
