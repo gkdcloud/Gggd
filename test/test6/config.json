@@ -28,6 +28,16 @@
             "ChainNodes": [
                 "relay+tls://cmhk.liyun.edu.pl:22892"
             ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:10773",
+                "udp://:10773"
+            ],
+            "ChainNodes": [
+                "relay+tls://s1.hkt.xlddns.xyz:10773"
+            ]
         }
     ]
 }
