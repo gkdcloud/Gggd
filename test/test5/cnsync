@@ -81,6 +81,8 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	else
 		echo "所有文件与远端相符，无需同步"
 	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
 fi
 }
 action=$1
