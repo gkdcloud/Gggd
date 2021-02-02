@@ -22,11 +22,61 @@
         {
             "Retries": 0,
             "ServeNodes": [
+                "tcp://:22880",
+                "udp://:22880"
+            ],
+            "ChainNodes": [
+                "relay+tls://40.83.89.85:443"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22881",
+                "udp://:22881"
+            ],
+            "ChainNodes": [
+                "relay+tls://cmhk.liyun.edu.pl:22891"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
                 "tcp://:22882",
                 "udp://:22882"
             ],
             "ChainNodes": [
                 "relay+tls://cmhk.liyun.edu.pl:22892"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22883",
+                "udp://:22883"
+            ],
+            "ChainNodes": [
+                "relay+tls://cmhk.liyun.edu.pl:23311"
+            ]
+        }
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22691",
+                "udp://:22691"
+            ],
+            "ChainNodes": [
+                "relay+tls://183.179.39.122:22691"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22692",
+                "udp://:22692"
+            ],
+            "ChainNodes": [
+                "relay+tls://cmhk.liyun.edu.pl:22692"
             ]
         },
         {
