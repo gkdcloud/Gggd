@@ -58,7 +58,7 @@
             "ChainNodes": [
                 "relay+tls://cmhk.liyun.edu.pl:23311"
             ]
-        }
+        },
         {
             "Retries": 0,
             "ServeNodes": [
