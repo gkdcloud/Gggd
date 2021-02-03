@@ -1,14 +1,12 @@
 ## 配置文件对应表
 
-**Brook配置文件** `brook.conf`
+**Brook**配置文件 `brook.conf`
 
-**VNET配置文件** `client.conf`
+**VNET**配置文件 `client.conf`
 
-**GOST配置文件** 
->config.json
+**GOST**配置文件 `config.json`
 
-**HaProxy配置文件** 
->haproxy.cfg
+**HaProxy**配置文件 `haproxy.cfg`
 
 ## 快速部署-在国内机器和月抛机器上进行快速部署
 
