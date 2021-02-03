@@ -1,19 +1,23 @@
-安装cnsync
+## 快速部署-在国内机器和月抛机器上进行快速部署
 
-rm -rf /usr/bin/cnsync ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/cnsync -O /usr/bin/cnsync ; chmod +x /usr/bin/cnsync
+**安装cnsync（一键同步Brook/VNET/GOST）**
 
-同步使用cnsync cron
+    rm -rf /usr/bin/cnsync ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/cnsync -O /usr/bin/cnsync ; chmod +x /usr/bin/cnsync
 
+同步使用
 
-安装haproxy（电信全端口转发）
+    cnsync cron
 
-rm -rf /root/haproxy.sh  ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/haproxy.sh -O /root/haproxy.sh ; chmod +x /root/haproxy.sh ; /root/haproxy.sh
+**安装haproxy（电信10000-50000端口转发）**
 
-同步使用 /root/haproxy.sh sync
+    rm -rf /root/haproxy.sh  ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/haproxy.sh -O /root/haproxy.sh ; chmod +x /root/haproxy.sh ; /root/haproxy.sh
+
+同步使用 
+
+    /root/haproxy.sh sync
 
 
 监控开关在crontab开启/关闭
 
-*/2 * * * * cnsync cron
-
-*/2 * * * * /root/haproxy.sh cron
+    */2 * * * * cnsync cron
+    */2 * * * * /root/haproxy.sh cron
