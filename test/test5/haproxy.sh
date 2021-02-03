@@ -85,7 +85,7 @@ menu_server() {
 	echo -e "同步：\033[32m $github_cron \033[0m"
 	echo -e "快捷命令\033[32m /root/haproxy.sh install|sync|cron\033[0m 来执行同步操作" 
   echo
-  read -erp " 请输入数字 [0-10]:" num
+  read -erp " 请输入数字 [1-3]:" num
   case "$num" in
   1)
     Restart_haproxy
