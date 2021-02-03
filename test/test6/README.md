@@ -1,10 +1,8 @@
 ## 配置文件对应表
 
-**Brook配置文件** 
->brook.conf
+**Brook配置文件** `brook.conf`
 
-**VNET配置文件** 
->client.conf
+**VNET配置文件** `client.conf`
 
 **GOST配置文件** 
 >config.json
