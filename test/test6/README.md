@@ -15,4 +15,5 @@ rm -rf /root/haproxy.sh  ; wget https://ghproxy.com/https://raw.githubuserconten
 监控开关在crontab开启/关闭
 
 */2 * * * * cnsync cron
+
 */2 * * * * /root/haproxy.sh cron
