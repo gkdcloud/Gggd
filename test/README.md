@@ -1,2 +1,0 @@
-TEST5储存一键脚本
-TEST6储存cnsync配置
