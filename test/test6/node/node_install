@@ -1,6 +1,8 @@
 #!/bin/bash
 #远端文件储存地址
 Github="https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
+#gost指定版本
+ct_new_ver="2.11.1"
 #安装vnets
 function install_vnets(){
 	yum -y install zip unzip vim
@@ -49,8 +51,8 @@ systemctl status docker
 sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 }
+#安装gost
 function Install_gost() {
-	ct_new_ver="2.11.1"
 	bit=$(uname -m)
     rm -rf gost-linux-"$bit"-"$ct_new_ver".gz
     wget --no-check-certificate https://github.com/ginuerzh/gost/releases/download/v"$ct_new_ver"/gost-linux-"$bit"-"$ct_new_ver".gz
