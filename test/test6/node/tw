@@ -29,6 +29,9 @@ docker run -d --name=CU \
 --log-opt max-size=10m --log-opt max-file=5 \
 --network=host --restart=always \
 woaizyg/rico-free:v2ray
+#gkd
+docker run -d --name=gkd143 -e NODE_ID=$143-e API_INTERFACE=modwebapi -e WEBAPI_URL=https://k.gkdcloud.xyz -e SPEEDTEST=6 -e WEBAPI_TOKEN=yunyiya -e DNS_1=\"\" -e DNS_2="" --log-opt max-size=50m --log-opt max-file=3 -p 2022:80/tcp -p 2022:80/udp --restart=always fanvinga/docker-ssrmu
+
 #ssr
 docker run -d --name=dog2 -e NODE_ID=19 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.freedog.pw -e SPEEDTEST=0 -e WEBAPI_TOKEN=qingchengss --log-opt max-size=50m --log-opt max-file=3 -p 8090:80/tcp -p 8090:80/udp --restart=always stone0906/ssrmuv2
 docker run -d --name=xinyun3 -e NODE_ID=48 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.xinyun.cyou -e SPEEDTEST=0 -e WEBAPI_TOKEN=qingchengss --log-opt max-size=50m --log-opt max-file=3 -p 82:80/tcp -p 82:80/udp --restart=always stone0906/ssrmuv2
