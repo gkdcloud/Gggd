@@ -14,6 +14,21 @@ docker run -d --name=dog \
 --log-opt max-size=10m --log-opt max-file=5 \
 --network=host --restart=always \
 xiaoyiya/free-node:v2ray
+#cv
+docker run -d --name=CVCM -e speedtest=0 -e api_port=2456 -e downWithPanel=0 -e node_id=22 -e usemysql=0  -e sspanel_url="https://cv2.xyz" -e key="mycheapv2ray" -e TZ="Asia/Shanghai"  --log-opt max-size=10m --log-opt max-file=5 --network=host --restart=always xiaoyiya/free-node:v2ray
+#fq
+docker run -d --name=CM \
+-e speedtest=0 -e api_port=2003 -e downWithPanel=0 \
+-e node_id=101 -e usemysql=1  -e MYSQLHOST=kjylike.club -e MYSQLDBNAME="sspanel_malio" -e MYSQLUSR="sspanel_malio" -e MYSQLPASSWD="kjyzwj806674037" -e MYSQLPORT=3306 -e MUSUFFIX=microsoft.com \
+--log-opt max-size=10m --log-opt max-file=5 \
+--network=host --restart=always \
+woaizyg/rico-free:v2ray
+docker run -d --name=CU \
+-e speedtest=0 -e api_port=2000 -e downWithPanel=0 \
+-e node_id=106 -e usemysql=1  -e MYSQLHOST=kjylike.club -e MYSQLDBNAME="sspanel_malio" -e MYSQLUSR="sspanel_malio" -e MYSQLPASSWD="kjyzwj806674037" -e MYSQLPORT=3306 -e MUSUFFIX=microsoft.com \
+--log-opt max-size=10m --log-opt max-file=5 \
+--network=host --restart=always \
+woaizyg/rico-free:v2ray
 #ssr
 docker run -d --name=dog2 -e NODE_ID=19 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.freedog.pw -e SPEEDTEST=0 -e WEBAPI_TOKEN=qingchengss --log-opt max-size=50m --log-opt max-file=3 -p 8090:80/tcp -p 8090:80/udp --restart=always stone0906/ssrmuv2
 docker run -d --name=xinyun3 -e NODE_ID=48 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.xinyun.cyou -e SPEEDTEST=0 -e WEBAPI_TOKEN=qingchengss --log-opt max-size=50m --log-opt max-file=3 -p 82:80/tcp -p 82:80/udp --restart=always stone0906/ssrmuv2
