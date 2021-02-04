@@ -46,7 +46,7 @@
                 "udp://:22882"
             ],
             "ChainNodes": [
-                "relay+tls://cmhk.liyun.edu.pl:22892"
+                "relay+tls://cmhk.liyun.edu.pl:22882"
             ]
         },
         {
