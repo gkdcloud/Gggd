@@ -1,0 +1,83 @@
+#!/bin/bash
+#远端文件储存地址
+Github="https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
+#安装vnets
+function install_vnets(){
+	yum -y install zip unzip vim
+    mkdir /usr/local/vnet
+    cd /usr/local/vnet
+    wget -N --no-check-certificate "https://www.isyunyi.com/download/linux/tunnel.zip"
+    unzip tunnel.zip 
+    rm -f /usr/local/vnet/tunnel.zip
+    rm -f /usr/local/vnet/client
+    echo '#!/bin/bash
+sleep 0.5
+cd /usr/local/vnet
+./server' >/usr/local/vnet/server.sh  
+    echo '#!/bin/bash
+sleep 1.5
+#在下方编写规则
+curl -d "{\"local\":{\"tls\":false,\"host\":\"0.0.0.0\",\"port\":9991,\"path\":\"tunnel\"},\"remote\":{\"host\":\"127.0.0.1\",\"port\":880}}"  'http://127.0.0.1:8081/server/add'
+curl -d "{\"local\":{\"tls\":false,\"host\":\"0.0.0.0\",\"port\":9988,\"path\":\"tunnel\"},\"remote\":{\"host\":\"127.0.0.1\",\"port\":881}}"  'http://127.0.0.1:8081/server/add'
+' >/usr/local/vnet/server.conf
+    chmod +x /usr/local/vnet/server /usr/local/vnet/server.sh /usr/local/vnet/server.conf
+	echo '
+[Unit]
+Description=VnetServer.Service
+After=rc-local.service network.target
+[Service]
+Type=simple
+ExecStart=/usr/local/vnet/server.sh
+ExecStartPost=/usr/local/vnet/server.conf
+Restart=always
+LimitNOFILE=512000
+LimitNPROC=512000
+[Install]
+WantedBy=multi-user.target' >/usr/lib/systemd/system/vnets.service
+	systemctl start vnets
+	systemctl status vnets
+	systemctl enable vnets
+	echo -e "\033[42;37mvnet服务端安装完成\033[0m" 
+	echo -e "\033[42;37m输入“ systemctl start|stop|restart|status vnets ”来查看当前运行状态\033[0m" 
+}
+#安装docker
+function install_docker(){
+wget -qO- get.docker.com | bash
+systemctl start docker
+systemctl enable docker
+systemctl status docker
+sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+}
+function Install_gost() {
+	ct_new_ver="2.11.1"
+	bit=$(uname -m)
+    rm -rf gost-linux-"$bit"-"$ct_new_ver".gz
+    wget --no-check-certificate https://github.com/ginuerzh/gost/releases/download/v"$ct_new_ver"/gost-linux-"$bit"-"$ct_new_ver".gz
+    gunzip gost-linux-"$bit"-"$ct_new_ver".gz
+    mv gost-linux-"$bit"-"$ct_new_ver" gost
+    mv gost /usr/bin/gost
+    chmod -R 777 /usr/bin/gost
+    wget --no-check-certificate https://raw.githubusercontent.com/KANIKIG/Multi-EasyGost/master/gost.service && chmod -R 777 gost.service && mv gost.service /usr/lib/systemd/system
+    mkdir /etc/gost && wget --no-check-certificate https://raw.githubusercontent.com/KANIKIG/Multi-EasyGost/master/config.json && mv config.json /etc/gost && chmod -R 777 /etc/gost
+
+
+  systemctl enable gost && systemctl restart gost
+  echo "------------------------------"
+  if test -a /usr/bin/gost -a /usr/lib/systemctl/gost.service -a /etc/gost/config.json; then
+    echo "gost安装成功"
+    rm -rf "$(pwd)"/gost
+    rm -rf "$(pwd)"/gost.service
+    rm -rf "$(pwd)"/config.json
+  else
+    echo "gost没有安装成功，可以在Github[EasyGost]中提交issue"
+    rm -rf "$(pwd)"/gost
+    rm -rf "$(pwd)"/gost.service
+    rm -rf "$(pwd)"/config.json
+    rm -rf "$(pwd)"/gost.sh
+  fi
+}
+
+#运行docker
+docker run -d --name=dog2 -e NODE_ID=19 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.freedog.pw -e SPEEDTEST=0 -e WEBAPI_TOKEN=qingchengss --log-opt max-size=50m --log-opt max-file=3 -p 8090:80/tcp -p 8090:80/udp --restart=always stone0906/ssrmuv2
+docker run -d --name=xinyun3 -e NODE_ID=48 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.xinyun.cyou -e SPEEDTEST=0 -e WEBAPI_TOKEN=qingchengss --log-opt max-size=50m --log-opt max-file=3 -p 82:80/tcp -p 82:80/udp --restart=always stone0906/ssrmuv2
