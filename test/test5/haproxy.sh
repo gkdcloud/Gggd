@@ -15,7 +15,7 @@ rm -rf /root/.test.txt /root/.crontab.txt
 #安装haproxy
 function install_haproxy(){
 	yum update -y
-	yum install gcc -y
+	yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel
 	cd /root
 	wget $Down/haproxy-2.3.4.tar.gz
 	tar -zxvf haproxy-*
