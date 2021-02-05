@@ -9,6 +9,17 @@ rm -rf /root/.test.txt
 curl -s $Github/test > /root/.test.txt
 github_test=`sed -n '1p' /root/.test.txt`
 rm -rf /root/.test.txt /root/.crontab.txt
+#开放防火墙
+function install_iptables(){
+systemctl stop firewalld
+systemctl mask firewalld
+yum install -y iptables
+yum install iptables-services -y
+iptables -F
+iptables -P INPUT ACCEPT
+iptables -X
+service iptables save
+}
 #安装vnets
 function install_vnets(){
 	yum -y install zip unzip vim
@@ -23,7 +34,7 @@ sleep 0.5
 cd /usr/local/vnet
 ./server' >/usr/local/vnet/server.sh  
 	rm -rf /usr/local/vnet/server.conf
-	wget -N --no-check-certificate $Github/$diQu/server.conf -O /usr/local/vnet/server.conf
+	wget -N --no-check-certificate $Github/node/$diQu/server.conf -O /usr/local/vnet/server.conf
     chmod +x /usr/local/vnet/server /usr/local/vnet/server.sh /usr/local/vnet/server.conf
 	echo '
 [Unit]
@@ -42,7 +53,6 @@ WantedBy=multi-user.target' >/usr/lib/systemd/system/vnets.service
 	systemctl status vnets
 	systemctl enable vnets
 	echo -e "\033[42;37mvnet服务端安装完成\033[0m" 
-	echo -e "\033[42;37m输入“ systemctl start|stop|restart|status vnets ”来查看当前运行状态\033[0m" 
 }
 #安装docker
 function install_docker(){
@@ -59,10 +69,11 @@ chmod +x /root/docker.run
 }
 #安装gost
 function Install_gost() {
-	bit=$(uname -m)
-    rm -rf gost-linux-"$bit"-"$ct_new_ver".gz
-    wget --no-check-certificate https://github.com/ginuerzh/gost/releases/download/v"$ct_new_ver"/gost-linux-"$bit"-"$ct_new_ver".gz
-    gunzip gost-linux-"$bit"-"$ct_new_ver".gz
+	bit="amd64"
+	yum install -y gzip
+    rm -rf /root/gost-linux-"$bit"-"$ct_new_ver".gz
+    wget --no-check-certificate https://github.com/ginuerzh/gost/releases/download/v$ct_new_ver/gost-linux-$bit-$ct_new_ver.gz -O /root/gost-linux-$bit-$ct_new_ver.gz
+    gunzip /root/gost-linux-"$bit"-"$ct_new_ver".gz
     mv gost-linux-"$bit"-"$ct_new_ver" gost
     mv gost /usr/bin/gost
     chmod -R 777 /usr/bin/gost
@@ -96,9 +107,11 @@ menu_server() {
 	echo -e "输入\033[32m tw\033[0m | \033[32m jp\033[0m 来进行安装" 
   echo
   read -erp " 请输入国家地区代码:" diQu
-  install_vnets
-  install_docker
-  Install_gost
+	yum update
+	install_iptables
+	install_vnets
+	Install_gost
+	install_docker
 }
 action=$1
 if [[ -n $action ]]; then
