@@ -1,8 +1,14 @@
 #!/bin/bash
 #远端文件储存地址
-Github="https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
+Github="https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
+GostService="https://raw.githubusercontent.com/KANIKIG/Multi-EasyGost/master"
 #gost指定版本
 ct_new_ver="2.11.1"
+#测试与GitHub连通性
+rm -rf /root/.test.txt
+curl -s $Github/test > /root/.test.txt
+github_test=`sed -n '1p' /root/.test.txt`
+rm -rf /root/.test.txt /root/.crontab.txt
 #安装vnets
 function install_vnets(){
 	yum -y install zip unzip vim
@@ -16,12 +22,8 @@ function install_vnets(){
 sleep 0.5
 cd /usr/local/vnet
 ./server' >/usr/local/vnet/server.sh  
-    echo '#!/bin/bash
-sleep 1.5
-#在下方编写规则
-curl -d "{\"local\":{\"tls\":false,\"host\":\"0.0.0.0\",\"port\":9991,\"path\":\"tunnel\"},\"remote\":{\"host\":\"127.0.0.1\",\"port\":880}}"  'http://127.0.0.1:8081/server/add'
-curl -d "{\"local\":{\"tls\":false,\"host\":\"0.0.0.0\",\"port\":9988,\"path\":\"tunnel\"},\"remote\":{\"host\":\"127.0.0.1\",\"port\":881}}"  'http://127.0.0.1:8081/server/add'
-' >/usr/local/vnet/server.conf
+	rm -rf /usr/local/vnet/server.conf
+	wget -N --no-check-certificate $Github/$diQu/server.conf -O /usr/local/vnet/server.conf
     chmod +x /usr/local/vnet/server /usr/local/vnet/server.sh /usr/local/vnet/server.conf
 	echo '
 [Unit]
@@ -50,6 +52,10 @@ systemctl enable docker
 systemctl status docker
 sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
+rm -rf /root/docker.run
+wget --no-check-certificate $Github/node/$diQu/docker -O /root/docker.run
+chmod +x /root/docker.run
+/root/docker.run
 }
 #安装gost
 function Install_gost() {
@@ -60,26 +66,57 @@ function Install_gost() {
     mv gost-linux-"$bit"-"$ct_new_ver" gost
     mv gost /usr/bin/gost
     chmod -R 777 /usr/bin/gost
-    wget --no-check-certificate https://raw.githubusercontent.com/KANIKIG/Multi-EasyGost/master/gost.service && chmod -R 777 gost.service && mv gost.service /usr/lib/systemd/system
-    mkdir /etc/gost && wget --no-check-certificate https://raw.githubusercontent.com/KANIKIG/Multi-EasyGost/master/config.json && mv config.json /etc/gost && chmod -R 777 /etc/gost
-
-
-  systemctl enable gost && systemctl restart gost
-  echo "------------------------------"
-  if test -a /usr/bin/gost -a /usr/lib/systemctl/gost.service -a /etc/gost/config.json; then
+    wget --no-check-certificate $GostService/gost.service && chmod -R 777 gost.service && mv gost.service /usr/lib/systemd/system
+	rm -rf /etc/gost/config.json
+    mkdir /etc/gost && wget --no-check-certificate $Github/node/$diQu/config.json && mv config.json /etc/gost && chmod -R 777 /etc/gost
+	systemctl enable gost && systemctl restart gost
+	echo "------------------------------"
+if test -a /usr/bin/gost -a /usr/lib/systemctl/gost.service -a /etc/gost/config.json; then
     echo "gost安装成功"
     rm -rf "$(pwd)"/gost
     rm -rf "$(pwd)"/gost.service
     rm -rf "$(pwd)"/config.json
-  else
+else
     echo "gost没有安装成功，可以在Github[EasyGost]中提交issue"
     rm -rf "$(pwd)"/gost
     rm -rf "$(pwd)"/gost.service
     rm -rf "$(pwd)"/config.json
     rm -rf "$(pwd)"/gost.sh
-  fi
+fi
 }
-
-#运行docker
-docker run -d --name=dog2 -e NODE_ID=19 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.freedog.pw -e SPEEDTEST=0 -e WEBAPI_TOKEN=qingchengss --log-opt max-size=50m --log-opt max-file=3 -p 8090:80/tcp -p 8090:80/udp --restart=always stone0906/ssrmuv2
-docker run -d --name=xinyun3 -e NODE_ID=48 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.xinyun.cyou -e SPEEDTEST=0 -e WEBAPI_TOKEN=qingchengss --log-opt max-size=50m --log-opt max-file=3 -p 82:80/tcp -p 82:80/udp --restart=always stone0906/ssrmuv2
+#菜单选项
+menu_server() {
+  echo && echo -e "  月抛/正常鸡 一键安装docker/vnet/gost
+  支持一键安装并从远端下发配置-直接黑化
+ ————————————
+ ${Green_font_prefix} tw:${Font_color_suffix} 安装至台湾机器
+ ${Green_font_prefix} jp:${Font_color_suffix} 安装至日本机器
+————————————
+ ${Green_font_prefix} 3.${Font_color_suffix} 安装脚本" &&echo 
+	echo -e "输入\033[32m tw\033[0m | \033[32m jp\033[0m 来进行安装" 
+  echo
+  read -erp " 请输入国家地区代码:" diQu
+  install_vnets
+  install_docker
+  Install_gost
+}
+action=$1
+if [[ -n $action ]]; then
+#增加一个通信检测，如果与GitHub通信失败则停止脚本
+if [[ $github_test == "success" ]]; then
+if [[ $action == "sync" ]]; then
+    Restart_haproxy
+	echo -e "\033[32m haproxy文件已更新 \033[0m"
+  elif [[ $action == "cron" ]]; then
+    haproxy_cron
+    echo -e "\033[32m haproxy文件已更新 \033[0m"
+  elif [[ $action == "install" ]]; then
+    install_haproxy
+    echo -e "\033[32m haproxy文件已更新 \033[0m"
+  fi
+else
+	echo -e "\033[31m 远端通信失败，程序中止 \033[0m"
+fi
+else
+	menu_server
+fi
