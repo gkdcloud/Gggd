@@ -74,8 +74,7 @@ function Install_gost() {
     rm -rf /root/gost-linux-"$bit"-"$ct_new_ver".gz
     wget --no-check-certificate https://github.com/ginuerzh/gost/releases/download/v$ct_new_ver/gost-linux-$bit-$ct_new_ver.gz -O /root/gost-linux-$bit-$ct_new_ver.gz
     gunzip /root/gost-linux-"$bit"-"$ct_new_ver".gz
-    mv gost-linux-"$bit"-"$ct_new_ver" gost
-    mv gost /usr/bin/gost
+    mv /root/gost-linux-"$bit"-"$ct_new_ver" /usr/bin/gost
     chmod -R 777 /usr/bin/gost
     wget --no-check-certificate $GostService/gost.service && chmod -R 777 gost.service && mv gost.service /usr/lib/systemd/system
 	rm -rf /etc/gost/config.json
@@ -104,10 +103,10 @@ menu_server() {
  ${Green_font_prefix} jp:${Font_color_suffix} 安装至日本机器
 ————————————
  ${Green_font_prefix} 3.${Font_color_suffix} 安装脚本" &&echo 
-	echo -e "输入\033[32m tw\033[0m | \033[32m jp\033[0m 来进行安装" 
+	echo -e "输入\033[32m tw\033[0m|\033[32m jp\033[0m来进行安装" 
   echo
   read -erp " 请输入国家地区代码:" diQu
-	yum update
+	yum update -y
 	install_iptables
 	install_vnets
 	Install_gost
