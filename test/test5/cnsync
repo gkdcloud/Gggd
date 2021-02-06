@@ -5,6 +5,7 @@ Github="https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd
 brook_Conf="/usr/local/brook-pf/brook.conf"
 vnet_Conf="/usr/local/vnet/client.conf"
 gost_Conf="/etc/gost/config.json"
+nginx_Conf="/usr/local/nginx/mjnginx.conf"
 #是否开启监控
 rm -rf /root/.crontab.txt
 curl -s $Github/crontab > /root/.crontab.txt
@@ -14,7 +15,7 @@ rm -rf /root/.test.txt
 curl -s $Github/test > /root/.test.txt
 github_test=`sed -n '1p' /root/.test.txt`
 rm -rf /root/.test.txt /root/.crontab.txt
-#从远端更新brook
+#从远端更新
 function Restart_brook(){
 	rm -rf $brook_Conf.back
 	cp $brook_Conf $brook_Conf.back
@@ -38,6 +39,13 @@ function Restart_gost(){
 	rm -rf $gost_Conf
 	wget $Github/config.json -O $gost_Conf
     systemctl restart gost
+}
+function Restart_nginx(){
+	rm -rf $nginx_Conf.back
+	cp $nginx_Conf $nginx_Conf.back
+	rm -rf $nginx_Conf
+	wget $Github/mjnginx.conf -O $nginx_Conf
+    systemctl restart nginx
 }
 function crontab_all(){
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
@@ -98,6 +106,9 @@ if [[ $action == "brook" ]]; then
   elif [[ $action == "gost" ]]; then
     Restart_gost
     echo -e "\033[32m gost文件已更新 \033[0m"
+  elif [[ $action == "nginx" ]]; then
+    Restart_nginx
+    echo -e "\033[32m nginx文件已更新 \033[0m"
   elif [[ $action == "all" ]]; then
     Restart_brook
     Restart_vnetc
@@ -113,5 +124,5 @@ fi
 else
  	echo -e "通信：\033[32m $github_test \033[0m"
 	echo -e "同步：\033[32m $github_cron \033[0m"
-	echo -e "请输入\033[32m cnsync vnet|brook|gost|all|cron\033[0m 来执行同步操作" 
+	echo -e "请输入\033[32m cnsync vnet|brook|gost|nginx|all|cron\033[0m 来执行同步操作" 
 fi
