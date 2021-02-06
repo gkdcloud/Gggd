@@ -46,6 +46,7 @@ function Restart_nginx(){
 	rm -rf $nginx_Conf
 	wget $Github/mjnginx.conf -O $nginx_Conf
     systemctl restart nginx
+	/etc/init.d/nginx restart
 }
 function crontab_all(){
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
