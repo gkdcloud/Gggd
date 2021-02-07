@@ -100,6 +100,7 @@ menu_server() {
   支持一键安装并从远端下发配置-直接黑化
  ————————————
  ${Green_font_prefix} tw:${Font_color_suffix} 安装至台湾机器
+ ${Green_font_prefix} tw2:${Font_color_suffix} 安装至台湾2号机
  ${Green_font_prefix} jp:${Font_color_suffix} 安装至日本机器
 ————————————
  ${Green_font_prefix} 3.${Font_color_suffix} 安装脚本" &&echo 
