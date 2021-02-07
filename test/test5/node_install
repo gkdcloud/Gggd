@@ -129,7 +129,7 @@ http {
 	systemctl status nginx
 }
 #菜单选项
-menu_server() {
+function menu_server() {
   echo && echo -e "  月抛/正常鸡 一键安装docker/vnet/gost
   支持一键安装并从远端下发配置-直接黑化
  ————————————
@@ -148,7 +148,7 @@ menu_server() {
 	install_docker
 }
 #cn菜单
-menu_server2() {
+function menu_server2() {
   echo && echo -e "  月抛/正常鸡 一键安装docker/vnet/gost
   支持一键安装并从远端下发配置-直接黑化
  ————————————
