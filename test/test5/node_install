@@ -126,6 +126,7 @@ http {
 	include /usr/local/nginx/*.conf;
 }">/etc/nginx/nginx.conf
 	systemctl resatrt nginx
+	systemctl enable nginx
 	systemctl status nginx
 }
 #菜单选项
@@ -149,7 +150,7 @@ function menu_server() {
 }
 #cn菜单
 function menu_server2() {
-  echo && echo -e "  月抛/正常鸡 一键安装docker/vnet/gost
+  echo && echo -e "  国内机器 一键安装Nginx/Brook等
   支持一键安装并从远端下发配置-直接黑化
  ————————————
  ${Green_font_prefix} 1:${Font_color_suffix} 安装Nginx负载
@@ -157,7 +158,6 @@ function menu_server2() {
  ${Green_font_prefix} 3:${Font_color_suffix} 没写
 ————————————
  ${Green_font_prefix} 0.${Font_color_suffix} 安装全部" &&echo 
-	echo -e "输入\033[32m tw\033[0m|\033[32m jp\033[0m来进行安装" 
   echo
   read -erp " 请输入国家地区代码:" Nem
   case "$num" in
