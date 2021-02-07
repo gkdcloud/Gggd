@@ -1,0 +1,7 @@
+{
+    "Debug": true,
+    "Retries": 0,
+    "ServeNodes": [
+        "relay+tls://:443/127.0.0.1:85"
+    ]
+}
