@@ -62,6 +62,16 @@
         {
             "Retries": 0,
             "ServeNodes": [
+                "tcp://:22884",
+                "udp://:22884"
+            ],
+            "ChainNodes": [
+                "relay+tls://cmhk.liyun.edu.pl:22884"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
                 "tcp://:22691",
                 "udp://:22691"
             ],
