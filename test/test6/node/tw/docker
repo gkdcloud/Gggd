@@ -5,8 +5,9 @@ docker run --restart=on-failure --name mojie -d -v /etc/soga/:/etc/soga/ --netwo
 --api=webapi \
 --webapi_url=https://www.mojie.me/ \
 --webapi_mukey=heihuamojie666666 \
+--proxy_protocol=true \
 --soga_key=GJiLnbWZcZ70l7HcXhwqp5jfUmtdg81K \
---node_id=6 \
+--node_id=6 
 #dogv2
 docker run -d --name=dog \
 -e speedtest=0 -e api_port=2555 -e downWithPanel=0 \
