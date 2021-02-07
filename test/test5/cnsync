@@ -70,6 +70,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		echo "brook与远端文件不符，正在同步"
 		rm -rf $brook_Conf
 		mv $brook_Conf.new $brook_Conf
+		sleep 1.5
 		PID=$(ps -ef| grep "brook relays"| grep -v grep| grep -v ".sh"| grep -v "init.d"| grep -v "service"| awk '{print $2}')
 		[[ ! -z ${PID} ]] && /etc/init.d/brook-pf stop
 		/etc/init.d/brook-pf start > /dev/null 2>&1 
@@ -79,12 +80,14 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		rm -rf $vnet_Conf
 		mv $vnet_Conf.new $vnet_Conf
 		chmod +x $vnet_Conf
+		sleep 1.5
 		systemctl restart vnetc
 		echo -e "\033[32m vnet文件已更新，同步完成 \033[0m"
 	elif [[ $gost_md5 != $gost_md5_n ]]; then
 		echo "gost与远端文件不符，正在同步"
 		rm -rf $gost_Conf
 		mv $gost_Conf.new $gost_Conf
+		sleep 1.5
 		systemctl restart gost
 		echo -e "\033[32m gost文件已更新，同步完成 \033[0m"
 	else
