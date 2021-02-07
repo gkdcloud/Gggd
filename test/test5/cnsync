@@ -32,6 +32,7 @@ function Restart_vnetc(){
 	wget $Github/client.conf -O $vnet_Conf
 	chmod +x $vnet_Conf
 	systemctl restart vnetc
+	systemctl status vnetc
 }
 function Restart_gost(){
 	rm -rf $gost_Conf.back
@@ -39,6 +40,7 @@ function Restart_gost(){
 	rm -rf $gost_Conf
 	wget $Github/config.json -O $gost_Conf
     systemctl restart gost
+	systemctl status gost
 }
 function Restart_nginx(){
 	rm -rf $nginx_Conf.back
@@ -46,6 +48,7 @@ function Restart_nginx(){
 	rm -rf $nginx_Conf
 	wget $Github/mjnginx.conf -O $nginx_Conf
     systemctl restart nginx
+	systemctl status nginx
 	/etc/init.d/nginx restart
 }
 function crontab_all(){
