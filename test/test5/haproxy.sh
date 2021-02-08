@@ -101,6 +101,7 @@ menu_server() {
     ;;
   esac
 }
+action=$1
 if [[ -n $action ]]; then
 #增加一个通信检测，如果与GitHub通信失败则停止脚本
 if [[ $github_test == "success" ]]; then
