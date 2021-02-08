@@ -32,9 +32,11 @@
     */2 * * * * cnsync cron
     */2 * * * * /root/haproxy.sh cron
 
+Brook因动态IP特殊性，需手动同步
+
 |  同步   |   服务器  |   同步项目  |     
 | --- | --- | --- |
 |  是   |   镇江200M  |   haproxy  |     
-|   否  |  长沙1   |   vnet/gost/nginx  |     
-|   否  |  长沙2  |   vnet/gost/nginx  |
+|   是  |  长沙1   |   vnet/gost/nginx  |     
+|   是  |  长沙2  |   vnet/gost/nginx  |
 |   否  |  广州2  |   vnet/gost/nginx  |
