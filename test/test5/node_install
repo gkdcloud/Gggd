@@ -144,9 +144,9 @@ function menu_server() {
   read -erp " 请输入国家地区代码:" diQu
 	yum update -y
 	install_iptables
+	install_docker
 	install_vnets
 	Install_gost
-	install_docker
 }
 #cn菜单
 function menu_server2() {
