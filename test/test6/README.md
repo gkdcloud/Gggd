@@ -44,4 +44,5 @@ Brook因动态IP特殊性，需手动同步
 |  是   |   镇江200M  |   haproxy  |     
 |   是  |  长沙1   |   vnet/gost/nginx  |     
 |   是  |  长沙2  |   vnet/gost/nginx  |
-|   否  |  广州2  |   vnet/gost/nginx  |
+|   是  |  广州2  |   vnet/gost/nginx  |
+|   否  |  AGA  |   vnet/gost/nginx  |
