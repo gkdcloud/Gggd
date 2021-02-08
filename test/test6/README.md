@@ -30,6 +30,9 @@
 
     yum -y install wget ; rm -rf /root/node_install ; wget https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/node_install -O /root/node_install ; chmod +x /root/node_install ; /root/node_install
 
+**国内机器安装（一键安装Nginx/VNET/GOST/Brook）**
+
+    yum -y install wget ; rm -rf /root/node_install ; wget https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/node_install -O /root/node_install ; chmod +x /root/node_install ; /root/node_install
 
 
 监控开关在crontab开启/关闭
