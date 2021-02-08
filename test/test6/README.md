@@ -18,7 +18,7 @@
 
     cnsync cron
 
-**安装haproxy（电信10000-50000端口转发）**
+**安装haproxy（电信10000-40000端口转发）**
 
     rm -rf /root/haproxy.sh  ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/haproxy.sh -O /root/haproxy.sh ; chmod +x /root/haproxy.sh ; /root/haproxy.sh
 
