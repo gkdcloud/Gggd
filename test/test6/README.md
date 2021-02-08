@@ -22,6 +22,11 @@
 
     rm -rf /root/haproxy.sh  ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/haproxy.sh -O /root/haproxy.sh ; chmod +x /root/haproxy.sh ; /root/haproxy.sh
 
+**国外/月抛安装（一键安装Docker/VNET/GOST）**
+
+    yum -y install wget ; rm -rf /root/node_install ; wget https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/node_install -O /root/node_install ; chmod +x /root/node_install ; /root/node_install
+
+
 同步使用 
 
     /root/haproxy.sh sync
