@@ -159,8 +159,8 @@ function menu_server2() {
 ————————————
  ${Green_font_prefix} 0.${Font_color_suffix} 安装全部" &&echo 
   echo
-  read -erp " 请输入国家地区代码:" Nem
-  case "$num" in
+  read -erp " 请输入对应的数字:" Nem
+  case "$Nem" in
   1)
     install_nginx
     ;;
