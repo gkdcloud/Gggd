@@ -1,0 +1,6 @@
+#gkdawshk
+docker run -d --name=gkd155 -e NODE_ID=155 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://k.gkdcloud.xyz -e SPEEDTEST=0 -e WEBAPI_TOKEN=yunyiya -e DNS_1=\"\" -e DNS_2="" --log-opt max-size=50m --log-opt max-file=3 -p 2022:80/tcp -p 2022:80/udp --restart=always fanvinga/docker-ssrmu
+#kapokawshk
+docker run -d --name=kopak140 -e NODE_ID=140 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.kapok.cloud -e SPEEDTEST=0 -e WEBAPI_TOKEN=yunyiya -e DNS_1=\"\" -e DNS_2="" --log-opt max-size=50m --log-opt max-file=3 -p 222:80/tcp -p 222:80/udp --restart=always fanvinga/docker-ssrmu
+#jcbbawshk
+docker run -d --name=jcbb136 -e NODE_ID=136 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.jcbb.xyz -e SPEEDTEST=0 -e WEBAPI_TOKEN=yunyiya -e DNS_1=\"\" -e DNS_2="" --log-opt max-size=50m --log-opt max-file=3 -p 2202:80/tcp -p 2202:80/udp --restart=always fanvinga/docker-ssrmu
