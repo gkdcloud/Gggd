@@ -9,3 +9,5 @@ docker run --restart=on-failure --name mojie -d -v /etc/soga/:/etc/soga/ --netwo
 --soga_key=GJiLnbWZcZ70l7HcXhwqp5jfUmtdg81K \
 --default_dns=103.142.141.23 \
 --node_id=71
+#cv
+docker run -d --name=CVCM -e speedtest=0 -e api_port=2456 -e downWithPanel=0 -e LDNS=103.142.141.23 -e node_id=36 -e usemysql=0  -e sspanel_url="https://cv2.xyz" -e key="mycheapv2ray" -e TZ="Asia/Shanghai"  --log-opt max-size=10m --log-opt max-file=5 --network=host --restart=always xiaoyiya/free-node:v2ray
