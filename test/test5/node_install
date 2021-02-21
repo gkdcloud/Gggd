@@ -1,6 +1,6 @@
 #!/bin/bash
 #远端文件储存地址
-Github="https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
+Github="https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
 GostService="https://raw.githubusercontent.com/KANIKIG/Multi-EasyGost/master"
 cndownload="https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5"
 #gost指定版本
