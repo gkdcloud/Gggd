@@ -2,6 +2,7 @@
 #远端文件储存地址
 Github="https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
 GostService="https://raw.githubusercontent.com/KANIKIG/Multi-EasyGost/master"
+cndownload="https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5"
 #gost指定版本
 ct_new_ver="2.11.1"
 #测试与GitHub连通性
@@ -103,7 +104,7 @@ function install_nginx() {
 	#写入配置文件
 	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.backup
 echo "worker_processes  1;
-
+user nobody;
 events {
     worker_connections  1024;
 }
@@ -118,7 +119,7 @@ http {
     keepalive_timeout  65;
 
     server {
-        listen       80;
+        listen       2333;
         server_name  localhost;
 
         location / {
@@ -136,6 +137,29 @@ http {
 	systemctl resatrt nginx
 	systemctl enable nginx
 	systemctl status nginx
+}
+#安装tengine
+function install_tengine() {
+        yum install epel-release -y
+		#创建一个www用户
+		useradd -s /sbin/nologin -M www-data
+        wget -N -P /usr/sbin/ $cndownload/download/nginx
+        chmod +x /usr/sbin/nginx
+		wget -N -P /lib/systemd/system/ $cndownload/download/nginx.service
+		mkdir /usr/local/nginx
+		mkdir /usr/local/nginx/logs
+		mkdir /etc/nginx
+		mkdir /etc/nginx/conf.d
+		wget -N -P /etc/nginx $cndownload/download/nginx.conf
+		wget -N -P /etc/nginx https://file.reimucloud.com/bin/tengine/CentOS/mime.types
+        wget -N -P /etc/nginx/conf.d https://file.reimucloud.com/bin/nginx_proxy/ws
+        wget -N -P /etc/nginx/conf.d https://file.reimucloud.com/bin/nginx_proxy/ssr.stream.sample
+        wget -N -P /etc/nginx/conf.d https://file.reimucloud.com/bin/nginx_proxy/v2ray.conf.sample
+		mkdir /etc/nginx/modules
+		wget -N -P /etc/nginx/modules https://file.reimucloud.com/bin/tengine/CentOS/ngx_stream_module.so
+        systemctl start nginx
+        systemctl enable nginx
+        echo -e "${Green}done!${Font}"
 }
 #菜单选项
 function menu_server() {
@@ -162,7 +186,7 @@ function menu_server2() {
   支持一键安装并从远端下发配置-直接黑化
  ————————————
  ${Green_font_prefix} 1:${Font_color_suffix} 安装Nginx负载
- ${Green_font_prefix} 2:${Font_color_suffix} 没写
+ ${Green_font_prefix} 2:${Font_color_suffix} 安装tengine负载（nginx1.17）
  ${Green_font_prefix} 3:${Font_color_suffix} 没写
 ————————————
  ${Green_font_prefix} 0.${Font_color_suffix} 安装全部" &&echo 
@@ -173,7 +197,7 @@ function menu_server2() {
     install_nginx
     ;;
   2)
-    echo "说了没写"
+    install_tengine
     ;;
   3)
     echo "说了没写"
