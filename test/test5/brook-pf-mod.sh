@@ -803,8 +803,8 @@ action=$1
 if [[ -n $action ]]; then
 		if [[ $action == "install" ]]; then
 			Install_brook			
-		elif [[ $action == "cron" ]]; then
-			echo -e "\033[32m 还没写 \033[0m"
+		elif [[ $action == "cronstart" ]]; then
+			crontab_monitor_brook_cron_start
 		fi
 else
 	menu_server
