@@ -19,8 +19,8 @@ brook_conf="/usr/local/brook-pf/brook.conf"
 brook_log="/usr/local/brook-pf/brook.log"
 Crontab_file="/usr/bin/crontab"
 
-Github="https://github.com"
-rawGithub="https://raw.githubusercontent.com"
+Github="https://ghproxy.com/https://github.com"
+rawGithub="https://ghproxy.com/https://raw.githubusercontent.com"
 brook_new_ver="v20200801"
 
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
