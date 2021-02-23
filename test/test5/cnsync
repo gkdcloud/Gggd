@@ -130,6 +130,7 @@ if [[ $action == "brook" ]]; then
     Restart_brook
     Restart_vnetc
     Restart_gost
+	Restart_nginx
     echo -e "\033[32m brook/vnet/gost文件已更新 \033[0m"
   elif [[ $action == "cron" ]]; then
 	crontab_all
