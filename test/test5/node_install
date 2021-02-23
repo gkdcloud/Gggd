@@ -10,6 +10,9 @@ rm -rf /root/.test.txt
 curl -s $Github/test > /root/.test.txt
 github_test=`sed -n '1p' /root/.test.txt`
 rm -rf /root/.test.txt /root/.crontab.txt
+#颜色文字
+Info="${Green_font_prefix}[信息]${Font_color_suffix}"
+Error="${Red_font_prefix}[错误]${Font_color_suffix}"
 #开放防火墙
 function install_iptables(){
 systemctl stop firewalld
@@ -50,9 +53,48 @@ LimitNOFILE=512000
 LimitNPROC=512000
 [Install]
 WantedBy=multi-user.target' >/usr/lib/systemd/system/vnets.service
+	cd /root
 	systemctl start vnets
 	systemctl status vnets
 	systemctl enable vnets
+	echo -e "\033[42;37mvnet服务端安装完成\033[0m" 
+}
+#安装vnetc
+function install_vnetc(){
+	yum -y install zip unzip
+    mkdir /usr/local/vnet
+    cd /usr/local/vnet
+    wget -N --no-check-certificate "https://www.isyunyi.com/download/linux/tunnel.zip"
+    unzip tunnel.zip 
+    rm -f /usr/local/vnet/tunnel.zip
+    rm -f /usr/local/vnet/server
+    echo '#!/bin/bash
+sleep 0.5
+cd /usr/local/vnet
+./client' >/usr/local/vnet/client.sh 
+	rm -rf /usr/local/vnet/client.conf
+	echo '#!/bin/bash
+sleep 1.5
+#在下方编写规则
+' >/usr/local/vnet/client.conf
+    chmod +x /usr/local/vnet/client /usr/local/vnet/client.sh /usr/local/vnet/client.conf
+	echo '
+[Unit]
+Description=VnetClient.Service
+After=rc-local.service
+[Service]
+Type=simple
+ExecStart=/usr/local/vnet/client.sh
+ExecStartPost=/usr/local/vnet/client.conf
+Restart=always
+LimitNOFILE=512000
+LimitNPROC=512000
+[Install]
+WantedBy=multi-user.target' >/usr/lib/systemd/system/vnetc.service
+	cd /root
+	systemctl start vnetc
+	systemctl enable vnetc
+	systemctl status vnetc
 	echo -e "\033[42;37mvnet服务端安装完成\033[0m" 
 }
 #安装docker
@@ -69,7 +111,7 @@ chmod +x /root/docker.run
 /root/docker.run
 }
 #安装gost
-function Install_gost() {
+function install_gost() {
 	bit="amd64"
 	yum install -y gzip
     rm -rf /root/gost-linux-"$bit"-"$ct_new_ver".gz
@@ -162,6 +204,40 @@ function install_tengine() {
 		cnsync nginx
         echo -e "${Green}done!${Font}"
 }
+function install_brook() {
+		wget -N -P /root $cndownload//brook-pf-mod.sh
+		chmod +x /root/brook-pf-mod.sh
+		/root/brook-pf-mod.sh install
+		#添加DDNS监控
+		yum install bind-utils -y
+    cron_config=$(crontab -l | grep "brook-pf-mod.sh monitor")
+    if [[ -z ${cron_config} ]]; then
+        echo -e "${Error} Brook 服务端运行状态监控功能 启动失败 !" 
+    else
+		crontab -l > "/root/crontab.bak"
+		sed -i "/brook-pf-mod.sh monitor/d" "/root/crontab.bak"
+		echo -e "\n*/2 * * * *  /bin/bash /root/brook-pf-mod.sh monitor" >> "/root/crontab.bak"
+		crontab "/root/crontab.bak"
+		rm -r "/root/crontab.bak"
+        echo -e "${Info} Brook 服务端运行状态监控功能 启动成功 !"
+    fi
+}
+#安装cnsync
+function install_cnsync() {
+	wget $cndownload/cnsync -O /usr/bin/cnsync
+	chmod +x /usr/bin/cnsync
+	cron_config=$(crontab -l | grep "cnsync cron")
+    if [[ -z ${cron_config} ]]; then
+        echo -e "${Error} 自动同步已存在 !" 
+    else
+		rm -r "/root/crontab.bak"
+		crontab -l > "/root/crontab.bak"
+		echo -e "\n*/2 * * * *  cnsync cron" >> "/root/crontab.bak"
+		crontab "/root/crontab.bak"
+		rm -r "/root/crontab.bak"
+        echo -e "${Info} 已添加自动同步 !"
+    fi
+}
 #菜单选项
 function menu_server() {
   echo && echo -e "  月抛/正常鸡 一键安装docker/vnet/gost
@@ -179,16 +255,20 @@ function menu_server() {
 	install_iptables
 	install_docker
 	install_vnets
-	Install_gost
+	install_gost
 }
 #cn菜单
 function menu_server2() {
   echo && echo -e "  国内机器 一键安装Nginx/Brook等
   支持一键安装并从远端下发配置-直接黑化
+  tengine为nginx1.7分支，该分支支持DDNS
  ————————————
  ${Green_font_prefix} 1:${Font_color_suffix} 安装Nginx负载
  ${Green_font_prefix} 2:${Font_color_suffix} 安装tengine负载支持DDNS
- ${Green_font_prefix} 3:${Font_color_suffix} 没写
+ ${Green_font_prefix} 3:${Font_color_suffix} 安装gost隧道
+ ${Green_font_prefix} 4:${Font_color_suffix} 安装vnet隧道
+ ${Green_font_prefix} 5:${Font_color_suffix} 安装brook转发
+ ${Green_font_prefix} 6:${Font_color_suffix} 安装cnsync同步
 ————————————
  ${Green_font_prefix} 0.${Font_color_suffix} 安装全部" &&echo 
   echo
@@ -201,10 +281,24 @@ function menu_server2() {
     install_tengine
     ;;
   3)
-    echo "说了没写"
+    install_gost
+    ;;
+  4)
+    install_vnetc
+    ;;
+  5)
+    install_brook
+    ;;
+  6)
+    install_cnsync
     ;;
   0)
-    echo "说了没写"
+    install_cnsync
+	install_iptables
+	install_brook
+	install_tengine
+	install_vnetc
+	install_gost
     ;;
   *)
     echo "请输入正确数字 [1-3]"
