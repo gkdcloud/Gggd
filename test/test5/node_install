@@ -24,7 +24,6 @@ iptables -P INPUT ACCEPT
 iptables -X
 service iptables save
 }
-#安装vnets
 function install_vnets(){
 	yum -y install zip unzip vim
     mkdir /usr/local/vnet
@@ -59,7 +58,6 @@ WantedBy=multi-user.target' >/usr/lib/systemd/system/vnets.service
 	systemctl enable vnets
 	echo -e "\033[42;37mvnet服务端安装完成\033[0m" 
 }
-#安装vnetc
 function install_vnetc(){
 	yum -y install zip unzip
     mkdir /usr/local/vnet
@@ -97,7 +95,6 @@ WantedBy=multi-user.target' >/usr/lib/systemd/system/vnetc.service
 	systemctl status vnetc
 	echo -e "\033[42;37mvnet服务端安装完成\033[0m" 
 }
-#安装docker
 function install_docker(){
 wget -qO- get.docker.com | bash
 systemctl start docker
@@ -110,7 +107,6 @@ wget --no-check-certificate $Github/node/$diQu/docker -O /root/docker.run
 chmod +x /root/docker.run
 /root/docker.run
 }
-#安装gost
 function install_gost() {
 	bit="amd64"
 	yum install -y gzip
@@ -137,7 +133,6 @@ else
     rm -rf "$(pwd)"/gost.sh
 fi
 }
-#安装nginx1.18
 function install_nginx() {
 	yum -y update
 	rpm -ivh http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.18.0-2.el7.ngx.x86_64.rpm
@@ -180,7 +175,6 @@ http {
 	systemctl enable nginx
 	systemctl status nginx
 }
-#安装tengine
 function install_tengine() {
         yum install epel-release -y
 		#创建一个www用户
@@ -212,14 +206,14 @@ function install_brook() {
 		yum install bind-utils -y
     cron_config=$(crontab -l | grep "brook-pf-mod.sh monitor")
     if [[ -z ${cron_config} ]]; then
-        echo -e "${Error} Brook 服务端运行状态监控功能 启动失败 !" 
-    else
 		crontab -l > "/root/crontab.bak"
 		sed -i "/brook-pf-mod.sh monitor/d" "/root/crontab.bak"
 		echo -e "\n*/2 * * * *  /bin/bash /root/brook-pf-mod.sh monitor" >> "/root/crontab.bak"
 		crontab "/root/crontab.bak"
 		rm -r "/root/crontab.bak"
         echo -e "${Info} Brook 服务端运行状态监控功能 启动成功 !"
+    else
+		echo -e "${Error} Brook 服务端运行状态监控功能 启动失败 !" 
     fi
 }
 #安装cnsync
@@ -228,14 +222,14 @@ function install_cnsync() {
 	chmod +x /usr/bin/cnsync
 	cron_config=$(crontab -l | grep "cnsync cron")
     if [[ -z ${cron_config} ]]; then
-        echo -e "${Error} 自动同步已存在 !" 
-    else
 		rm -r "/root/crontab.bak"
 		crontab -l > "/root/crontab.bak"
 		echo -e "\n*/2 * * * *  cnsync cron" >> "/root/crontab.bak"
 		crontab "/root/crontab.bak"
 		rm -r "/root/crontab.bak"
-        echo -e "${Info} 已添加自动同步 !"
+        echo -e "${Info} 已添加自动同步 !"        
+    else
+		echo -e "${Error} 自动同步已存在 !" 
     fi
 }
 #菜单选项
@@ -293,12 +287,13 @@ function menu_server2() {
     install_cnsync
     ;;
   0)
-    install_cnsync
 	install_iptables
+    install_cnsync
 	install_brook
 	install_tengine
 	install_vnetc
 	install_gost
+	cnsync cron
     ;;
   *)
     echo "请输入正确数字 [1-3]"
