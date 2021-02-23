@@ -726,9 +726,6 @@ Update_Shell(){
 }
 check_sys
 menu_server(){
-if [[ "${action}" == "monitor" ]]; then
-    crontab_monitor_brook
-else
     echo && echo -e "  Brook 端口转发 一键管理脚本修改版(DDNS支持) ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
   
  ${Green_font_prefix} 0.${Font_color_suffix} 升级脚本
@@ -797,7 +794,6 @@ case "$num" in
     echo "请输入正确数字 [0-10]"
     ;;
 esac
-fi
 }
 action=$1
 if [[ -n $action ]]; then
@@ -805,6 +801,8 @@ if [[ -n $action ]]; then
 			Install_brook			
 		elif [[ $action == "cronstart" ]]; then
 			crontab_monitor_brook_cron_start
+		elif [[ $action == "monitor" ]]; then
+			crontab_monitor_brook
 		fi
 else
 	menu_server
