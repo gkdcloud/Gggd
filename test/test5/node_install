@@ -274,6 +274,7 @@ function menu_server2() {
     install_nginx
     ;;
   2)
+	yum update -y
     install_tengine
     ;;
   3)
@@ -289,6 +290,7 @@ function menu_server2() {
     install_cnsync
     ;;
   0)
+	yum update -y
 	install_iptables
     install_cnsync
 	install_brook
