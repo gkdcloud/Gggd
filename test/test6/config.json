@@ -6,7 +6,7 @@
         "udp://:33880"
     ],
     "ChainNodes": [
-        "relay+tls://40.83.89.85:443"
+        "relay+tls://40.83.90.63:443"
     ],
     "Routes": [
         {
@@ -16,7 +16,7 @@
                 "udp://:33881"
             ],
             "ChainNodes": [
-                "relay+tls://210.71.253.114:443"
+                "relay+tls://tw.gkd.world:443"
             ]
         },
         {
