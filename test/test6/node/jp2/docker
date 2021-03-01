@@ -11,3 +11,10 @@ docker run --restart=on-failure --name mojie -d -v /etc/soga/:/etc/soga/ --netwo
 --node_id=71
 #cv
 docker run -d --name=CVCM -e speedtest=0 -e api_port=2456 -e downWithPanel=0 -e LDNS=103.142.141.23 -e node_id=36 -e usemysql=0  -e sspanel_url="https://cv2.xyz" -e key="mycheapv2ray" -e TZ="Asia/Shanghai"  --log-opt max-size=10m --log-opt max-file=5 --network=host --restart=always xiaoyiya/free-node:v2ray
+#dog
+docker run -d --name=dogfree \
+-e speedtest=0 -e api_port=2345 -e downWithPanel=0 \
+-e node_id=44 -e usemysql=0  -e sspanel_url="https://www.freedog.pw" -e key="qingchengss" -e TZ="Asia/Shanghai"  \
+--log-opt max-size=10m --log-opt max-file=5 \
+--network=host --restart=always \
+xiaoyiya/free-node:v2ray
