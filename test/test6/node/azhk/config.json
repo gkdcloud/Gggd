@@ -3,5 +3,13 @@
     "Retries": 0,
     "ServeNodes": [
         "relay+tls://:443/127.0.0.1:85"
-    ]
+    ],
+    "Routes": [
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "relay+tls://:445/127.0.0.1:81"
+            ]
+        }
+	]
 }
