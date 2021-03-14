@@ -6,3 +6,5 @@ docker run -d --name=kopak142 -e NODE_ID=142 -e API_INTERFACE=modwebapi -e WEBAP
 docker run -d --name=haokuai138 -e NODE_ID=138 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.haokuai.cloud -e SPEEDTEST=0 -e WEBAPI_TOKEN=yunyiya -e DNS_1=\"\" -e DNS_2="" --log-opt max-size=50m --log-opt max-file=3 -p 232:80/tcp -p 232:80/udp --restart=always fanvinga/docker-ssrmu
 #jcbbazhk
 docker run -d --name=jcbb137 -e NODE_ID=137 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.jcbb.xyz -e SPEEDTEST=0 -e WEBAPI_TOKEN=yunyiya -e DNS_1=\"\" -e DNS_2="" --log-opt max-size=50m --log-opt max-file=3 -p 2202:80/tcp -p 2202:80/udp --restart=always fanvinga/docker-ssrmu
+#xinyun gost
+docker run -d --name=xy3 -e NODE_ID=21 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://www.xinyun.cyou -e SPEEDTEST=0 -e WEBAPI_TOKEN=qingchengss --log-opt max-size=50m --log-opt max-file=3 -p 81:80/tcp -p 81:80/udp --restart=always stone0906/ssrmuv2
