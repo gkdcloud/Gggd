@@ -78,26 +78,6 @@
             "ChainNodes": [
                 "relay+tls://183.179.39.122:22691"
             ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:22692",
-                "udp://:22692"
-            ],
-            "ChainNodes": [
-                "relay+tls://cmhk.liyun.edu.pl:22692"
-            ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:10773",
-                "udp://:10773"
-            ],
-            "ChainNodes": [
-                "relay+tls://s1.hkt.xlddns.xyz:10773"
-            ]
         }
     ]
 }
