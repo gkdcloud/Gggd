@@ -72,6 +72,46 @@
         {
             "Retries": 0,
             "ServeNodes": [
+                "tcp://:22693",
+                "udp://:22693"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22673",
+                "udp://:22673"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22773",
+                "udp://:22773"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22708",
+                "udp://:22708"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
                 "tcp://:22691",
                 "udp://:22691"
             ],
