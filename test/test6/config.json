@@ -76,7 +76,7 @@
                 "udp://:22693"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world"
+                "relay+tls://tw.gkd.world:22693"
             ]
         },
         {
@@ -86,7 +86,7 @@
                 "udp://:22673"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world"
+                "relay+tls://tw.gkd.world:22673"
             ]
         },
         {
@@ -96,7 +96,7 @@
                 "udp://:22773"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world"
+                "relay+tls://tw.gkd.world:22773"
             ]
         },
         {
@@ -106,7 +106,7 @@
                 "udp://:22708"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world"
+                "relay+tls://tw.gkd.world:22708"
             ]
         },
         {
