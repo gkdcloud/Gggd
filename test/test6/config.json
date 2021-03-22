@@ -92,6 +92,16 @@
         {
             "Retries": 0,
             "ServeNodes": [
+                "tcp://:22287",
+                "udp://:22287"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world:22287"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
                 "tcp://:22708",
                 "udp://:22708"
             ],
