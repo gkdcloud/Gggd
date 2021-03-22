@@ -16,7 +16,7 @@
                 "udp://:33881"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world:443"
+                "relay+tls://tw.gkd.world:343"
             ]
         },
         {
@@ -62,11 +62,51 @@
         {
             "Retries": 0,
             "ServeNodes": [
-                "tcp://:22884",
-                "udp://:22884"
+                "tcp://:22693",
+                "udp://:22693"
             ],
             "ChainNodes": [
-                "relay+tls://cmhk.liyun.edu.pl:22884"
+                "relay+tls://tw.gkd.world:22693"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22673",
+                "udp://:22673"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world:22673"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22773",
+                "udp://:22773"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world:22773"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22287",
+                "udp://:22287"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world:22287"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22708",
+                "udp://:22708"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world:22708"
             ]
         },
         {
