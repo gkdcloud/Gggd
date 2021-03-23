@@ -16,7 +16,17 @@
                 "udp://:33881"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world:343"
+                "relay+tls://tw.gkd.world:33881"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:33882",
+                "udp://:33882"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world:33882"
             ]
         },
         {
