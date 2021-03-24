@@ -35,6 +35,11 @@
     yum -y install wget ; rm -rf /root/node_install ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/node_install -O /root/node_install ; chmod +x /root/node_install ; /root/node_install cn
 
 
+## 测试NETFLIX播放
+
+	rm -rf /root/netflix.sh ; wget https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/netflix.sh -O /root/netflix.sh ; chmod +x /root/netflix.sh ; /root/netflix.sh
+
+
 监控开关在crontab开启/关闭
 
     */2 * * * * cnsync cron
