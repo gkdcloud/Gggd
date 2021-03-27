@@ -128,6 +128,90 @@
             "ChainNodes": [
                 "relay+tls://183.179.39.122:22691"
             ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:25565/mc.icraft.cc:43630",
+                "udp://:25565/mc.icraft.cc:43630"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:10033/tw.gkd.world:7718",
+                "udp://:10033/tw.gkd.world:7718"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:10014/tw.gkd.world:7718",
+                "udp://:10014/tw.gkd.world:7718"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:30005/tw.gkd.world:666",
+                "udp://:30005/tw.gkd.world:666"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:23324/tw.gkd.world:5678",
+                "udp://:23324/tw.gkd.world:5678"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:23330/tw.gkd.world:7718",
+                "udp://:23330/tw.gkd.world:7718"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:23359/tw.gkd.world:7718",
+                "udp://:23359/tw.gkd.world:7718"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:23370/tw.gkd.world:6616",
+                "udp://:23370/tw.gkd.world:6616"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:23387/tw.gkd.world:6616",
+                "udp://:23387/tw.gkd.world:6616"
+            ]
+        },
+{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:26607/tw.gkd.world:5678",
+                "udp://:26607/tw.gkd.world:5678"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:50007/tw.gkd.world:2605",
+                "udp://:50007/tw.gkd.world:2605"
+            ]
+        },
+		{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:33334/156.234.201.151:3389",
+                "udp://:33334/156.234.201.151:3389"
+            ]
         }
     ]
 }
