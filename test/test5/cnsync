@@ -54,10 +54,10 @@ function Restart_nginx(){
 function crontab_all(){
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#brook监控(暂不启用，需将brook中的动态域名清除，否则将重复同步)
-	#rm -rf $brook_Conf.new 
-	#wget $Github/brook.conf -O $brook_Conf.new
-	#brook_md5=`md5sum $brook_Conf  | cut -d ' ' -f1`
-	#brook_md5_n=`md5sum $brook_Conf.new  | cut -d ' ' -f1`
+	rm -rf $brook_Conf.new 
+	wget $Github/brook.conf -O $brook_Conf.new
+	brook_md5=`md5sum $brook_Conf  | cut -d ' ' -f1`
+	brook_md5_n=`md5sum $brook_Conf.new  | cut -d ' ' -f1`
 	#注释结束
 	#vnet监控
 	rm -rf $vnet_Conf.new
