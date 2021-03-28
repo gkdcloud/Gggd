@@ -12,7 +12,7 @@
 
 **安装cnsync（一键同步Brook/VNET/GOST）**
 
-    rm -rf /usr/bin/cnsync ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/cnsync -O /usr/bin/cnsync ; chmod +x /usr/bin/cnsync
+    rm -rf /usr/bin/cnsync ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/cnsync -O /usr/bin/cnsync ; chmod +x /usr/bin/cnsync
 
 同步使用
 
@@ -20,7 +20,7 @@
 
 **安装haproxy（电信10000-40000端口转发）**
 
-    rm -rf /root/haproxy.sh  ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/haproxy.sh -O /root/haproxy.sh ; chmod +x /root/haproxy.sh ; /root/haproxy.sh
+    rm -rf /root/haproxy.sh  ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/haproxy.sh -O /root/haproxy.sh ; chmod +x /root/haproxy.sh ; /root/haproxy.sh
 	
 	同步使用 
 
@@ -32,7 +32,7 @@
 
 **国内机器安装（一键安装Nginx/VNET/GOST/Brook）**
 
-    yum -y install wget ; rm -rf /root/node_install ; wget https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/node_install -O /root/node_install ; chmod +x /root/node_install ; /root/node_install cn
+    yum -y install wget ; rm -rf /root/node_install ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/node_install -O /root/node_install ; chmod +x /root/node_install ; /root/node_install cn
 
 
 ## 测试NETFLIX播放
