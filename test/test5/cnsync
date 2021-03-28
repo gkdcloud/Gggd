@@ -137,7 +137,7 @@ if [[ $action == "brook" ]]; then
   elif [[ $action == "cron" ]]; then
 	crontab_all
   elif [[ $action == "v" ]]; then
-	echo $shell_version
+	echo -e $shell_version
   fi
 else
 	echo -e "\033[31m 远端通信失败，程序中止 \033[0m"
