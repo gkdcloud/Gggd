@@ -15,6 +15,8 @@ rm -rf /root/.test.txt
 curl -s $Github/test > /root/.test.txt
 github_test=`sed -n '1p' /root/.test.txt`
 rm -rf /root/.test.txt /root/.crontab.txt
+#版本号
+shell_version="1.0.1"
 #从远端更新
 function Restart_brook(){
 	rm -rf $brook_Conf.back
@@ -134,7 +136,8 @@ if [[ $action == "brook" ]]; then
     echo -e "\033[32m brook/vnet/gost文件已更新 \033[0m"
   elif [[ $action == "cron" ]]; then
 	crontab_all
-
+  elif [[ $action == "v" ]]; then
+	echo $shell_version
   fi
 else
 	echo -e "\033[31m 远端通信失败，程序中止 \033[0m"
