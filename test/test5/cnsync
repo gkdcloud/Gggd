@@ -56,6 +56,33 @@ function Restart_nginx(){
 	systemctl status nginx
 	/etc/init.d/nginx restart
 }
+function crontab_add(){
+	#查看是否已经存在监控
+	cron_config=$(crontab -l | grep "cnsync cron")
+	cron_config2=$(crontab -l | grep "cnsync update")
+	#检查并添加自动同步
+    if [[ -z ${cron_config} ]]; then
+		rm -r "/root/crontab.bak"
+		crontab -l > "/root/crontab.bak"
+		echo -e "\n*/2 * * * *  cnsync cron" >> "/root/crontab.bak"
+		crontab "/root/crontab.bak"
+		rm -r "/root/crontab.bak"
+        echo -e "${Info} 已添加cnsync自动同步 !"        
+    else
+		echo -e "${Error} cnsync自动同步已存在 !" 
+    fi
+	#检查并添加cnsync每日检查更新
+	if [[ -z ${cron_config2} ]]; then
+		rm -r "/root/crontab.bak"
+		crontab -l > "/root/crontab.bak"
+		echo -e "\n0 4 * * *  cnsync update" >> "/root/crontab.bak"
+		crontab "/root/crontab.bak"
+		rm -r "/root/crontab.bak"
+        echo -e "${Info} 已添加cnsync自动更新 !"        
+    else
+		echo -e "${Error} cnsync自动更新已存在 !" 
+    fi
+}
 function crontab_all(){
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#brook监控(暂不启用，需将brook中的动态域名清除，否则将重复同步)
@@ -117,7 +144,7 @@ fi
 }
 function cnsync_update(){
 new_version=`curl -s $Github_shell/version`
-if [[ $github_test == "success" ]]; then
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#检测更新
 	if [[ $new_version > $shell_version ]];then
 	echo -e "当前版本\033[32m $shell_version \033[0m,最新版本为\033[32m $new_version \033[0m"
@@ -129,7 +156,7 @@ if [[ $github_test == "success" ]]; then
 	echo -e "当前版本号为\033[32m $shell_version \033[0m,已是最新版本"
 	fi
 else
-echo -e "\033[31m 远端通信失败，程序中止 \033[0m"
+echo -e "\033[31m 通信中断或已关闭同步，程序中止 \033[0m"
 fi
 }
 action=$1
@@ -160,6 +187,8 @@ if [[ $action == "brook" ]]; then
 	echo -e $shell_version
   elif [[ $action == "update" ]]; then
 	cnsync_update
+  elif [[ $action == "addcron" ]]; then
+	crontab_add
   fi
 else
 	echo -e "\033[31m 远端通信失败，程序中止 \033[0m"
@@ -168,4 +197,6 @@ else
  	echo -e "通信：\033[32m $github_test \033[0m"
 	echo -e "同步：\033[32m $github_cron \033[0m"
 	echo -e "请输入\033[32m cnsync vnet|brook|gost|nginx|all|cron\033[0m 来执行同步操作" 
+	echo -e "输入\033[32m cnsync update\033[0m 检测更新"
+	echo -e "输入\033[32m cnsync addcron\033[0m 添加自动同步与自动更新"
 fi
