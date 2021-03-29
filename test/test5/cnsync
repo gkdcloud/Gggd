@@ -67,9 +67,9 @@ function crontab_add(){
 		echo -e "\n*/2 * * * *  cnsync cron" >> "/root/crontab.bak"
 		crontab "/root/crontab.bak"
 		rm -r "/root/crontab.bak"
-        echo -e "${Info} 已添加cnsync自动同步 !"        
+        echo -e "${Info} 已添加cnsync自动同步!"        
     else
-		echo -e "${Error} cnsync自动同步已存在 !" 
+		echo -e "${Error} cnsync自动同步已存在" 
     fi
 	#检查并添加cnsync每日检查更新
 	if [[ -z ${cron_config2} ]]; then
@@ -78,9 +78,9 @@ function crontab_add(){
 		echo -e "\n0 4 * * *  cnsync update" >> "/root/crontab.bak"
 		crontab "/root/crontab.bak"
 		rm -r "/root/crontab.bak"
-        echo -e "${Info} 已添加cnsync自动更新 !"        
+        echo -e "${Info} 已添加cnsync自动更新!"        
     else
-		echo -e "${Error} cnsync自动更新已存在 !" 
+		echo -e "${Error} cnsync自动更新已存在" 
     fi
 }
 function crontab_all(){
