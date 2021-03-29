@@ -222,17 +222,7 @@ function install_brook() {
 function install_cnsync() {
 	wget $cndownload/cnsync -O /usr/bin/cnsync
 	chmod +x /usr/bin/cnsync
-	cron_config=$(crontab -l | grep "cnsync cron")
-    if [[ -z ${cron_config} ]]; then
-		rm -r "/root/crontab.bak"
-		crontab -l > "/root/crontab.bak"
-		echo -e "\n*/2 * * * *  cnsync cron" >> "/root/crontab.bak"
-		crontab "/root/crontab.bak"
-		rm -r "/root/crontab.bak"
-        echo -e "${Info} 已添加自动同步 !"        
-    else
-		echo -e "${Error} 自动同步已存在 !" 
-    fi
+	cnsync addcron
 }
 #菜单选项
 function menu_server() {
