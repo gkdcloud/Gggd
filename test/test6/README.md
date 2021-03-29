@@ -12,7 +12,7 @@
 
 **安装cnsync（一键同步Brook/VNET/GOST）**
 
-    rm -rf /usr/bin/cnsync ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/cnsync -O /usr/bin/cnsync ; chmod +x /usr/bin/cnsync
+    rm -rf /usr/bin/cnsync ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/cnsync -O /usr/bin/cnsync ; chmod +x /usr/bin/cnsync ; cnsync addcron
 
 同步使用
 
