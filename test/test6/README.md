@@ -43,7 +43,9 @@
 监控开关在crontab开启/关闭
 
     */2 * * * * cnsync cron
+	0 4 * * * cnsync update
     */2 * * * * /root/haproxy.sh cron
+
 
 Brook因动态IP特殊性，需手动同步
 
