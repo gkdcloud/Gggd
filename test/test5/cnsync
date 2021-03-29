@@ -115,7 +115,7 @@ else
 	echo "通信中断或已关闭同步，请手动操作"
 fi
 }
-function crontab_update(){
+function cnsync_update(){
 new_version=`curl -s $Github_shell/version`
 if [[ $github_test == "success" ]]; then
 	#检测更新
@@ -155,7 +155,7 @@ if [[ $action == "brook" ]]; then
   elif [[ $action == "v" ]]; then
 	echo -e $shell_version
   elif [[ $action == "update" ]]; then
-	echo -e $shell_version
+	cnsync_update
   fi
 else
 	echo -e "\033[31m 远端通信失败，程序中止 \033[0m"
