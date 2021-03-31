@@ -195,6 +195,7 @@ function install_tengine() {
         wget -N -P /etc/nginx/conf.d https://file.reimucloud.com/bin/nginx_proxy/v2ray.conf.sample
 		mkdir /etc/nginx/modules
 		wget -N -P /etc/nginx/modules https://file.reimucloud.com/bin/tengine/CentOS/ngx_stream_module.so
+		wget -N -P /usr/local/nginx $cndownload/download/ws
         systemctl start nginx
         systemctl enable nginx
 		cnsync nginx
