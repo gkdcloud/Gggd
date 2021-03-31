@@ -127,14 +127,14 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		systemctl restart nginx
 		/etc/init.d/nginx restart
 		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
-	#elif [[ $brook_md5 != $brook_md5_n ]]; then
-	#	echo "brook与远端文件不符，正在同步"
-	#	rm -rf $brook_Conf
-	#	mv $brook_Conf.new $brook_Conf
-	#	PID=$(ps -ef| grep "brook relays"| grep -v grep| grep -v ".sh"| grep -v "init.d"| grep -v "service"| awk '{print $2}')
-	#	[[ ! -z ${PID} ]] && /etc/init.d/brook-pf stop
-	#	/etc/init.d/brook-pf start > /dev/null 2>&1 
-	#	echo -e "\033[32m brook文件已更新，同步完成 \033[0m"
+	elif [[ $brook_md5 != $brook_md5_n ]]; then
+		echo "brook与远端文件不符，正在同步"
+		rm -rf $brook_Conf
+		mv $brook_Conf.new $brook_Conf
+		PID=$(ps -ef| grep "brook relays"| grep -v grep| grep -v ".sh"| grep -v "init.d"| grep -v "service"| awk '{print $2}')
+		[[ ! -z ${PID} ]] && /etc/init.d/brook-pf stop
+		/etc/init.d/brook-pf start > /dev/null 2>&1 
+		echo -e "\033[32m brook文件已更新，同步完成 \033[0m"
 	else
 		echo "所有文件与远端相符，无需同步"
 	fi
