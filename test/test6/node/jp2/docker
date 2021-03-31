@@ -18,3 +18,5 @@ docker run -d --name=dogfree \
 --log-opt max-size=10m --log-opt max-file=5 \
 --network=host --restart=always \
 xiaoyiya/free-node:v2ray
+#三狗jp
+docker run -d --name=3go230 -e speedtest=0 -e api_port=19900 -e downWithPanel=0 -e node_id=230 -e usemysql=0  -e sspanel_url="https://k.hihusangou.tk" -e key="mukey" -e TZ="Asia/Shanghai"  --log-opt max-size=10m --log-opt max-file=5 --network=host --restart=always xiaoyiya/free-node:v2ray
