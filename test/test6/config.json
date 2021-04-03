@@ -143,6 +143,13 @@
                 "udp://:10033/tw.gkd.world:7718"
             ]
         },
+	    {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:9999/101.gkd.world:9999",
+                "udp://:9999/101.gkd.world:9999"
+            ]
+        },
 		{
             "Retries": 0,
             "ServeNodes": [
