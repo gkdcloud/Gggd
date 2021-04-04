@@ -39,6 +39,16 @@
                 "relay+tls://40.83.89.85:4433"
             ]
         },
+	{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:23634",
+                "udp://:23634"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world:23634"
+            ]
+        },
         {
             "Retries": 0,
             "ServeNodes": [
