@@ -39,7 +39,7 @@
                 "relay+tls://40.83.89.85:4433"
             ]
         },
-	{
+		{
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:23634",
@@ -129,7 +129,7 @@
                 "relay+tls://tw.gkd.world:22708"
             ]
         },
-	{
+		{
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:9999",
@@ -149,7 +149,7 @@
                 "relay+tls://183.179.39.122:22691"
             ]
         },
-	{
+		{
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:22692",
@@ -159,7 +159,7 @@
                 "relay+tls://hkt.gkd.world:22692"
             ]
         },
-	{
+		{
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:22667",
@@ -169,7 +169,7 @@
                 "relay+tls://hkt.gkd.world:22667"
             ]
         },
-	{
+		{
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:22769",
@@ -179,8 +179,8 @@
                 "relay+tls://hkt.gkd.world:22769"
             ]
         },
-	{
-            "Retries": 0,
+		{
+			"Retries": 0,
             "ServeNodes": [
                 "tcp://:22709",
                 "udp://:22709"
@@ -252,7 +252,7 @@
                 "udp://:23387/tw.gkd.world:6616"
             ]
         },
-{
+		{
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:26607/tw.gkd.world:5678",
@@ -279,6 +279,6 @@
                 "tcp://:55555/156.234.201.76:3389",
                 "udp://:55555/156.234.201.76:3389"
             ]
-        },
+        }
     ]
 }
