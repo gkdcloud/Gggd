@@ -2,23 +2,13 @@
     "Debug": true,
     "Retries": 0,
     "ServeNodes": [
-        "tcp://:33880",
-        "udp://:33880"
+        "tcp://:33881",
+        "udp://:33881"
     ],
     "ChainNodes": [
-        "relay+tls://13.75.93.221:4433"
+        "relay+tls://tw.gkd.world:33881"
     ],
     "Routes": [
-        {
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:33881",
-                "udp://:33881"
-            ],
-            "ChainNodes": [
-                "relay+tls://tw.gkd.world:33881"
-            ]
-        },
         {
             "Retries": 0,
             "ServeNodes": [
@@ -39,7 +29,7 @@
                 "relay+tls://40.83.89.85:4433"
             ]
         },
-	{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:23634",
@@ -129,7 +119,7 @@
                 "relay+tls://tw.gkd.world:22708"
             ]
         },
-	{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:9999",
@@ -149,7 +139,7 @@
                 "relay+tls://183.179.39.122:22691"
             ]
         },
-	{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:22692",
@@ -159,7 +149,7 @@
                 "relay+tls://hkt.gkd.world:22692"
             ]
         },
-	{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:22667",
@@ -169,7 +159,7 @@
                 "relay+tls://hkt.gkd.world:22667"
             ]
         },
-	{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:22769",
@@ -179,7 +169,7 @@
                 "relay+tls://hkt.gkd.world:22769"
             ]
         },
-	{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:22709",
@@ -196,77 +186,77 @@
                 "udp://:25565/mc.icraft.cc:43630"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:10033/tw.gkd.world:7718",
                 "udp://:10033/tw.gkd.world:7718"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:10014/tw.gkd.world:7718",
                 "udp://:10014/tw.gkd.world:7718"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:30005/tw.gkd.world:666",
                 "udp://:30005/tw.gkd.world:666"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:23324/tw.gkd.world:5678",
                 "udp://:23324/tw.gkd.world:5678"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:23330/tw.gkd.world:7718",
                 "udp://:23330/tw.gkd.world:7718"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:23359/tw.gkd.world:7718",
                 "udp://:23359/tw.gkd.world:7718"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:23370/tw.gkd.world:6616",
                 "udp://:23370/tw.gkd.world:6616"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:23387/tw.gkd.world:6616",
                 "udp://:23387/tw.gkd.world:6616"
             ]
         },
-{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:26607/tw.gkd.world:5678",
                 "udp://:26607/tw.gkd.world:5678"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:50007/tw.gkd.world:2605",
                 "udp://:50007/tw.gkd.world:2605"
             ]
         },
-		{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:33334/156.234.201.151:3389",
@@ -279,6 +269,6 @@
                 "tcp://:55555/156.234.201.76:3389",
                 "udp://:55555/156.234.201.76:3389"
             ]
-        },
+        }
     ]
 }
