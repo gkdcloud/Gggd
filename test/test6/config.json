@@ -146,7 +146,7 @@
                 "udp://:22692"
             ],
             "ChainNodes": [
-                "relay+tls://hkt.gkd.buzz:22692"
+                "relay+tls://219.76.150.106:22692"
             ]
         },
         {
@@ -156,7 +156,7 @@
                 "udp://:22667"
             ],
             "ChainNodes": [
-                "relay+tls://hkt.gkd.buzz:22667"
+                "relay+tls://219.76.150.106:22667"
             ]
         },
         {
@@ -166,7 +166,7 @@
                 "udp://:22769"
             ],
             "ChainNodes": [
-                "relay+tls://hkt.gkd.buzz:22769"
+                "relay+tls://219.76.150.106:22769"
             ]
         },
         {
@@ -176,7 +176,7 @@
                 "udp://:22709"
             ],
             "ChainNodes": [
-                "relay+tls://hkt.gkd.buzz:22709"
+                "relay+tls://219.76.150.106:22709"
             ]
         },
         {
