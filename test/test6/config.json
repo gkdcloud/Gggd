@@ -129,6 +129,16 @@
                 "relay+tls://101.gkd.world:9999"
             ]
         },
+	{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22634",
+                "udp://:22634"
+            ],
+            "ChainNodes": [
+                "relay+tls://tw.gkd.world:22634"
+            ]
+        },
         {
             "Retries": 0,
             "ServeNodes": [
