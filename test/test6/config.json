@@ -156,7 +156,7 @@
                 "udp://:22785"
             ],
             "ChainNodes": [
-                "relay+ws://hkbn.hopto.org:22785"
+                "relay+tls://hkbn.hopto.org:22785"
             ]
         },
         {
