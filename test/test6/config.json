@@ -149,6 +149,16 @@
                 "relay+tls://183.179.39.122:22691"
             ]
         },
+	{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22785",
+                "udp://:22785"
+            ],
+            "ChainNodes": [
+                "relay+tls://hkbn.hopto.org:22785"
+            ]
+        },
         {
             "Retries": 0,
             "ServeNodes": [
