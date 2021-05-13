@@ -6,7 +6,7 @@
         "udp://:33881"
     ],
     "ChainNodes": [
-        "relay+tls://tw.gkd.world:33881"
+        "relay+tls://tw.gkd.news:33881"
     ],
     "Routes": [
         {
@@ -16,7 +16,7 @@
                 "udp://:33882"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world:33882"
+                "relay+tls://tw.gkd.news:33882"
             ]
         },
         {
@@ -36,7 +36,7 @@
                 "udp://:23634"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world:23634"
+                "relay+tls://tw.gkd.news:23634"
             ]
         },
         {
@@ -76,7 +76,7 @@
                 "udp://:22693"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world:22693"
+                "relay+tls://tw.gkd.news:22693"
             ]
         },
         {
@@ -86,7 +86,7 @@
                 "udp://:22673"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world:22673"
+                "relay+tls://tw.gkd.news:22673"
             ]
         },
         {
@@ -96,7 +96,7 @@
                 "udp://:22773"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world:22773"
+                "relay+tls://tw.gkd.news:22773"
             ]
         },
         {
@@ -106,7 +106,7 @@
                 "udp://:22287"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world:22287"
+                "relay+tls://tw.gkd.news:22287"
             ]
         },
         {
@@ -116,7 +116,7 @@
                 "udp://:22708"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.world:22708"
+                "relay+tls://tw.gkd.news:22708"
             ]
         },
         {
