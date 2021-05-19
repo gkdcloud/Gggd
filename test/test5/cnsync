@@ -169,18 +169,19 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	nginx_status_md5_n=`md5sum $nginx_Conf_status.new  | cut -d ' ' -f1`
 		if [[ $nginx_ws_md5 != $nginx_ws_md5_n ]]; then
 		echo "nginx_ws与远端文件不符，正在更新"
-		rm -rf $nginx_ws_md5
-		mv $nginx_ws_md5.new $nginx_ws_md5
-		chmod +x $nginx_ws_md5
+		rm -rf $nginx_Conf_ws
+		mv $nginx_Conf_ws.new $nginx_Conf_ws
+		chmod +x $nginx_Conf_ws
 		echo -e "\033[32m nginx_ws文件已更新 \033[0m"
 		fi
 		if [[ $nginx_status_md5 != $nginx_status_md5_n ]]; then
 		echo "nginx_status与远端文件不符，正在更新"
-		rm -rf $nginx_status_md5
-		mv $nginx_status_md5.new $nginx_status_md5
-		chmod +x $nginx_status_md5
+		rm -rf $nginx_Conf_status
+		mv $nginx_Conf_status.new $nginx_Conf_status
+		chmod +x $nginx_Conf_status
 		echo -e "\033[32m nginx_status文件已更新 \033[0m"
 		fi
+		rm -rf $nginx_Conf_ws.new $nginx_Conf_status.new
 else
 echo -e "\033[31m 通信中断或已关闭同步，程序中止 \033[0m"
 fi
