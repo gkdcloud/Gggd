@@ -160,7 +160,6 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		echo "nginx_ws与远端文件不符，正在更新"
 		rm -rf $nginx_Conf_ws
 		mv $nginx_Conf_ws.new $nginx_Conf_ws
-		chmod +x $nginx_Conf_ws
 		echo -e "\033[32m nginx_ws文件已更新 \033[0m"
 		else
 	    echo -e "nginx_ws文件无需更新"
@@ -169,7 +168,6 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		echo "nginx_status与远端文件不符，正在更新"
 		rm -rf $nginx_Conf_status
 		mv $nginx_Conf_status.new $nginx_Conf_status
-		chmod +x $nginx_Conf_status
 		echo -e "\033[32m nginx_status文件已更新 \033[0m"
 		else
 	    echo -e "nginx_status文件无需更新"
