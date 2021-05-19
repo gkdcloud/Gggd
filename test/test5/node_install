@@ -135,6 +135,7 @@ else
     rm -rf "$(pwd)"/gost.sh
 fi
 }
+#nginx废弃，使用tengine
 function install_nginx() {
 	yum -y update
 	rpm -ivh http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.18.0-2.el7.ngx.x86_64.rpm
@@ -178,27 +179,42 @@ http {
 	systemctl status nginx
 }
 function install_tengine() {
+        yum update -y
         yum install epel-release -y
-		#创建一个www用户
-		useradd -s /sbin/nologin -M www-data
-        wget -N -P /usr/sbin/ $cndownload/download/nginx
-        chmod +x /usr/sbin/nginx
-		wget -N -P /lib/systemd/system/ $cndownload/download/nginx.service
-		mkdir /usr/local/nginx
-		mkdir /usr/local/nginx/logs
-		mkdir /etc/nginx
-		mkdir /etc/nginx/conf.d
-		wget -N -P /etc/nginx $cndownload/download/nginx.conf
-		wget -N -P /etc/nginx https://file.reimucloud.com/bin/tengine/CentOS/mime.types
-        wget -N -P /etc/nginx/conf.d https://file.reimucloud.com/bin/nginx_proxy/ws
-        wget -N -P /etc/nginx/conf.d https://file.reimucloud.com/bin/nginx_proxy/ssr.stream.sample
-        wget -N -P /etc/nginx/conf.d https://file.reimucloud.com/bin/nginx_proxy/v2ray.conf.sample
-		mkdir /etc/nginx/modules
-		wget -N -P /etc/nginx/modules https://file.reimucloud.com/bin/tengine/CentOS/ngx_stream_module.so
-		wget -N -P /usr/local/nginx $cndownload/download/ws
+        yum install gcc gcc-c++ autoconf automake -y
+        yum install pcre-devel -y
+        yum install openssl-devel -y
+        yum -y install libmcrypt libmcrypt-devel mcrypt mhash 
+		rm -rf /usr/local/nginx
+		cd /root
+		wget http://tengine.taobao.org/download/tengine-2.3.3.tar.gz
+		tar zxvf tengine-2.3.3.tar.gz
+		cd /root/tengine*
+		./configure --without-http_upstream_keepalive_module --with-stream --with-stream_ssl_module --with-stream_sni --add-module=modules/ngx_http_upstream_* --add-module=modules/ngx_debug_* --add-module=modules/ngx_http_slice_module --add-module=modules/ngx_http_user_agent_module --add-module=modules/ngx_http_reqstat_module --add-module=modules/ngx_http_proxy_connect_module --add-module=modules/ngx_http_footer_filter_module
+        make
+        make install
+        wget -N -P /usr/local/nginx/ $cndownload/download/ws
+		wget -N -P /usr/local/nginx/ $cndownload/download/status
+		wget -N -P /usr/local/nginx/conf/ $cndownload/download/nginx.conf
+		echo "[Unit]
+Description=The nginx HTTP and reverse proxy server
+After=syslog.target network.target remote-fs.target nss-lookup.target
+ 
+[Service]
+Type=forking
+PIDFile=/usr/local/nginx/logs/nginx.pid
+ExecStartPre=/usr/local/nginx/sbin/nginx -t
+ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+ 
+[Install]
+WantedBy=multi-user.target" >/lib/systemd/system/nginx.service
+        systemctl daemon-reload
         systemctl start nginx
         systemctl enable nginx
-		cnsync nginx
+        cnsync nginx
         echo -e "${Green}done!${Font}"
 }
 function install_brook() {
@@ -250,8 +266,8 @@ function menu_server2() {
   支持一键安装并从远端下发配置-直接黑化
   tengine为nginx1.7分支，该分支支持DDNS
  ————————————
- ${Green_font_prefix} 1:${Font_color_suffix} 安装Nginx负载
- ${Green_font_prefix} 2:${Font_color_suffix} 安装tengine负载支持DDNS
+ ${Green_font_prefix} 1:${Font_color_suffix} 安装Nginx负载(已废弃，使用tengine)
+ ${Green_font_prefix} 2:${Font_color_suffix} 安装tengine负载支持DDNS/主动健康检查
  ${Green_font_prefix} 3:${Font_color_suffix} 安装gost隧道
  ${Green_font_prefix} 4:${Font_color_suffix} 安装vnet隧道
  ${Green_font_prefix} 5:${Font_color_suffix} 安装brook转发
