@@ -21,7 +21,8 @@ rm -rf /root/.test.txt /root/.crontab.txt
 #版本号
 #请务必确认版本号与version文件一致
 #增加该版本号，即可触发自动更新（需机器开启crontab）
-shell_version="1.0.2"
+#1.0.3增加了nginx_ws/status每日检测更新
+shell_version="1.0.3"
 #从远端更新
 function Restart_brook(){
 	rm -rf $brook_Conf.back
