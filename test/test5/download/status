@@ -1,4 +1,4 @@
-    location /status {
-            check_status;
-            access_log   off;
-        }
+location /status {
+        check_status;
+        access_log   off;
+    }
