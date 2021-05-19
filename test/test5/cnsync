@@ -164,15 +164,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		else
 	    echo -e "nginx_ws文件无需更新"
 		fi
-		if [[ $nginx_status_md5 != $nginx_status_md5_n ]]; then
-		echo "nginx_status与远端文件不符，正在更新"
-		rm -rf $nginx_Conf_status
-		mv $nginx_Conf_status.new $nginx_Conf_status
-		echo -e "\033[32m nginx_status文件已更新 \033[0m"
-		else
-	    echo -e "nginx_status文件无需更新"
-		fi
-		rm -rf $nginx_Conf_ws.new $nginx_Conf_status.new
+		rm -rf $nginx_Conf_ws.new
 	#检测cnsync更新
 	if [[ $new_version > $shell_version ]];then
 	    echo -e "当前版本\033[32m $shell_version \033[0m,最新版本为\033[32m $new_version \033[0m"
