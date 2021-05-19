@@ -163,7 +163,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		chmod +x $nginx_Conf_ws
 		echo -e "\033[32m nginx_ws文件已更新 \033[0m"
 		else
-	    echo -e "\033[32m $shell_version \033[0m nginx_ws文件无需更新"
+	    echo -e "nginx_ws文件无需更新"
 		fi
 		if [[ $nginx_status_md5 != $nginx_status_md5_n ]]; then
 		echo "nginx_status与远端文件不符，正在更新"
@@ -172,7 +172,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		chmod +x $nginx_Conf_status
 		echo -e "\033[32m nginx_status文件已更新 \033[0m"
 		else
-	    echo -e "\033[32m $shell_version \033[0m nginx_status文件无需更新"
+	    echo -e "nginx_status文件无需更新"
 		fi
 		rm -rf $nginx_Conf_ws.new $nginx_Conf_status.new
 	#检测cnsync更新
@@ -183,7 +183,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
     	chmod +x /usr/bin/cnsync
 	    echo -e "更新完成,版本号\033[32m $new_version \033[0m"
 	    else
-	    echo -e "当前版本号为\033[32m $shell_version \033[0m,已是最新版本"
+	    echo -e "cnsync当前版本号为\033[32m $shell_version \033[0m,已是最新版本"
     fi
 else
 echo -e "\033[31m 通信中断或已关闭同步，程序中止 \033[0m"
