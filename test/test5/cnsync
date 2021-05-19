@@ -22,7 +22,7 @@ rm -rf /root/.test.txt /root/.crontab.txt
 #请务必确认版本号与version文件一致
 #增加该版本号，即可触发自动更新（需机器开启crontab）
 #1.0.3增加了nginx_ws/status每日检测更新
-shell_version="1.0.3"
+shell_version="1.0.4"
 #从远端更新
 function Restart_brook(){
 	rm -rf $brook_Conf.back
@@ -151,11 +151,8 @@ new_version=`curl -s $Github_shell/version`
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then	
     #检测nginx的ws/status更新
 	wget $Github_shell/download/ws -O $nginx_Conf_ws.new
-	wget $Github_shell/download/status -O $nginx_Conf_status.new
 	nginx_ws_md5=`md5sum $nginx_Conf_ws  | cut -d ' ' -f1`
 	nginx_ws_md5_n=`md5sum $nginx_Conf_ws.new  | cut -d ' ' -f1`
-	nginx_status_md5=`md5sum $nginx_Conf_status  | cut -d ' ' -f1`
-	nginx_status_md5_n=`md5sum $nginx_Conf_status.new  | cut -d ' ' -f1`
 		if [[ $nginx_ws_md5 != $nginx_ws_md5_n ]]; then
 		echo "nginx_ws与远端文件不符，正在更新"
 		rm -rf $nginx_Conf_ws
