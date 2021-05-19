@@ -194,7 +194,6 @@ function install_tengine() {
         make
         make install
         wget -N -P /usr/local/nginx/ $cndownload/download/ws
-		wget -N -P /usr/local/nginx/ $cndownload/download/status
 		wget -N -P /usr/local/nginx/conf/ $cndownload/download/nginx.conf
 		echo "[Unit]
 Description=The nginx HTTP and reverse proxy server
