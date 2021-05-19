@@ -1,4 +1,0 @@
-location /status {
-        check_status;
-        access_log   off;
-    }
