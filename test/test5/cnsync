@@ -7,6 +7,8 @@ brook_Conf="/usr/local/brook-pf/brook.conf"
 vnet_Conf="/usr/local/vnet/client.conf"
 gost_Conf="/etc/gost/config.json"
 nginx_Conf="/usr/local/nginx/mjnginx.conf"
+nginx_Conf_ws="/usr/local/nginx/ws"
+nginx_Conf_status="/usr/local/nginx/status"
 #是否开启监控
 rm -rf /root/.crontab.txt
 curl -s $Github/crontab > /root/.crontab.txt
@@ -142,10 +144,11 @@ else
 	echo "通信中断或已关闭同步，请手动操作"
 fi
 }
+#增加nginx：ws/status更新
 function cnsync_update(){
 new_version=`curl -s $Github_shell/version`
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
-	#检测更新
+	#检测cnsync更新
 	if [[ $new_version > $shell_version ]];then
 	echo -e "当前版本\033[32m $shell_version \033[0m,最新版本为\033[32m $new_version \033[0m"
 	rm -rf /usr/bin/cnsync
@@ -155,6 +158,28 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	else
 	echo -e "当前版本号为\033[32m $shell_version \033[0m,已是最新版本"
 	fi
+	
+    #检测nginx的ws/status更新
+	wget $Github_shell/download/ws -O $nginx_Conf_ws.new
+	wget $Github_shell/download/status -O $nginx_Conf_status.new
+	nginx_ws_md5=`md5sum $nginx_Conf_ws  | cut -d ' ' -f1`
+	nginx_ws_md5_n=`md5sum $nginx_Conf_ws.new  | cut -d ' ' -f1`
+	nginx_status_md5=`md5sum $nginx_Conf_status  | cut -d ' ' -f1`
+	nginx_status_md5_n=`md5sum $nginx_Conf_status.new  | cut -d ' ' -f1`
+		if [[ $nginx_ws_md5 != $nginx_ws_md5_n ]]; then
+		echo "nginx_ws与远端文件不符，正在更新"
+		rm -rf $nginx_ws_md5
+		mv $nginx_ws_md5.new $nginx_ws_md5
+		chmod +x $nginx_ws_md5
+		echo -e "\033[32m nginx_ws文件已更新 \033[0m"
+		fi
+		if [[ $nginx_status_md5 != $nginx_status_md5_n ]]; then
+		echo "nginx_status与远端文件不符，正在更新"
+		rm -rf $nginx_status_md5
+		mv $nginx_status_md5.new $nginx_status_md5
+		chmod +x $nginx_status_md5
+		echo -e "\033[32m nginx_status文件已更新 \033[0m"
+		fi
 else
 echo -e "\033[31m 通信中断或已关闭同步，程序中止 \033[0m"
 fi
