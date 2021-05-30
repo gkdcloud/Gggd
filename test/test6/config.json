@@ -59,6 +59,16 @@
                 "relay+tls://homehkt.ddns.net:22882"
             ]
         },
+	{
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:22794",
+                "udp://:22794"
+            ],
+            "ChainNodes": [
+                "relay+tls://anhkwtt.ddns.net:22794"
+            ]
+        },
         {
             "Retries": 0,
             "ServeNodes": [
