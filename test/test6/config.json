@@ -46,7 +46,7 @@
                 "udp://:22881"
             ],
             "ChainNodes": [
-                "relay+tls://hkbn.hopto.org:22881"
+                "relay+tls://homehkt.ddns.net:22881"
             ]
         },
         {
@@ -56,7 +56,7 @@
                 "udp://:22882"
             ],
             "ChainNodes": [
-                "relay+tls://hkbn.hopto.org:22882"
+                "relay+tls://homehkt.ddns.net:22882"
             ]
         },
         {
@@ -166,7 +166,7 @@
                 "udp://:22785"
             ],
             "ChainNodes": [
-                "relay+tls://hkbn.hopto.org:22785"
+                "relay+tls://homehkt.ddns.net:22785"
             ]
         },
 	{
