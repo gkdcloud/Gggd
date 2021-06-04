@@ -74,7 +74,7 @@
             "ServeNodes": [
                 "tcp://:22810",
                 "udp://:22810"
-            ],        #新华云
+            ],        
             "ChainNodes": [
                 "relay+tls://anyhkwtt.ddns.net:22810"
             ]
