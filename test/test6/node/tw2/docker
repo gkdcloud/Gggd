@@ -1,5 +1,5 @@
 #魔戒
-docker run --restart=on-failure --name mojie -d -v /etc/soga/:/etc/soga/ --network host sprov065/soga \
+docker run --restart=always --name mojie -d -v /etc/soga/:/etc/soga/ --network host sprov065/soga \
 --type=v2board \
 --server_type=v2ray \
 --api=webapi \
