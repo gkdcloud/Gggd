@@ -126,7 +126,7 @@
                 "udp://:22287"
             ],
             "ChainNodes": [
-                "relay+tls://tw.gkd.news:22287"
+                "relay+tls://a9194225-7dd3-4a8d-b409-bd141c7a48be.ddns.moonvm.net:22287"
             ]
         },
         {
