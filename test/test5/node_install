@@ -184,7 +184,8 @@ function install_tengine() {
         yum install gcc gcc-c++ autoconf automake -y
         yum install pcre-devel -y
         yum install openssl-devel -y
-        yum -y install libmcrypt libmcrypt-devel mcrypt mhash 
+        yum install libmcrypt libmcrypt-devel mcrypt mhash -y
+		yum install kernel-headers kernel-devel make -y
 		rm -rf /usr/local/nginx
 		cd /root
 		wget http://tengine.taobao.org/download/tengine-2.3.3.tar.gz
