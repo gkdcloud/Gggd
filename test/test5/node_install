@@ -242,8 +242,8 @@ function install_cnsync() {
 }
 #安装hksync
 function install_hksync() {
-	wget $cndownload/hksync -O /usr/bin/hksync
-	chmod +x /usr/bin/cnsync
+	wget $cndownload/hksync -O /usr/bin/hksync	
+	chmod +x /usr/bin/hksync
 	hksync addcron
 }
 #菜单选项
@@ -305,6 +305,7 @@ function menu_server2() {
   8)
     install_vnets
 	install_tengine
+	install_hksync
 	hksync all
     ;;
   0)
