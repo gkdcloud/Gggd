@@ -214,7 +214,6 @@ WantedBy=multi-user.target" >/lib/systemd/system/nginx.service
         systemctl daemon-reload
         systemctl start nginx
         systemctl enable nginx
-        cnsync nginx
         echo -e "${Green}done!${Font}"
 }
 function install_brook() {
@@ -240,6 +239,12 @@ function install_cnsync() {
 	wget $cndownload/cnsync -O /usr/bin/cnsync
 	chmod +x /usr/bin/cnsync
 	cnsync addcron
+}
+#安装hksync
+function install_hksync() {
+	wget $cndownload/hksync -O /usr/bin/hksync
+	chmod +x /usr/bin/cnsync
+	hksync addcron
 }
 #菜单选项
 function menu_server() {
@@ -272,8 +277,9 @@ function menu_server2() {
  ${Green_font_prefix} 4:${Font_color_suffix} 安装vnet隧道
  ${Green_font_prefix} 5:${Font_color_suffix} 安装brook转发
  ${Green_font_prefix} 6:${Font_color_suffix} 安装cnsync同步
+ ${Green_font_prefix} 8.${Font_color_suffix} 安装vnets+tengine(香港跳板安装)
 ————————————
- ${Green_font_prefix} 0.${Font_color_suffix} 安装全部" &&echo 
+ ${Green_font_prefix} 0.${Font_color_suffix} 安装全部(国内中转一键部署)" &&echo 
   echo
   read -erp " 请输入对应的数字:" Num
   case "$Num" in
@@ -295,6 +301,11 @@ function menu_server2() {
     ;;
   6)
     install_cnsync
+    ;;
+  8)
+    install_vnets
+	install_tengine
+	hksync all
     ;;
   0)
 	yum update -y
