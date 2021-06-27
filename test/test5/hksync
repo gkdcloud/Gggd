@@ -24,7 +24,7 @@ rm -rf /root/.test.txt /root/.crontab.txt
 #1.0.3增加了nginx_ws/status每日检测更新
 shell_version="1.0.4"
 #从远端更新
-function Restart_vnetc(){
+function Restart_vnets(){
 	rm -rf $vnet_Conf.back
 	cp $vnet_Conf $vnet_Conf.back
 	rm -rf $vnet_Conf
