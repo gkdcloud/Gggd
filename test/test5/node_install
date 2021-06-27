@@ -1,8 +1,8 @@
 #!/bin/bash
 #远端文件储存地址
-Github="https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
-GostService="https://ghproxy.com/https://raw.githubusercontent.com/KANIKIG/Multi-EasyGost/master"
-cndownload="https://ghproxy.com/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5"
+Github="https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
+GostService="https://ghproxy.net/https://raw.githubusercontent.com/KANIKIG/Multi-EasyGost/master"
+cndownload="https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5"
 #gost指定版本
 ct_new_ver="2.11.1"
 #测试与GitHub连通性
@@ -44,7 +44,7 @@ cd /usr/local/vnet
 	echo '
 [Unit]
 Description=VnetServer.Service
-After=rc-local.service network.target
+After=rc-local.service syslog.target network.target remote-fs.target nss-lookup.target
 [Service]
 Type=simple
 ExecStart=/usr/local/vnet/server.sh
@@ -113,7 +113,7 @@ function install_gost() {
 	bit="amd64"
 	yum install -y gzip
     rm -rf /root/gost-linux-"$bit"-"$ct_new_ver".gz
-    wget --no-check-certificate https://ghproxy.com/https://github.com/ginuerzh/gost/releases/download/v$ct_new_ver/gost-linux-$bit-$ct_new_ver.gz -O /root/gost-linux-$bit-$ct_new_ver.gz
+    wget --no-check-certificate https://ghproxy.net/https://github.com/ginuerzh/gost/releases/download/v$ct_new_ver/gost-linux-$bit-$ct_new_ver.gz -O /root/gost-linux-$bit-$ct_new_ver.gz
     gunzip /root/gost-linux-"$bit"-"$ct_new_ver".gz
     mv /root/gost-linux-"$bit"-"$ct_new_ver" /usr/bin/gost
     chmod -R 777 /usr/bin/gost
