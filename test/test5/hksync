@@ -4,7 +4,7 @@ Github="https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
 Github_shell="https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5"
 #brook/vnet/gost本地文件位置
 brook_Conf="/usr/local/brook-pf/brook.conf"
-vnet_Conf="/usr/local/vnet/client.conf"
+vnet_Conf="/usr/local/vnet/server.conf"
 gost_Conf="/etc/gost/config.json"
 nginx_Conf="/usr/local/nginx/mjnginx.conf"
 nginx_Conf_ws="/usr/local/nginx/ws"
@@ -28,7 +28,7 @@ function Restart_vnetc(){
 	rm -rf $vnet_Conf.back
 	cp $vnet_Conf $vnet_Conf.back
 	rm -rf $vnet_Conf
-	wget $Github/client.conf -O $vnet_Conf
+	wget $Github/server.conf -O $vnet_Conf
 	chmod +x $vnet_Conf
 	systemctl restart vnets
 	systemctl status vnets
@@ -73,7 +73,7 @@ function crontab_all(){
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#vnet监控
 	rm -rf $vnet_Conf.new
-	wget $Github/client.conf -O $vnet_Conf.new
+	wget $Github/server.conf -O $vnet_Conf.new
 	vnet_md5=`md5sum $vnet_Conf  | cut -d ' ' -f1`
 	vnet_md5_n=`md5sum $vnet_Conf.new  | cut -d ' ' -f1`
 	#nginx监控
@@ -163,7 +163,7 @@ fi
 else
  	echo -e "通信：\033[32m $github_test \033[0m"
 	echo -e "同步：\033[32m $github_cron \033[0m"
-	echo -e "请输入\033[32m hksync vnet|brook|gost|nginx|all|cron\033[0m 来执行同步操作" 
+	echo -e "请输入\033[32m hksync vnet|nginx|all|cron\033[0m 来执行同步操作" 
 	echo -e "输入\033[32m hksync update\033[0m 检测更新"
 	echo -e "输入\033[32m hksync addcron\033[0m 添加自动同步与自动更新"
 fi
