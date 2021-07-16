@@ -250,8 +250,8 @@
         {
             "Retries": 0,
             "ServeNodes": [
-                "tcp://:23330/tw2.gkd.news:7720",
-                "udp://:23330/tw2.gkd.news:7720"
+                "tcp://:23330/tw2.gkd.news:7721",
+                "udp://:23330/tw2.gkd.news:7721"
             ]
         },
         {
