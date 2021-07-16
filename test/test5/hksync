@@ -6,7 +6,7 @@ Github_shell="https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/t
 brook_Conf="/usr/local/brook-pf/brook.conf"
 vnet_Conf="/usr/local/vnet/server.conf"
 gost_Conf="/etc/gost/config.json"
-nginx_Conf="/usr/local/nginx/mjnginx.conf"
+nginx_Conf="/usr/local/nginx/hknginx.conf"
 nginx_Conf_ws="/usr/local/nginx/ws"
 nginx_Conf_status="/usr/local/nginx/status"
 #是否开启监控
@@ -37,7 +37,7 @@ function Restart_nginx(){
 	rm -rf $nginx_Conf.back
 	cp $nginx_Conf $nginx_Conf.back
 	rm -rf $nginx_Conf
-	wget $Github/mjnginx.conf -O $nginx_Conf
+	wget $Github/hknginx.conf -O $nginx_Conf
     systemctl restart nginx
 	systemctl status nginx
 	/etc/init.d/nginx restart
@@ -78,7 +78,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	vnet_md5_n=`md5sum $vnet_Conf.new  | cut -d ' ' -f1`
 	#nginx监控
 	rm -rf $nginx_Conf.new
-	wget $Github/mjnginx.conf -O $nginx_Conf.new
+	wget $Github/hknginx.conf -O $nginx_Conf.new
 	nginx_md5=`md5sum $nginx_Conf  | cut -d ' ' -f1`
 	nginx_md5_n=`md5sum $nginx_Conf.new  | cut -d ' ' -f1`	
 	#检查与远端是否相符

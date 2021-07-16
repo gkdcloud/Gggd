@@ -250,6 +250,27 @@
         {
             "Retries": 0,
             "ServeNodes": [
+                "tcp://:23330/tw2.gkd.news:7720",
+                "udp://:23330/tw2.gkd.news:7720"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:23324/tw2.gkd.news:5681",
+                "udp://:23324/tw2.gkd.news:5681"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:26616/tw2.gkd.news:6623",
+                "udp://:26616/tw2.gkd.news:6623"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
                 "tcp://:50007/tw.gkd.world:2605",
                 "udp://:50007/tw.gkd.world:2605"
             ]
