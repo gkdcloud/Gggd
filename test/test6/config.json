@@ -236,7 +236,7 @@
                 "udp://:23330"
             ],
             "ChainNodes": [
-                "relay+tls://yftw.gkd.news:23330"
+                "relay+tls://tw.gkd.news:23330"
             ]
         },
         {
