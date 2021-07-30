@@ -234,7 +234,7 @@ function install_brook() {
 		echo -e "${Error} Brook 服务端运行状态监控功能 启动失败 !" 
     fi
 }
-#安装XrayR
+#安装XrayR-暂时废弃
 function install_xrayr() {
     mkdir /usr/local/xrayr
 	wget -N -P /usr/local/xrayr https://github.com/XrayR-project/XrayR/releases/download/v0.6.1/XrayR-freebsd-64.zip
@@ -278,7 +278,7 @@ function install_xrayr_pengui() {
 #是否安装XrayR主程序
 if [[ $ins_xrayr == "" ]]; then
 echo "安装XrayR主程序"
-install_xrayr
+bash <(curl -Ls https://raw.githubusercontent.com/XrayR-project/XrayR-release/master/install.sh)
 else
 echo "跳过XrayR安装"
 fi
@@ -308,7 +308,7 @@ if [[ $dns_nf == "down" ]]; then
   Level: none # Log level: none, error, warning, info, debug 
   AccessPath: # ./access.Log
   ErrorPath: # ./error.log
-DnsConfigPath: # ./dns.json  #如果启用dns解锁删掉该注释并上传文件至root
+DnsConfigPath: # ./dns.json  #
 ConnetionConfig:
   Handshake: 4 # Handshake time limit, Second
   ConnIdle: 30 # Connection idle time limit, Second
@@ -353,7 +353,7 @@ Nodes:
         DNSEnv: # DNS ENV option used by DNS provider
           ALICLOUD_ACCESS_KEY: aaa
           ALICLOUD_SECRET_KEY: bbb
-" >/usr/local/xrayr/config.yml
+" >/etc/XrayR/config.yml
 else
     echo "Log:
   Level: none # Log level: none, error, warning, info, debug 
@@ -416,8 +416,8 @@ echo "{
     ]
 }" >/usr/local/xrayr/dns.json
 fi
-systemctl restart xrayr
-systemctl status xrayr
+systemctl restart XrayR
+systemctl status XrayR
 echo "对接完成"
 }
 #安装cnsync
