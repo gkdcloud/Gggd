@@ -7,6 +7,7 @@ brook_Conf="/usr/local/brook-pf/brook.conf"
 vnet_Conf="/usr/local/vnet/client.conf"
 gost_Conf="/etc/gost/config.json"
 nginx_Conf="/usr/local/nginx/mjnginx.conf"
+cn80_Conf="/usr/local/nginx/hk80.conf"
 nginx_Conf_ws="/usr/local/nginx/ws"
 nginx_Conf_status="/usr/local/nginx/status"
 #是否开启监控
@@ -128,7 +129,6 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		rm -rf $nginx_Conf
 		mv $nginx_Conf.new $nginx_Conf
 		systemctl restart nginx
-		/etc/init.d/nginx restart
 		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
 	elif [[ $brook_md5 != $brook_md5_n ]]; then
 		echo "brook与远端文件不符，正在同步"
@@ -138,6 +138,26 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		[[ ! -z ${PID} ]] && /etc/init.d/brook-pf stop
 		/etc/init.d/brook-pf start > /dev/null 2>&1 
 		echo -e "\033[32m brook文件已更新，同步完成 \033[0m"
+	else
+		echo "所有文件与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
+function crontab_cn80(){
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+	#hk80监控
+	rm -rf $cn80_Conf.new
+	wget $Github/hk80.conf -O $cn80_Conf.new
+	cn80_md5=`md5sum $cn80_Conf  | cut -d ' ' -f1`
+	cn80_md5_n=`md5sum $cn80_Conf.new  | cut -d ' ' -f1`
+	if [[ $cn80_md5 != $cn80_md5_n ]]; then
+		echo "cn80与远端文件不符，正在同步"
+		rm -rf $cn80_Conf
+		mv $cn80_Conf.new $cn80_Conf
+		systemctl restart nginx
+		echo -e "\033[32m Nginx_cn80文件已更新，同步完成 \033[0m"
 	else
 		echo "所有文件与远端相符，无需同步"
 	fi
