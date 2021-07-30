@@ -7,7 +7,7 @@ brook_Conf="/usr/local/brook-pf/brook.conf"
 vnet_Conf="/usr/local/vnet/client.conf"
 gost_Conf="/etc/gost/config.json"
 nginx_Conf="/usr/local/nginx/mjnginx.conf"
-cn80_Conf="/usr/local/nginx/hk80.conf"
+cn80_Conf="/usr/local/nginx/cn80.conf"
 nginx_Conf_ws="/usr/local/nginx/ws"
 nginx_Conf_status="/usr/local/nginx/status"
 #是否开启监控
@@ -147,9 +147,9 @@ fi
 }
 function crontab_cn80(){
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
-	#hk80监控
+	#cn80监控
 	rm -rf $cn80_Conf.new
-	wget $Github/hk80.conf -O $cn80_Conf.new
+	wget $Github/cn80.conf -O $cn80_Conf.new
 	cn80_md5=`md5sum $cn80_Conf  | cut -d ' ' -f1`
 	cn80_md5_n=`md5sum $cn80_Conf.new  | cut -d ' ' -f1`
 	if [[ $cn80_md5 != $cn80_md5_n ]]; then
@@ -220,6 +220,8 @@ if [[ $action == "brook" ]]; then
     echo -e "\033[32m brook/vnet/gost文件已更新 \033[0m"
   elif [[ $action == "cron" ]]; then
 	crontab_all
+  elif [[ $action == "cn80" ]]; then
+	crontab_cn80
   elif [[ $action == "v" ]]; then
 	echo -e $shell_version
   elif [[ $action == "update" ]]; then
@@ -233,7 +235,7 @@ fi
 else
  	echo -e "通信：\033[32m $github_test \033[0m"
 	echo -e "同步：\033[32m $github_cron \033[0m"
-	echo -e "请输入\033[32m cnsync vnet|brook|gost|nginx|all|cron\033[0m 来执行同步操作" 
+	echo -e "请输入\033[32m cnsync vnet|brook|gost|nginx|all|cron|cn80\033[0m 来执行同步操作" 
 	echo -e "输入\033[32m cnsync update\033[0m 检测更新"
 	echo -e "输入\033[32m cnsync addcron\033[0m 添加自动同步与自动更新"
 fi
