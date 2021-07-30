@@ -2,7 +2,7 @@ Log:
   Level: none # Log level: none, error, warning, info, debug 
   AccessPath: # ./access.Log
   ErrorPath: # ./error.log
-DnsConfigPath: # ./dns.json Path to dns config
+DnsConfigPath:  ./dns.json  #如果启用dns解锁删掉该注释并上传文件至root
 ConnetionConfig:
   Handshake: 4 # Handshake time limit, Second
   ConnIdle: 30 # Connection idle time limit, Second
