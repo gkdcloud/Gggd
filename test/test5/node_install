@@ -404,7 +404,7 @@ Nodes:
         DNSEnv: # DNS ENV option used by DNS provider
           ALICLOUD_ACCESS_KEY: aaa
           ALICLOUD_SECRET_KEY: bbb
-" >/usr/local/xrayr/config.yml
+" >/etc/XrayR/config.yml
 echo "{
     \"address\": \"$dns_nf\",
     \"port\": 5353,
@@ -414,7 +414,7 @@ echo "{
     \"expectIPs\": [
         \"geoip:cn\"
     ]
-}" >/usr/local/xrayr/dns.json
+}" >/etc/XrayR/dns.json
 fi
 systemctl restart XrayR
 systemctl status XrayR
