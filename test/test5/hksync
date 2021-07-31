@@ -107,7 +107,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		rm -rf $hk80_Conf
 		mv $hk80_Conf.new $hk80_Conf
 		systemctl restart nginx
-		/etc/init.d/nginx restart
+		#/etc/init.d/nginx restart
 		echo -e "\033[32m Nginx_hk80文件已更新，同步完成 \033[0m"
 	else
 		echo "所有文件与远端相符，无需同步"
