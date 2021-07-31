@@ -37,6 +37,12 @@ rm -rf /var/log/secure-*
 rm -rf /var/log/spooler-*
 rm -rf /var/log/boot.log-*
 rm -rf /var/log/btmp-*
+rm -rf /var/log/auth.log.*
+rm -rf /var/log/daemon.log.*
+rm -rf /var/log/syslog.*
+echo > /var/log/auth.log
+echo > /var/log/daemon.log
+echo > /var/log/syslog
 echo > /usr/local/nginx/logs/access.log
 echo > /usr/local/nginx/logs/error.log
 echo -e "${Info}日志清理完成"
