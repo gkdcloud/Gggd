@@ -234,6 +234,194 @@ function install_brook() {
 		echo -e "${Error} Brook 服务端运行状态监控功能 启动失败 !" 
     fi
 }
+#安装XrayR-暂时废弃
+function install_xrayr() {
+    mkdir /usr/local/xrayr
+	wget -N -P /usr/local/xrayr https://github.com/XrayR-project/XrayR/releases/download/v0.6.1/XrayR-freebsd-64.zip
+	yum install unzip -y
+	cd /usr/local/xrayr
+	unzip XrayR-freebsd-64.zip
+	rm -rf /usr/local/xrayr/XrayR-freebsd-64.zip
+	echo "[Unit]
+Description=XrayR Service
+After=network.target nss-lookup.target
+Wants=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+LimitAS=infinity
+LimitRSS=infinity
+LimitCORE=infinity
+LimitNOFILE=999999
+WorkingDirectory=/usr/local/xrayr/
+ExecStart=/usr/local/xrayr/XrayR -config /usr/local/xrayr/config.yml
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target" >/lib/systemd/system/xrayr.service
+    systemctl enable xrayr
+    echo "XrayR安装完成并设置开机自启"
+}
+#安装XrayR-企鹅配置
+function install_xrayr_pengui() {
+    echo && echo -e "  企鹅节点对接--XrayR
+  节点快速对接，支持设置DNS解锁
+  安装XrayR主程序可输入任意字符跳过安装(适用于已安装重新对接)
+  DNS解锁支持预设BGP.SH地址输入：sg/jp/kr/us/uk/fr/tw/hk
+ ————————————" 
+    read -erp " 是否安装XrayR主程序(回车安装):" ins_xrayr
+    read -erp " 请输入节点ID:" node_id
+    read -erp " 请输入DNS解锁地址(回车跳过):" dns_nf
+#是否安装XrayR主程序
+if [[ $ins_xrayr == "" ]]; then
+echo "安装XrayR主程序"
+bash <(curl -Ls https://raw.githubusercontent.com/XrayR-project/XrayR-release/master/install.sh)
+else
+echo "跳过XrayR安装"
+fi
+#预设DNS解锁地址
+	if [[ $dns_nf == "jp" ]]; then
+		dns_nf="103.142.141.23"			
+	elif [[ $dns_nf == "sg" ]]; then
+		dns_nf="149.129.56.249"	
+	elif [[ $dns_nf == "us" ]]; then
+		dns_nf="49.51.178.84"
+	elif [[ $dns_nf == "uk" ]]; then
+		dns_nf="161.35.161.202"
+	elif [[ $dns_nf == "fr" ]]; then
+		dns_nf="109.238.14.142"
+	elif [[ $dns_nf == "kr" ]]; then
+		dns_nf="61.111.129.138"
+	elif [[ $dns_nf == "hk" ]]; then
+		dns_nf="47.240.40.111"
+	elif [[ $dns_nf == "tw" ]]; then
+		dns_nf="34.81.172.137"
+	elif [[ $dns_nf == "" ]]; then
+		dns_nf="down"
+    fi
+#判断是否开启dns解锁
+if [[ $dns_nf == "down" ]]; then
+    echo "Log:
+  Level: none # Log level: none, error, warning, info, debug 
+  AccessPath: # ./access.Log
+  ErrorPath: # ./error.log
+DnsConfigPath: # ./dns.json  #
+ConnetionConfig:
+  Handshake: 4 # Handshake time limit, Second
+  ConnIdle: 30 # Connection idle time limit, Second
+  UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
+  DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
+  BufferSize: 64 # The internal cache size of each connection, kB 
+Nodes:
+  -
+    PanelType: \"V2board\" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
+    ApiConfig:
+      ApiHost: \"https://pengui.xyz/\"
+      ApiKey: \"www_pengui_ml123\"
+      NodeID: $node_id  #这是节点ID
+      NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      Timeout: 30 # Timeout for the api request
+      EnableVless: false # Enable Vless for V2ray Type
+      EnableXTLS: false # Enable XTLS for V2ray and Trojan
+      SpeedLimit: 0 # Mbps, Local settings will replace remote settings, 0 means disable
+      DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
+      RuleListPath: # ./rulelist Path to local rulelist file
+    ControllerConfig:
+      ListenIP: 0.0.0.0 # IP address you want to listen
+      SendIP: 0.0.0.0 # IP address you want to send pacakage
+      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
+      EnableDNS: false # Use custom DNS config, Please ensure that you set the dns.json well
+      DNSType: AsIs # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
+      EnableProxyProtocol: false # Only works for WebSocket and TCP
+      EnableFallback: false # Only support for Trojan and Vless
+      FallBackConfigs:  # Support multiple fallbacks
+        -
+          SNI: # TLS SNI(Server Name Indication), Empty for any
+          Path: # HTTP PATH, Empty for any
+          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
+          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
+      CertConfig:
+        CertMode: dns # Option about how to get certificate: none, file, http, dns. Choose \"none\" will forcedly disable the tls config.
+        CertDomain: \"node1.test.com\" # Domain to cert
+        CertFile: ./cert/node1.test.com.cert # Provided if the CertMode is file
+        KeyFile: ./cert/node1.test.com.key
+        Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
+        Email: test@me.com
+        DNSEnv: # DNS ENV option used by DNS provider
+          ALICLOUD_ACCESS_KEY: aaa
+          ALICLOUD_SECRET_KEY: bbb
+" >/etc/XrayR/config.yml
+else
+    echo "Log:
+  Level: none # Log level: none, error, warning, info, debug 
+  AccessPath: # ./access.Log
+  ErrorPath: # ./error.log
+DnsConfigPath:  /etc/XrayR/dns.json  #
+ConnetionConfig:
+  Handshake: 4 # Handshake time limit, Second
+  ConnIdle: 30 # Connection idle time limit, Second
+  UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
+  DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
+  BufferSize: 64 # The internal cache size of each connection, kB 
+Nodes:
+  -
+    PanelType: \"V2board\" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
+    ApiConfig:
+      ApiHost: \"https://pengui.xyz/\"
+      ApiKey: \"www_pengui_ml123\"
+      NodeID: $node_id  #这是节点ID
+      NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      Timeout: 30 # Timeout for the api request
+      EnableVless: false # Enable Vless for V2ray Type
+      EnableXTLS: false # Enable XTLS for V2ray and Trojan
+      SpeedLimit: 0 # Mbps, Local settings will replace remote settings, 0 means disable
+      DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
+      RuleListPath: # ./rulelist Path to local rulelist file
+    ControllerConfig:
+      ListenIP: 0.0.0.0 # IP address you want to listen
+      SendIP: 0.0.0.0 # IP address you want to send pacakage
+      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
+      EnableDNS: true # Use custom DNS config, Please ensure that you set the dns.json well
+      DNSType: UseIP # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
+      EnableProxyProtocol: false # Only works for WebSocket and TCP
+      EnableFallback: false # Only support for Trojan and Vless
+      FallBackConfigs:  # Support multiple fallbacks
+        -
+          SNI: # TLS SNI(Server Name Indication), Empty for any
+          Path: # HTTP PATH, Empty for any
+          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
+          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
+      CertConfig:
+        CertMode: dns # Option about how to get certificate: none, file, http, dns. Choose \"none\" will forcedly disable the tls config.
+        CertDomain: \"node1.test.com\" # Domain to cert
+        CertFile: ./cert/node1.test.com.cert # Provided if the CertMode is file
+        KeyFile: ./cert/node1.test.com.key
+        Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
+        Email: test@me.com
+        DNSEnv: # DNS ENV option used by DNS provider
+          ALICLOUD_ACCESS_KEY: aaa
+          ALICLOUD_SECRET_KEY: bbb
+" >/etc/XrayR/config.yml
+echo "{
+    \"servers\": [
+      \"localhost\", 
+      {
+        \"address\": \"$dns_nf\", 
+        \"port\": 53,
+        \"domains\": [
+          \"geosite:netflix\" 
+        ]
+      }
+    ]
+  }" >/etc/XrayR/dns.json
+fi
+systemctl restart XrayR
+systemctl status XrayR
+echo "对接完成"
+}
 #安装cnsync
 function install_cnsync() {
 	wget $cndownload/cnsync -O /usr/bin/cnsync
@@ -335,6 +523,8 @@ if [[ -n $action ]]; then
 	if [[ $github_test == "success" ]]; then
 		if [[ $action == "cn" ]]; then
 			menu_server2			
+		elif [[ $action == "pengui" ]]; then
+			install_xrayr_pengui
 		elif [[ $action == "cron" ]]; then
 			echo -e "\033[32m 还没写 \033[0m"
 		fi

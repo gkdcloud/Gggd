@@ -209,7 +209,7 @@
                 "relay+tls://homewtt.ddns.net:22811"
             ]
         },
-	{
+        {
             "Retries": 0,
             "ServeNodes": [
                 "tcp://:22791",
@@ -217,6 +217,36 @@
             ],
             "ChainNodes": [
                 "relay+tls://homewtt.ddns.net:22791"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:26616",
+                "udp://:26616"
+            ],
+            "ChainNodes": [
+                "relay+tls://yftw.gkd.news:26616"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:23330",
+                "udp://:23330"
+            ],
+            "ChainNodes": [
+                "relay+tls://yftw.gkd.news:23330"
+            ]
+        },
+        {
+            "Retries": 0,
+            "ServeNodes": [
+                "tcp://:23324",
+                "udp://:23324"
+            ],
+            "ChainNodes": [
+                "relay+tls://yftw.gkd.news:23324"
             ]
         },
         {
@@ -245,27 +275,6 @@
             "ServeNodes": [
                 "tcp://:23387/tw.gkd.world:6616",
                 "udp://:23387/tw.gkd.world:6616"
-            ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:23330/tw2.gkd.news:7721",
-                "udp://:23330/tw2.gkd.news:7721"
-            ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:23324/tw2.gkd.news:5682",
-                "udp://:23324/tw2.gkd.news:5682"
-            ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:26616/tw2.gkd.news:6623",
-                "udp://:26616/tw2.gkd.news:6623"
             ]
         },
         {

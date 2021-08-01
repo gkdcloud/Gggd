@@ -11,3 +11,4 @@ docker run --restart=on-failure --name mojie -d -v /etc/soga/:/etc/soga/ --netwo
 --node_id=73
 #三狗sg
 docker run -d --name=3go232 -e speedtest=0 -e api_port=19902 -e downWithPanel=0 -e node_id=232 -e usemysql=0  -e sspanel_url="https://k.hihusangou.tk" -e key="mukey" -e TZ="Asia/Shanghai"  --log-opt max-size=10m --log-opt max-file=5 --network=host --restart=always xiaoyiya/free-node:v2ray
+#xrayr
