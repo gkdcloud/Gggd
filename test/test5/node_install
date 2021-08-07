@@ -205,7 +205,7 @@ Type=forking
 PIDFile=/usr/local/nginx/logs/nginx.pid
 ExecStartPre=/usr/local/nginx/sbin/nginx -t
 ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
-ExecReload=/bin/kill -s HUP $MAINPID
+ExecReload=/usr/local/nginx/sbin/nginx -s reload
 ExecStop=/bin/kill -s QUIT $MAINPID
 PrivateTmp=true
  
@@ -267,14 +267,47 @@ WantedBy=multi-user.target" >/lib/systemd/system/xrayr.service
 }
 #安装XrayR-企鹅配置
 function install_xrayr_pengui() {
-    echo && echo -e "  企鹅节点对接--XrayR
+    echo && echo -e "  节点快速对接--XrayR
   节点快速对接，支持设置DNS解锁
   安装XrayR主程序可输入任意字符跳过安装(适用于已安装重新对接)
   DNS解锁支持预设BGP.SH地址输入：sg/jp/kr/us/uk/fr/tw/hk
+  可以同时对接多个网站,pg=对接企鹅vmess,dog=对接狗子v2ray
  ————————————" 
-    read -erp " 是否安装XrayR主程序(回车安装):" ins_xrayr
+    read -erp " 是否安装XrayR主程序(回车安装,任意字符跳过):" ins_xrayr
+	read -erp " 现在开始对接第一个节点(pg|dog,回车默认企鹅):" node_web
+	if [[ $node_web == "" ]] || [[ $node_web == "pg" ]]; then
+    node_web="pengui.xyz"
+	node_type="V2ray"
+	node_panel="V2board"
+	node_key="www_pengui_ml123"
+    elif [[ $node_web == "dog" ]]; then
+	node_web="www.freedog.pw"
+	node_type="V2ray"
+	node_panel="SSpanel"
+	node_key="qingchengss"
+    else
+    echo "您输入的信息不正确，脚本将重新执行"
+	install_xrayr_pengui
+    fi
     read -erp " 请输入节点ID:" node_id
     read -erp " 请输入DNS解锁地址(回车跳过):" dns_nf
+	read -erp " 现在开始对接第二个节点(pg|dog,回车跳过):" node2_web
+	if [[ $node2_web == "dog" ]]; then
+	node_web2="www.freedog.pw"
+	node_type2="V2ray"
+	node_panel2="SSpanel"
+	node_key2="qingchengss"
+	are_you_have_node2="yes"
+	elif [[ $node2_web == "pg" ]]; then
+    node_web2="pengui.xyz"
+	node_type2="V2ray"
+	node_panel2="V2board"
+	node_key2="www_pengui_ml123"
+	are_you_have_node2="yes"
+	else
+	echo "不对接第二节点,仅执行对接第一节点"
+	are_you_have_node2="no"
+	fi	
 #是否安装XrayR主程序
 if [[ $ins_xrayr == "" ]]; then
 echo "安装XrayR主程序"
@@ -304,107 +337,13 @@ fi
     fi
 #判断是否开启dns解锁
 if [[ $dns_nf == "down" ]]; then
-    echo "Log:
-  Level: none # Log level: none, error, warning, info, debug 
-  AccessPath: # ./access.Log
-  ErrorPath: # ./error.log
-DnsConfigPath: # ./dns.json  #
-ConnetionConfig:
-  Handshake: 4 # Handshake time limit, Second
-  ConnIdle: 30 # Connection idle time limit, Second
-  UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
-  DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
-  BufferSize: 64 # The internal cache size of each connection, kB 
-Nodes:
-  -
-    PanelType: \"V2board\" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
-    ApiConfig:
-      ApiHost: \"https://pengui.xyz/\"
-      ApiKey: \"www_pengui_ml123\"
-      NodeID: $node_id  #这是节点ID
-      NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
-      Timeout: 30 # Timeout for the api request
-      EnableVless: false # Enable Vless for V2ray Type
-      EnableXTLS: false # Enable XTLS for V2ray and Trojan
-      SpeedLimit: 0 # Mbps, Local settings will replace remote settings, 0 means disable
-      DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
-      RuleListPath: # ./rulelist Path to local rulelist file
-    ControllerConfig:
-      ListenIP: 0.0.0.0 # IP address you want to listen
-      SendIP: 0.0.0.0 # IP address you want to send pacakage
-      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
-      EnableDNS: false # Use custom DNS config, Please ensure that you set the dns.json well
-      DNSType: AsIs # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
-      EnableProxyProtocol: false # Only works for WebSocket and TCP
-      EnableFallback: false # Only support for Trojan and Vless
-      FallBackConfigs:  # Support multiple fallbacks
-        -
-          SNI: # TLS SNI(Server Name Indication), Empty for any
-          Path: # HTTP PATH, Empty for any
-          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
-          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
-      CertConfig:
-        CertMode: dns # Option about how to get certificate: none, file, http, dns. Choose \"none\" will forcedly disable the tls config.
-        CertDomain: \"node1.test.com\" # Domain to cert
-        CertFile: ./cert/node1.test.com.cert # Provided if the CertMode is file
-        KeyFile: ./cert/node1.test.com.key
-        Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
-        Email: test@me.com
-        DNSEnv: # DNS ENV option used by DNS provider
-          ALICLOUD_ACCESS_KEY: aaa
-          ALICLOUD_SECRET_KEY: bbb
-" >/etc/XrayR/config.yml
+node_dns_path="# ./dns.json"
+node_dns_type="AsIs"
+node_dns_enable="false"
 else
-    echo "Log:
-  Level: none # Log level: none, error, warning, info, debug 
-  AccessPath: # ./access.Log
-  ErrorPath: # ./error.log
-DnsConfigPath:  /etc/XrayR/dns.json  #
-ConnetionConfig:
-  Handshake: 4 # Handshake time limit, Second
-  ConnIdle: 30 # Connection idle time limit, Second
-  UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
-  DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
-  BufferSize: 64 # The internal cache size of each connection, kB 
-Nodes:
-  -
-    PanelType: \"V2board\" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
-    ApiConfig:
-      ApiHost: \"https://pengui.xyz/\"
-      ApiKey: \"www_pengui_ml123\"
-      NodeID: $node_id  #这是节点ID
-      NodeType: V2ray # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
-      Timeout: 30 # Timeout for the api request
-      EnableVless: false # Enable Vless for V2ray Type
-      EnableXTLS: false # Enable XTLS for V2ray and Trojan
-      SpeedLimit: 0 # Mbps, Local settings will replace remote settings, 0 means disable
-      DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
-      RuleListPath: # ./rulelist Path to local rulelist file
-    ControllerConfig:
-      ListenIP: 0.0.0.0 # IP address you want to listen
-      SendIP: 0.0.0.0 # IP address you want to send pacakage
-      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
-      EnableDNS: true # Use custom DNS config, Please ensure that you set the dns.json well
-      DNSType: UseIP # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
-      EnableProxyProtocol: false # Only works for WebSocket and TCP
-      EnableFallback: false # Only support for Trojan and Vless
-      FallBackConfigs:  # Support multiple fallbacks
-        -
-          SNI: # TLS SNI(Server Name Indication), Empty for any
-          Path: # HTTP PATH, Empty for any
-          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
-          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
-      CertConfig:
-        CertMode: dns # Option about how to get certificate: none, file, http, dns. Choose \"none\" will forcedly disable the tls config.
-        CertDomain: \"node1.test.com\" # Domain to cert
-        CertFile: ./cert/node1.test.com.cert # Provided if the CertMode is file
-        KeyFile: ./cert/node1.test.com.key
-        Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
-        Email: test@me.com
-        DNSEnv: # DNS ENV option used by DNS provider
-          ALICLOUD_ACCESS_KEY: aaa
-          ALICLOUD_SECRET_KEY: bbb
-" >/etc/XrayR/config.yml
+node_dns_path="/etc/XrayR/dns.json"
+node_dns_type="UseIP"
+node_dns_enable="true"
 echo "{
     \"servers\": [
       \"localhost\", 
@@ -418,6 +357,101 @@ echo "{
     ]
   }" >/etc/XrayR/dns.json
 fi
+#判断是否添加第二节点
+if [[ $are_you_have_node2 == "yes" ]]; then
+node2_config="  -
+    PanelType: \"$node_panel2\" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
+    ApiConfig:
+      ApiHost: \"https://$node_web2/\"
+      ApiKey: \"$node_key2\"
+      NodeID: $node_id  #这是节点ID
+      NodeType: $node_type2 # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      Timeout: 30 # Timeout for the api request
+      EnableVless: false # Enable Vless for V2ray Type
+      EnableXTLS: false # Enable XTLS for V2ray and Trojan
+      SpeedLimit: 0 # Mbps, Local settings will replace remote settings, 0 means disable
+      DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
+      RuleListPath: # ./rulelist Path to local rulelist file
+    ControllerConfig:
+      ListenIP: 0.0.0.0 # IP address you want to listen
+      SendIP: 0.0.0.0 # IP address you want to send pacakage
+      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
+      EnableDNS: $node_dns_enable # Use custom DNS config, Please ensure that you set the dns.json well
+      DNSType: $node_dns_type # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
+      EnableProxyProtocol: false # Only works for WebSocket and TCP
+      EnableFallback: false # Only support for Trojan and Vless
+      FallBackConfigs:  # Support multiple fallbacks
+        -
+          SNI: # TLS SNI(Server Name Indication), Empty for any
+          Path: # HTTP PATH, Empty for any
+          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
+          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
+      CertConfig:
+        CertMode: dns # Option about how to get certificate: none, file, http, dns. Choose \"none\" will forcedly disable the tls config.
+        CertDomain: \"node1.test.com\" # Domain to cert
+        CertFile: ./cert/node1.test.com.cert # Provided if the CertMode is file
+        KeyFile: ./cert/node1.test.com.key
+        Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
+        Email: test@me.com
+        DNSEnv: # DNS ENV option used by DNS provider
+          ALICLOUD_ACCESS_KEY: aaa
+          ALICLOUD_SECRET_KEY: bbb"
+		echo "当前对接两个节点"
+else
+        echo "当前对接一个节点"
+fi
+
+#开始编写配置文件
+    echo "Log:
+  Level: none # Log level: none, error, warning, info, debug 
+  AccessPath: # ./access.Log
+  ErrorPath: # ./error.log
+DnsConfigPath: $node_dns_path
+ConnetionConfig:
+  Handshake: 4 # Handshake time limit, Second
+  ConnIdle: 30 # Connection idle time limit, Second
+  UplinkOnly: 2 # Time limit when the connection downstream is closed, Second
+  DownlinkOnly: 4 # Time limit when the connection is closed after the uplink is closed, Second
+  BufferSize: 64 # The internal cache size of each connection, kB 
+Nodes:
+  -
+    PanelType: \"$node_panel\" # Panel type: SSpanel, V2board, PMpanel, , Proxypanel
+    ApiConfig:
+      ApiHost: \"https://$node_web/\"
+      ApiKey: \"$node_key\"
+      NodeID: $node_id  #这是节点ID
+      NodeType: $node_type # Node type: V2ray, Shadowsocks, Trojan, Shadowsocks-Plugin
+      Timeout: 30 # Timeout for the api request
+      EnableVless: false # Enable Vless for V2ray Type
+      EnableXTLS: false # Enable XTLS for V2ray and Trojan
+      SpeedLimit: 0 # Mbps, Local settings will replace remote settings, 0 means disable
+      DeviceLimit: 0 # Local settings will replace remote settings, 0 means disable
+      RuleListPath: # ./rulelist Path to local rulelist file
+    ControllerConfig:
+      ListenIP: 0.0.0.0 # IP address you want to listen
+      SendIP: 0.0.0.0 # IP address you want to send pacakage
+      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
+      EnableDNS: $node_dns_enable # Use custom DNS config, Please ensure that you set the dns.json well
+      DNSType: $node_dns_type # AsIs, UseIP, UseIPv4, UseIPv6, DNS strategy
+      EnableProxyProtocol: false # Only works for WebSocket and TCP
+      EnableFallback: false # Only support for Trojan and Vless
+      FallBackConfigs:  # Support multiple fallbacks
+        -
+          SNI: # TLS SNI(Server Name Indication), Empty for any
+          Path: # HTTP PATH, Empty for any
+          Dest: 80 # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
+          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
+      CertConfig:
+        CertMode: dns # Option about how to get certificate: none, file, http, dns. Choose \"none\" will forcedly disable the tls config.
+        CertDomain: \"node1.test.com\" # Domain to cert
+        CertFile: ./cert/node1.test.com.cert # Provided if the CertMode is file
+        KeyFile: ./cert/node1.test.com.key
+        Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
+        Email: test@me.com
+        DNSEnv: # DNS ENV option used by DNS provider
+          ALICLOUD_ACCESS_KEY: aaa
+          ALICLOUD_SECRET_KEY: bbb
+$node2_config" >/etc/XrayR/config.yml
 systemctl restart XrayR
 systemctl status XrayR
 echo "对接完成"
