@@ -112,11 +112,6 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	wget $Github/mjnginx.conf -O $nginx_Conf.new
 	nginx_md5=`md5sum $nginx_Conf  | cut -d ' ' -f1`
 	nginx_md5_n=`md5sum $nginx_Conf.new  | cut -d ' ' -f1`	
-	#gkdnginx监控
-	rm -rf $gkdnginx_Conf.new
-	wget $Github/$gkdnginx_name -O $gkdnginx_Conf.new
-	gkdnginx_md5=`md5sum $gkdnginx_Conf  | cut -d ' ' -f1`
-	gkdnginx_md5_n=`md5sum $gkdnginx_Conf.new  | cut -d ' ' -f1`	
 	#检查与远端是否相符
 	if [[ $vnet_md5 != $vnet_md5_n ]]; then
 		echo "vnet与远端文件不符，正在同步"
@@ -135,13 +130,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		echo "Nginx与远端文件不符，正在同步"
 		rm -rf $nginx_Conf
 		mv $nginx_Conf.new $nginx_Conf
-		systemctl restart nginx
-		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
-	elif [[ $gkdnginx_md5 != $gkdnginx_md5_n ]]; then
-		echo "GKD-Nginx与远端文件不符，正在同步"
-		rm -rf $gkdnginx_Conf
-		mv $gkdnginx_Conf.new $gkdnginx_Conf
-		systemctl restart nginx
+		systemctl reload nginx
 		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
 	elif [[ $brook_md5 != $brook_md5_n ]]; then
 		echo "brook与远端文件不符，正在同步"
@@ -151,6 +140,26 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		[[ ! -z ${PID} ]] && /etc/init.d/brook-pf stop
 		/etc/init.d/brook-pf start > /dev/null 2>&1 
 		echo -e "\033[32m brook文件已更新，同步完成 \033[0m"
+	else
+		echo "所有文件与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
+function crontab_gkd(){
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+	#gkdnginx监控
+	rm -rf $gkdnginx_Conf.new
+	wget $Github/$gkdnginx_name -O $gkdnginx_Conf.new
+	gkdnginx_md5=`md5sum $gkdnginx_Conf  | cut -d ' ' -f1`
+	gkdnginx_md5_n=`md5sum $gkdnginx_Conf.new  | cut -d ' ' -f1`	
+	if [[ $gkdnginx_md5 != $gkdnginx_md5_n ]]; then
+		echo "GKD-Nginx与远端文件不符，正在同步"
+		rm -rf $gkdnginx_Conf
+		mv $gkdnginx_Conf.new $gkdnginx_Conf
+		systemctl reload nginx
+		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
 	else
 		echo "所有文件与远端相符，无需同步"
 	fi
@@ -169,7 +178,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		echo "cn80与远端文件不符，正在同步"
 		rm -rf $cn80_Conf
 		mv $cn80_Conf.new $cn80_Conf
-		systemctl restart nginx
+		systemctl reload nginx
 		echo -e "\033[32m Nginx_cn80文件已更新，同步完成 \033[0m"
 	else
 		echo "所有文件与远端相符，无需同步"
