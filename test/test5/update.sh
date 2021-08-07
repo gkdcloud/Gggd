@@ -17,6 +17,7 @@ PrivateTmp=true
  
 [Install]
 WantedBy=multi-user.target" >/lib/systemd/system/nginx.service
+systemctl daemon-reload
 rm -rf /usr/bin/cnsync ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/cnsync -O /usr/bin/cnsync ; chmod +x /usr/bin/cnsync
 }
 function menu_server() {
