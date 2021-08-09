@@ -42,6 +42,10 @@
 
     yum -y install wget ; rm -rf /root/node_install ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/node_install -O /root/node_install ; chmod +x /root/node_install ; /root/node_install pengui
 
+**升级脚本，手动升级时使用**
+
+    rm -rf /root/update.sh ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/update.sh -O /root/update.sh ; chmod +x /root/update.sh ; /root/update.sh
+
 
 ## 测试NETFLIX播放
 
