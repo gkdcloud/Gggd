@@ -16,12 +16,11 @@
 
 6.一键添加监控任务 cnsync addcron
 
-
+<br/>
 <span id="f1">注释1: [^](#a1)</span>使用探针时，发送消息可定义机器名称 
 
     echo "机器名称">/root/.status_name
 
-> Blockquote
 
 ## 快速部署-在国内机器和月抛机器上进行快速部署
 
