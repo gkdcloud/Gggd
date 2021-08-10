@@ -242,6 +242,7 @@ if [ "$GOST" -ne 0 ]		#$GOST 这个变量的运行结果不等于0 非0代表正
    else		#否则启动gost
      echo "正在重启 gost"
      systemctl restart gost
+	 sleep 0.5
 	 GOST_RESTART=`netstat -anput | grep gost | wc -l`	 
 	if [ "$GOST_RESTART" != 0 ] ;then
 	TG_MESSAGE="检测到$SERVER_NAME GOST 停止运行，已于 $DA 重启成功"
