@@ -10,7 +10,7 @@
 
 3.守护程序(探针)<sup id="a1">[[1]](#f1)</sup> cnsync status   
 
-4.发送通过TG机器人发送消息
+4.通过TG机器人发送消息
 
 5.自动升级<sup id="a2">[[2]](#f2)</sup> cnsync update
 
