@@ -12,7 +12,7 @@
 
 4.发送通过TG机器人发送消息
 
-5.自动升级 cnsync update
+5.自动升级<sup id="a2">[[2]](#f2)</sup> cnsync update
 
 6.一键添加监控任务 cnsync addcron
 
@@ -57,7 +57,7 @@
 
     yum -y install wget ; rm -rf /root/node_install ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/node_install -O /root/node_install ; chmod +x /root/node_install ; /root/node_install pengui
 
-**升级脚本，手动升级时使用**
+**升级脚本** <span id="f2">注释2: [^](#a2)</span>改动cnsync之外的文件时，我们需要手动升级
 
     rm -rf /root/update.sh ; wget https://ghproxy.net/https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5/update.sh -O /root/update.sh ; chmod +x /root/update.sh ; /root/update.sh
 
