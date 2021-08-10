@@ -340,6 +340,8 @@ if [[ $action == "brook" ]]; then
 	nginx_status
     gost_status
     vnetc_status
+  elif [[ $action == "nginx_status" ]]; then
+    nginx_status
   elif [[ $action == "v" ]]; then
 	echo -e $shell_version
   elif [[ $action == "update" ]]; then
