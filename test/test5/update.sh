@@ -25,6 +25,7 @@ function menu_server() {
  ————————————
  1.修复Tengine使其支持重载配置
  2.更新cnsync：独立GKD配置文件，使用Nginx重载配置代替重启
+ 3.更新cnsync：添加守护程序并增加TG通知
 ————————————
 " &&echo 
   echo
