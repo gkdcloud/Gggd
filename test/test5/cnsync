@@ -138,18 +138,24 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		chmod +x $vnet_Conf
 		systemctl restart vnetc
 		echo -e "\033[32m vnet文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME vnet 于 $DA 自动同步配置文件"
+        TG_BOT
 	elif [[ $gost_md5 != $gost_md5_n ]]; then
 		echo "gost与远端文件不符，正在同步"
 		rm -rf $gost_Conf
 		mv $gost_Conf.new $gost_Conf
 		systemctl restart gost
 		echo -e "\033[32m gost文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME gost 于 $DA 自动同步配置文件"
+        TG_BOT
 	elif [[ $nginx_md5 != $nginx_md5_n ]]; then
 		echo "Nginx与远端文件不符，正在同步"
 		rm -rf $nginx_Conf
 		mv $nginx_Conf.new $nginx_Conf
 		systemctl reload nginx
 		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME Nginx 于 $DA 自动同步配置文件"
+        TG_BOT
 	elif [[ $brook_md5 != $brook_md5_n ]]; then
 		echo "brook与远端文件不符，正在同步"
 		rm -rf $brook_Conf
@@ -158,6 +164,8 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		[[ ! -z ${PID} ]] && /etc/init.d/brook-pf stop
 		/etc/init.d/brook-pf start > /dev/null 2>&1 
 		echo -e "\033[32m brook文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME brook 于 $DA 自动同步配置文件"
+        TG_BOT
 	else
 		echo "所有文件与远端相符，无需同步"
 	fi
@@ -178,6 +186,8 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		mv $gkdnginx_Conf.new $gkdnginx_Conf
 		systemctl reload nginx
 		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME GKD-Nginx 于 $DA 自动同步配置文件"
+        TG_BOT
 	else
 		echo "所有文件与远端相符，无需同步"
 	fi
@@ -198,6 +208,8 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		mv $cn80_Conf.new $cn80_Conf
 		systemctl reload nginx
 		echo -e "\033[32m Nginx_cn80文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME Nginx_cn80 于 $DA 自动同步配置文件"
+        TG_BOT
 	else
 		echo "所有文件与远端相符，无需同步"
 	fi
