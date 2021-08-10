@@ -5,10 +5,12 @@
 功能列表：
 1.手动同步 cnsync vnet|brook|gost|nginx|all
 2.自动同步 cnsync cron|cn80|gkd
-3.守护程序(探针)^[footnote] cnsync status   
+3.守护程序(探针)[^1] cnsync status   
 4.发送通过TG机器人发送消息
+5.自动升级 cnsync update
+6.一键添加监控任务 cnsync addcron
 
-[^footnote]:
+[^1]:
 
 注释1：使用探针时，发送消息可定义机器名称 
 
