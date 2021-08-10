@@ -72,6 +72,7 @@ function crontab_add(){
 	#查看是否已经存在监控
 	cron_config=$(crontab -l | grep "cnsync cron")
 	cron_config2=$(crontab -l | grep "cnsync update")
+	cron_config3=$(crontab -l | grep "cnsync status")
 	#检查并添加自动同步
     if [[ -z ${cron_config} ]]; then
 		rm -r "/root/crontab.bak"
@@ -93,6 +94,17 @@ function crontab_add(){
         echo -e "${Info} 已添加cnsync自动更新!"        
     else
 		echo -e "${Error} cnsync自动更新已存在" 
+    fi
+	#检查并添加cnsync守护程序-含TG通知
+	if [[ -z ${cron_config3} ]]; then
+		rm -r "/root/crontab.bak"
+		crontab -l > "/root/crontab.bak"
+		echo -e "\n*/1 * * * *  cnsync status" >> "/root/crontab.bak"
+		crontab "/root/crontab.bak"
+		rm -r "/root/crontab.bak"
+        echo -e "${Info} 已添加cnsync守护程序!"        
+    else
+		echo -e "${Error} cnsync自动守护程序已存在" 
     fi
 }
 function crontab_all(){
