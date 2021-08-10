@@ -1,12 +1,20 @@
-## 配置文件对应表
+## cnsync功能说明
 
-**Brook**配置文件 `brook.conf`
+经过多次更新，cnsync不再是一个简单的同步程序
 
-**VNET**配置文件 `client.conf`
+功能列表：
+1.手动同步 cnsync vnet|brook|gost|nginx|all
+2.自动同步 cnsync cron|cn80|gkd
+3.守护程序(探针)^[footnote] cnsync status   
+4.发送通过TG机器人发送消息
 
-**GOST**配置文件 `config.json`
+[^footnote]:
 
-**HaProxy**配置文件 `haproxy.cfg`
+注释1：使用探针时，发送消息可定义机器名称 
+
+    echo "机器名称">/root/.status_name
+
+> Blockquote
 
 ## 快速部署-在国内机器和月抛机器上进行快速部署
 
@@ -58,6 +66,15 @@
 	0 4 * * * cnsync update
     */2 * * * * /root/haproxy.sh cron
 
+## 配置文件对应表
+
+**Brook**配置文件 `brook.conf`
+
+**VNET**配置文件 `client.conf`
+
+**GOST**配置文件 `config.json`
+
+**HaProxy**配置文件 `haproxy.cfg`
 
 Brook因动态IP特殊性，需手动同步
 
