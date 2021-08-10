@@ -230,7 +230,7 @@ if [ "$NGX" -ne 0 ]		#$NGX这个变量的运行结果不等于0 非0代表正在
 	TG_MESSAGE="检测到$SERVER_NAME Nginx 停止运行，于 $DA 尝试重启但未成功，请进行人工检查"
 	TG_BOT
 	else
-	TG_MESSAGE="检测到Nginx停止运行，于 $DA 尝试重启时出现未知错误，请进行人工检查"
+	TG_MESSAGE="$SERVER_NAME Nginx!，于 $DA 尝试重启时出现未知错误，请进行人工检查"
 	TG_BOT	
 	fi	 
 fi
@@ -251,7 +251,7 @@ if [ "$GOST" -ne 0 ]		#$GOST 这个变量的运行结果不等于0 非0代表正
 	TG_MESSAGE="检测到$SERVER_NAME GOST 停止运行，于 $DA 尝试重启但未成功，请进行人工检查"
 	TG_BOT
 	else
-	TG_MESSAGE="GOST，于 $DA 尝试重启时出现未知错误，请进行人工检查"
+	TG_MESSAGE="$SERVER_NAME GOST!于 $DA 尝试重启时出现未知错误，请进行人工检查"
 	TG_BOT	
 	fi	 
 fi
@@ -271,7 +271,7 @@ if [ "$VNETC" -ne 0 ]		#$VNETC 这个变量的运行结果不等于0 非0代表�
 	TG_MESSAGE="检测到$SERVER_NAME vnetc 停止运行，于 $DA 尝试重启但未成功，请进行人工检查"
 	TG_BOT
 	else
-	TG_MESSAGE="vnetc，于 $DA 尝试重启时出现未知错误，请进行人工检查"
+	TG_MESSAGE="$SERVER_NAME vnetc!于 $DA 尝试重启时出现未知错误，请进行人工检查"
 	TG_BOT	
 	fi	 
 fi
