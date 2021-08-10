@@ -8,7 +8,7 @@
 
 2.自动同步 cnsync cron|cn80|gkd
 
-3.守护程序(探针)[^1] cnsync status   
+3.守护程序(探针)<sup id="a1">[[1]](#f1)</sup> cnsync status   
 
 4.发送通过TG机器人发送消息
 
@@ -17,9 +17,7 @@
 6.一键添加监控任务 cnsync addcron
 
 
-[^1]:
-
-注释1：使用探针时，发送消息可定义机器名称 
+<span id="f1">1. [^](#a1)</span> 注释1：使用探针时，发送消息可定义机器名称 
 
     echo "机器名称">/root/.status_name
 
