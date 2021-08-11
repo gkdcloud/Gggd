@@ -1,16 +1,25 @@
 #检测方式：curl 国内机器出口地址，如果返回 Bad Request 则正常
+#因azhk检测方式特殊，ct备用暂时直接切cu
+#定义探针函数
+DA=`date "+%Y-%m-%d %H:%M:%S"`   #标准的时间输出
+check_logs_file="/root/alidns_check"
 #定义
 cu_zhuzhou="116.163.10.131"  #填入株洲检测IP
-cu_zhuzhou_id=""  #填入该解析的ID
+cu_zhuzhou_id="21365271413065728"  #填入该解析的ID
 cu_changzhou="112.82.144.173"  #填入常州检测IP
-cu_changzhou_id=""  #填入该解析的ID
+cu_changzhou_id="703642261516879872"  #填入该解析的ID
 cu_backup_id="" #cu备选线路
+ct_shbgp=`ping sh3589.518999.xyz -c 1 | sed '1{s/[^(]*(//;s/).*//;q}'`  #动态域名获取IP
+ct_shbgp_id="703954779439251456"
+ct_azure=""
+ct_azure_id=""
+ct_backup_id="712684558951352320" #ct备选线路
 function check_zhuzhou(){
 #定义函数，修改这里即可
 cn_host=$cu_zhuzhou
 cn_host_id=$cu_zhuzhou_id
 cn_host_name="株洲"
-cn_host_local="/root/alidns_check/zhuzhou_status"
+cn_host_local="$check_logs_file/zhuzhou_status"
 #判断是否正常
 check_status
 }
@@ -19,7 +28,16 @@ function check_changzhou(){
 cn_host=$cu_changzhou
 cn_host_id=$cu_changzhou_id
 cn_host_name="常州"
-cn_host_local="/root/alidns_check/changzhou_status"
+cn_host_local="$check_logs_file/changzhou_status"
+#判断是否正常
+check_status
+}
+function check_shbgp(){
+#定义函数，修改这里即可
+cn_host=$ct_shbgp
+cn_host_id=$ct_shbgp_id
+cn_host_name="上海BGP"
+cn_host_local="$check_logs_file/shbgp_status"
 #判断是否正常
 check_status
 }
@@ -61,8 +79,6 @@ else
     TG_BOT
 fi
 }
-#定义探针函数
-DA=`date "+%Y-%m-%d %H:%M:%S"`   #标准的时间输出
 #TG通知部分，定义TG_MESSAGE后调用
 function TG_BOT() {
 export TGSEND_TOKEN="1918956809:AAG2pWiCrESamvFjHsE3_gyt8uVDCHJ69pk"
@@ -73,20 +89,44 @@ curl -s -k "https://thingproxy.freeboard.io/fetch/https://api.telegram.org/bot$T
     > /dev/null &
 }
 function install(){
-	if [[ ! -d "/root/alidns_check" ]];then
-		mkdir /root/alidns_check
+	if [[ ! -d "$check_logs_file" ]];then
+		mkdir $check_logs_file
 	elif [[ ! -f "/usr/bin/aldns" ]];then
 		wget https://ghproxy.net/https://raw.githubusercontent.com/iscoconut/alidns-bash/master/aldns.sh -O /usr/bin/aldns
+		sed -i "s/AccessKeyId=''/AccessKeyId='LTAI5t717jTdxiyLLaPHSN47'/g" /usr/bin/aldns
+		sed -i "s/AccessKeySecret=''/AccessKeySecret='Fc5iSdZoHdav5EA3emQG5C9S6JYK2L'/g" /usr/bin/aldns
+		sed -i "s/ManagementDomain=''/ManagementDomain='cnhost.cyou'/g" /usr/bin/aldns
 		chmod +x /usr/bin/aldns
+		
 	fi
 }
-#install
+install
 check_zhuzhou
-#check_changzhou
-cn_zhuzhou_status=`sed -n '1p' /root/alidns_check/zhuzhou_status`
-cn_changzhou_status=`sed -n '1p' /root/alidns_check/changzhou_status`
+check_changzhou
+cn_zhuzhou_status=`sed -n '1p' $check_logs_file/zhuzhou_status`
+cn_changzhou_status=`sed -n '1p' $check_logs_file/changzhou_status`
 if [[ $cn_zhuzhou_status != "enable" ]] && [[ $cn_changzhou_status != "enable" ]] ;then
-    echo "常州线路与株洲线路均异常，无备选路线，请立即处理"
-    TG_MESSAGE="[ ! ] 常州线路与株洲线路均异常，无备选路线，请立即处理"
+    echo "常州线路与株洲线路均异常，无备选路线，魔戒CU可能已瘫痪，请立即处理"
+    TG_MESSAGE="[ ! ] 常州线路与株洲线路均异常，无备选路线，魔戒CU可能已瘫痪，请立即处理"
     TG_BOT	
+fi
+#CT线路，上海BGP-备用1azhk-备用2cu
+check_shbgp
+cn_shbgp_status=`sed -n '1p' $check_logs_file/shbgp_status`
+ct_backup_status=`sed -n '1p' $check_logs_file/ct_backup_status`
+ct_backup_local="$check_logs_file/ct_backup_status"
+if [[ $cn_shbgp_status != "enable" ]] && [[ $ct_backup_status != "enable" ]] ;then
+    aldns enable $ct_backup_id
+    echo "enable"> $ct_backup_local
+    echo "$cn_host_name于 $DA 异常，已切换至备选CU"
+    TG_MESSAGE="[ ! ] $cn_host_name于 $DA 异常，已切换至备选CU"
+    TG_BOT
+elif [[ $cn_shbgp_status == "enable" ]] && [[ $ct_backup_status == "enable" ]] ;then	
+    aldns disable $ct_backup_id
+    echo "disable"> $ct_backup_local
+    echo "$cn_host_name于 $DA 恢复可用，已切换回主线路"
+    TG_MESSAGE="[ ! ] $cn_host_name于 $DA 恢复可用，已切换回主线路"
+    TG_BOT
+elif [[ $cn_shbgp_status != $ct_backup_status ]] ;then	
+    echo "$cn_host_name 当前状态未发生变化"
 fi
