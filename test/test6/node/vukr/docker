@@ -1,2 +1,2 @@
-docker run -d --name=gkd116 -e NODE_ID=116 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://k.gkdcloud.xyz -e SPEEDTEST=6 -e WEBAPI_TOKEN=yunyiya -e DNS_1="61.111.129.138" -e DNS_2="" --log-opt max-size=50m --log-opt max-file=3 -p 20223:80/tcp -p 20223:80/udp --restart=always fanvinga/docker-ssrmu
-7a71ea7bb31a864d62843f605ccf49a644dba8a701f347600256fb86eb2ea45e
+#kapok-kr
+docker run -d --name=kopak159 -e NODE_ID=159 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://kapok.gkd.wiki -e SPEEDTEST=0 -e WEBAPI_TOKEN=yunyiya -e DNS_1="" -e DNS_2="" --log-opt max-size=50m --log-opt max-file=3 -p 222:80/tcp -p 222:80/udp --restart=always gkdcloud/gkd
