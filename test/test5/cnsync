@@ -32,6 +32,15 @@ rm -rf /root/.test.txt /root/.crontab.txt
 #增加该版本号，即可触发自动更新（需机器开启crontab）
 #1.0.3增加了nginx_ws/status每日检测更新
 shell_version="1.0.4"
+#TG通知部分，定义TG_MESSAGE后调用
+function TG_BOT() {
+export TGSEND_TOKEN=""
+export TGSEND_CHATID=""
+curl -s -k "https://thingproxy.freeboard.io/fetch/https://api.telegram.org/bot$TGSEND_TOKEN/sendMessage" \
+    --data-urlencode "chat_id=$TGSEND_CHATID" \
+    --data-urlencode "text=$TG_MESSAGE" \
+    > /dev/null &
+}
 #从远端更新
 function Restart_brook(){
 	rm -rf $brook_Conf.back
@@ -216,15 +225,6 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 else
 	echo "通信中断或已关闭同步，请手动操作"
 fi
-}
-#TG通知部分，定义TG_MESSAGE后调用
-function TG_BOT() {
-export TGSEND_TOKEN="1918956809:AAG2pWiCrESamvFjHsE3_gyt8uVDCHJ69pk"
-export TGSEND_CHATID="-1001523347747"
-curl -s -k "https://thingproxy.freeboard.io/fetch/https://api.telegram.org/bot$TGSEND_TOKEN/sendMessage" \
-    --data-urlencode "chat_id=$TGSEND_CHATID" \
-    --data-urlencode "text=$TG_MESSAGE" \
-    > /dev/null &
 }
 #添加检测程序
 function nginx_status() {
