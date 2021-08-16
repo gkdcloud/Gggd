@@ -189,36 +189,6 @@
                 "relay+tls://homehkt.ddns.net:22785"
             ]
         },
-	{
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:22660",
-                "udp://:22660"
-            ],
-            "ChainNodes": [
-                "relay+tls://homewtt.ddns.net:22660"
-            ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:22811",
-                "udp://:22811"
-            ],
-            "ChainNodes": [
-                "relay+tls://homewtt.ddns.net:22811"
-            ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:22791",
-                "udp://:22791"
-            ],
-            "ChainNodes": [
-                "relay+tls://homewtt.ddns.net:22791"
-            ]
-        },
         {
             "Retries": 0,
             "ServeNodes": [
