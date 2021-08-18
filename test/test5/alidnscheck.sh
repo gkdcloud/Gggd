@@ -81,8 +81,8 @@ fi
 }
 #TG通知部分，定义TG_MESSAGE后调用
 function TG_BOT() {
-export TGSEND_TOKEN="1918956809:AAG2pWiCrESamvFjHsE3_gyt8uVDCHJ69pk"
-export TGSEND_CHATID="-1001523347747"
+export TGSEND_TOKEN=""
+export TGSEND_CHATID=""
 curl -s -k "https://thingproxy.freeboard.io/fetch/https://api.telegram.org/bot$TGSEND_TOKEN/sendMessage" \
     --data-urlencode "chat_id=$TGSEND_CHATID" \
     --data-urlencode "text=$TG_MESSAGE" \
@@ -93,9 +93,6 @@ function install(){
 		mkdir $check_logs_file
 	elif [[ ! -f "/usr/bin/aldns" ]];then
 		wget https://ghproxy.net/https://raw.githubusercontent.com/iscoconut/alidns-bash/master/aldns.sh -O /usr/bin/aldns
-		sed -i "s/AccessKeyId=''/AccessKeyId='LTAI5t717jTdxiyLLaPHSN47'/g" /usr/bin/aldns
-		sed -i "s/AccessKeySecret=''/AccessKeySecret='Fc5iSdZoHdav5EA3emQG5C9S6JYK2L'/g" /usr/bin/aldns
-		sed -i "s/ManagementDomain=''/ManagementDomain='cnhost.cyou'/g" /usr/bin/aldns
 		chmod +x /usr/bin/aldns
 		
 	fi
