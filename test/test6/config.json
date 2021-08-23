@@ -192,16 +192,6 @@
         {
             "Retries": 0,
             "ServeNodes": [
-                "tcp://:26616",
-                "udp://:26616"
-            ],
-            "ChainNodes": [
-                "relay+tls://yftw.gkd.news:26616"
-            ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
                 "tcp://:23330",
                 "udp://:23330"
             ],
