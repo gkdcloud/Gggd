@@ -323,7 +323,7 @@ echo "跳过XrayR安装"
 fi
 #预设DNS解锁地址
 	if [[ $dns_nf == "jp" ]]; then
-		dns_nf="103.142.141.23"			
+		dns_nf="34.97.174.245"			
 	elif [[ $dns_nf == "sg" ]]; then
 		dns_nf="149.129.56.249"	
 	elif [[ $dns_nf == "us" ]]; then
