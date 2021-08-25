@@ -271,10 +271,11 @@ function install_xrayr_pengui() {
   节点快速对接，支持设置DNS解锁
   安装XrayR主程序可输入任意字符跳过安装(适用于已安装重新对接)
   DNS解锁支持预设BGP.SH地址输入：sg/jp/kr/us/uk/fr/tw/hk
-  可以同时对接多个网站,pg=对接企鹅vmess,dog=对接狗子v2ray
+  pg=对接企鹅vmess,dog=对接狗子v2ray,cv=cv2-v2ray
+  可以同时对接多个网站,!还没写好！
  ————————————" 
     read -erp " 是否安装XrayR主程序(回车安装,任意字符跳过):" ins_xrayr
-	read -erp " 现在开始对接第一个节点(pg|dog,回车默认企鹅):" node_web
+	read -erp " 现在开始对接第一个节点(pg|dog|cv,回车默认企鹅):" node_web
 	if [[ $node_web == "" ]] || [[ $node_web == "pg" ]]; then
     node_web="pengui.xyz"
 	node_type="V2ray"
@@ -285,6 +286,11 @@ function install_xrayr_pengui() {
 	node_type="V2ray"
 	node_panel="SSpanel"
 	node_key="qingchengss"
+    elif [[ $node_web == "cv" ]]; then
+	node_web="cv2.xyz"
+	node_type="V2ray"
+	node_panel="SSpanel"
+	node_key="mycheapv2ray"
     else
     echo "您输入的信息不正确，脚本将重新执行"
 	install_xrayr_pengui
