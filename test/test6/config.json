@@ -192,26 +192,6 @@
         {
             "Retries": 0,
             "ServeNodes": [
-                "tcp://:23330",
-                "udp://:23330"
-            ],
-            "ChainNodes": [
-                "relay+tls://yftw.gkd.news:23330"
-            ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:23324",
-                "udp://:23324"
-            ],
-            "ChainNodes": [
-                "relay+tls://yftw.gkd.news:23324"
-            ]
-        },
-        {
-            "Retries": 0,
-            "ServeNodes": [
                 "tcp://:25565/mc.icraft.cc:43630",
                 "udp://:25565/mc.icraft.cc:43630"
             ]
