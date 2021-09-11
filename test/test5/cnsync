@@ -18,6 +18,9 @@ gkdnginx_Conf="/usr/local/nginx/gkdnginx.conf"
 gkdnginx_name="gkdnginx.conf"
 nginx_Conf_ws="/usr/local/nginx/ws"
 nginx_Conf_status="/usr/local/nginx/status"
+#nginx四层文件位置
+nginx_tcp_conf="/usr/local/nginx/tcp/tcp.conf"
+nginx_tcp_name="tcp.conf"
 #是否开启监控
 rm -rf /root/.crontab.txt
 curl -s $Github/crontab > /root/.crontab.txt
@@ -204,6 +207,28 @@ else
 	echo "通信中断或已关闭同步，请手动操作"
 fi
 }
+function crontab_tcp(){
+    #nginx四层同步
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+    rm -rf $nginx_tcp_conf.new
+    wget $Github/$nginx_tcp_name -O $nginx_tcp_conf.new
+	nginx_tcp_md5=`md5sum $nginx_tcp_conf  | cut -d ' ' -f1`
+	nginx_tcp_md5_n=`md5sum $nginx_tcp_conf.new  | cut -d ' ' -f1`	
+	if [[ $nginx_tcp_md5 != $nginx_tcp_md5_n ]]; then
+		echo "Nginx四层协议与远端文件不符，正在同步"
+		rm -rf $nginx_tcp_conf
+		mv $nginx_tcp_conf.new $nginx_tcp_conf
+		systemctl reload nginx
+		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME GKD-Nginx 于 $DA 自动同步配置文件"
+        TG_BOT
+	else
+		echo "所有文件与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
 function crontab_cn80(){
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#cn80监控
@@ -348,6 +373,8 @@ if [[ $action == "brook" ]]; then
 	crontab_cn80
   elif [[ $action == "gkd" ]]; then
 	crontab_gkd
+  elif [[ $action == "tcp" ]]; then
+	crontab_tcp
   elif [[ $action == "status" ]]; then
 	nginx_status
     gost_status
