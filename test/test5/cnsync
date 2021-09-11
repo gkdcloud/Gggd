@@ -85,22 +85,12 @@ function crontab_add(){
 	cron_config=$(crontab -l | grep "cnsync cron")
 	cron_config2=$(crontab -l | grep "cnsync update")
 	cron_config3=$(crontab -l | grep "cnsync status")
+	cron_config4=$(crontab -l | grep "cnsync tcp")
 	#检查并添加自动同步
     if [[ -z ${cron_config} ]]; then
 		rm -r "/root/crontab.bak"
 		crontab -l > "/root/crontab.bak"
 		echo -e "\n*/2 * * * *  cnsync cron" >> "/root/crontab.bak"
-		crontab "/root/crontab.bak"
-		rm -r "/root/crontab.bak"
-        echo -e "${Info} 已添加cnsync自动同步!"        
-    else
-		echo -e "${Error} cnsync自动同步已存在" 
-    fi
-	#检查并添加Nginx TCP自动同步
-    if [[ -z ${cron_config} ]]; then
-		rm -r "/root/crontab.bak"
-		crontab -l > "/root/crontab.bak"
-		echo -e "\n*/2 * * * *  cnsync tcp" >> "/root/crontab.bak"
 		crontab "/root/crontab.bak"
 		rm -r "/root/crontab.bak"
         echo -e "${Info} 已添加cnsync自动同步!"        
@@ -128,6 +118,17 @@ function crontab_add(){
         echo -e "${Info} 已添加cnsync守护程序!"        
     else
 		echo -e "${Error} cnsync自动守护程序已存在" 
+    fi
+	#检查并添加Nginx TCP自动同步
+    if [[ -z ${cron_config4} ]]; then
+		rm -r "/root/crontab.bak"
+		crontab -l > "/root/crontab.bak"
+		echo -e "\n*/2 * * * *  cnsync tcp" >> "/root/crontab.bak"
+		crontab "/root/crontab.bak"
+		rm -r "/root/crontab.bak"
+        echo -e "${Info} 已添加cnsync TCP自动同步!"        
+    else
+		echo -e "${Error} cnsync tcp自动同步已存在" 
     fi
 }
 function crontab_all(){
