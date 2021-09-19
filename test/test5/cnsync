@@ -241,7 +241,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	wget $Github/$fqnginx_name -O $fqnginx_Conf.new
 	fqnginx_md5=`md5sum $fqnginx_Conf  | cut -d ' ' -f1`
 	fqnginx_md5_n=`md5sum $fqnginx_Conf.new  | cut -d ' ' -f1`	
-	if [[ $fqnginx_md5 != $gkdnginx_md5_n ]]; then
+	if [[ $fqnginx_md5 != $fqnginx_md5_n ]]; then
 		echo "FQ-Nginx与远端文件不符，正在同步"
 		rm -rf $fqnginx_Conf
 		mv $fqnginx_Conf.new $fqnginx_Conf
