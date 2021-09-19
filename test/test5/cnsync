@@ -135,7 +135,7 @@ function crontab_add(){
     if [[ -z ${cron_config5} ]]; then
 		rm -r "/root/crontab.bak"
 		crontab -l > "/root/crontab.bak"
-		echo -e "\n*/2 * * * *  cnsync tcp" >> "/root/crontab.bak"
+		echo -e "\n*/2 * * * *  cnsync fq" >> "/root/crontab.bak"
 		crontab "/root/crontab.bak"
 		rm -r "/root/crontab.bak"
         echo -e "${Info} 已添加cnsync fq自动同步!"        
@@ -424,6 +424,8 @@ if [[ $action == "brook" ]]; then
 	crontab_gkd
   elif [[ $action == "tcp" ]]; then
 	crontab_tcp
+  elif [[ $action == "fq" ]]; then
+	crontab_fq
   elif [[ $action == "status" ]]; then
 	nginx_status
     gost_status
@@ -443,7 +445,7 @@ fi
 else
  	echo -e "通信：\033[32m $github_test \033[0m"
 	echo -e "同步：\033[32m $github_cron \033[0m"
-	echo -e "请输入\033[32m cnsync vnet|brook|gost|nginx|all|cron|cn80|gkd\033[0m 来执行同步操作" 
+	echo -e "请输入\033[32m cnsync vnet|brook|gost|nginx|all|cron|cn80|gkd|fq\033[0m 来执行同步操作" 
 	echo -e "输入\033[32m cnsync update\033[0m 检测更新"
 	echo -e "输入\033[32m cnsync status\033[0m 增加NGINX/VNET/GOST探针，自动重启并发送TG通知"
 	echo -e "输入\033[32m cnsync addcron\033[0m 添加自动同步与自动更新"
