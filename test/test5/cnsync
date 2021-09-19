@@ -86,6 +86,7 @@ function crontab_add(){
 	cron_config2=$(crontab -l | grep "cnsync update")
 	cron_config3=$(crontab -l | grep "cnsync status")
 	cron_config4=$(crontab -l | grep "cnsync tcp")
+	cron_config5=$(crontab -l | grep "cnsync fq")
 	#检查并添加自动同步
     if [[ -z ${cron_config} ]]; then
 		rm -r "/root/crontab.bak"
@@ -129,6 +130,17 @@ function crontab_add(){
         echo -e "${Info} 已添加cnsync TCP自动同步!"        
     else
 		echo -e "${Error} cnsync tcp自动同步已存在" 
+    fi
+	#检查并添加Nginx FQ自动同步
+    if [[ -z ${cron_config5} ]]; then
+		rm -r "/root/crontab.bak"
+		crontab -l > "/root/crontab.bak"
+		echo -e "\n*/2 * * * *  cnsync tcp" >> "/root/crontab.bak"
+		crontab "/root/crontab.bak"
+		rm -r "/root/crontab.bak"
+        echo -e "${Info} 已添加cnsync fq自动同步!"        
+    else
+		echo -e "${Error} cnsync fq自动同步已存在" 
     fi
 }
 function crontab_all(){
@@ -211,6 +223,31 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		systemctl reload nginx
 		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
         TG_MESSAGE="$SERVER_NAME GKD-Nginx 于 $DA 自动同步配置文件"
+        TG_BOT
+	else
+		echo "所有文件与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
+function crontab_fq(){
+#首先定义该文件所在位置和远端文件名字
+fqnginx_Conf="/usr/local/nginx/fqnginx.conf"
+fqnginx_name="fqnginx.conf"
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+	#fqnginx监控
+	rm -rf $fqnginx_Conf.new
+	wget $Github/$fqnginx_name -O $fqnginx_Conf.new
+	fqnginx_md5=`md5sum $fqnginx_Conf  | cut -d ' ' -f1`
+	fqnginx_md5_n=`md5sum $fqnginx_Conf.new  | cut -d ' ' -f1`	
+	if [[ $fqnginx_md5 != $gkdnginx_md5_n ]]; then
+		echo "FQ-Nginx与远端文件不符，正在同步"
+		rm -rf $fqnginx_Conf
+		mv $fqnginx_Conf.new $fqnginx_Conf
+		systemctl reload nginx
+		echo -e "\033[32m FQ-Nginx文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME FQ-Nginx 于 $DA 自动同步配置文件"
         TG_BOT
 	else
 		echo "所有文件与远端相符，无需同步"
