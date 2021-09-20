@@ -89,4 +89,4 @@ console.log('程序结束运行');
 
 exports.get = get;
 exports.hello = hello;
-export.read = read
+exports.read = read
