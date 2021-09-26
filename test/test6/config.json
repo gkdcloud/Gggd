@@ -59,16 +59,6 @@
                 "relay+tls://tw.gkd.news:22708"
             ]
         },
-	{
-            "Retries": 0,
-            "ServeNodes": [
-                "tcp://:22807",
-                "udp://:22807"
-            ],
-            "ChainNodes": [
-                "relay+tls://tw.gkd.news:22807"
-            ]
-        },
         {
             "Retries": 0,
             "ServeNodes": [
