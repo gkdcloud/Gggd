@@ -93,7 +93,7 @@ if [[ $Install_status != "1" ]]; then
 	  install_xrayr
 	  echo "1">/root/.xrayr_node
 	  elif 
-	  fi [[ $Install_status_Yn == "N" ]] || [[ $Install_status_Yn == "n" ]]; then
+	  if [[ $Install_status_Yn == "N" ]] || [[ $Install_status_Yn == "n" ]]; then
 	  echo 当前取消安装，写入已安装方便下次识别
 	  echo "1">/root/.xrayr_node
 elif [[ $Install_status == "1" ]]; then
