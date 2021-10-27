@@ -115,6 +115,11 @@ fi
 	node_type="V2ray"
 	node_panel="SSpanel"
 	node_key="mycheapv2ray"
+    elif [[ $node_web == "fq" ]]; then
+	node_web="fanqie.cyou"
+	node_type="V2ray"
+	node_panel="SSpanel"
+	node_key="kjyzwj806674037"
     elif [[ $node_web == "tbs" ]]; then
 	node_web="tuboshu.live"
 	node_type="V2ray"
