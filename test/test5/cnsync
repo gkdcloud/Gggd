@@ -157,10 +157,10 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	vnet_md5=`md5sum $vnet_Conf  | cut -d ' ' -f1`
 	vnet_md5_n=`md5sum $vnet_Conf.new  | cut -d ' ' -f1`
 	#gost监控
-	rm -rf $gost_Conf.new
-	wget --no-check-certificate $Github/config.json -O $gost_Conf.new
-	gost_md5=`md5sum $gost_Conf  | cut -d ' ' -f1`
-	gost_md5_n=`md5sum $gost_Conf.new  | cut -d ' ' -f1`	
+	#rm -rf $gost_Conf.new
+	#wget --no-check-certificate $Github/config.json -O $gost_Conf.new
+	#gost_md5=`md5sum $gost_Conf  | cut -d ' ' -f1`
+	#gost_md5_n=`md5sum $gost_Conf.new  | cut -d ' ' -f1`	
 	#nginx监控
 	rm -rf $nginx_Conf.new
 	wget --no-check-certificate $Github/mjnginx.conf -O $nginx_Conf.new
@@ -176,14 +176,14 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		echo -e "\033[32m vnet文件已更新，同步完成 \033[0m"
         TG_MESSAGE="$SERVER_NAME vnet 于 $DA 自动同步配置文件"
         TG_BOT
-	elif [[ $gost_md5 != $gost_md5_n ]]; then
-		echo "gost与远端文件不符，正在同步"
-		rm -rf $gost_Conf
-		mv $gost_Conf.new $gost_Conf
-		systemctl restart gost
-		echo -e "\033[32m gost文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="$SERVER_NAME gost 于 $DA 自动同步配置文件"
-        TG_BOT
+#	elif [[ $gost_md5 != $gost_md5_n ]]; then
+#		echo "gost与远端文件不符，正在同步"
+#		rm -rf $gost_Conf
+#		mv $gost_Conf.new $gost_Conf
+#		systemctl restart gost
+#		echo -e "\033[32m gost文件已更新，同步完成 \033[0m"
+#       TG_MESSAGE="$SERVER_NAME gost 于 $DA 自动同步配置文件"
+#        TG_BOT
 	elif [[ $nginx_md5 != $nginx_md5_n ]]; then
 		echo "Nginx与远端文件不符，正在同步"
 		rm -rf $nginx_Conf
@@ -321,6 +321,7 @@ if [ "$NGX" -ne 0 ]		#$NGX这个变量的运行结果不等于0 非0代表正在
 	fi	 
 fi
 }
+#gost废弃
 function gost_status() {
 if [ "$GOST" -ne 0 ]		#$GOST 这个变量的运行结果不等于0 非0代表正在运行
    then	#那么
@@ -428,7 +429,7 @@ if [[ $action == "brook" ]]; then
 	crontab_fq
   elif [[ $action == "status" ]]; then
 	nginx_status
-    gost_status
+    #gost_status
     vnetc_status
   elif [[ $action == "nginx_status" ]]; then
     nginx_status
