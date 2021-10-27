@@ -92,10 +92,10 @@ if [[ $Install_status != "1" ]]; then
 	  install_iptables
 	  install_xrayr
 	  echo "1">/root/.xrayr_node
-	  elif 
-	  if [[ $Install_status_Yn == "N" ]] || [[ $Install_status_Yn == "n" ]]; then
-	  echo 当前取消安装，写入已安装方便下次识别
+	  elif  [[ $Install_status_Yn == "N" ]] || [[ $Install_status_Yn == "n" ]]; then
+	  echo "当前取消安装，写入已安装方便下次识别"
 	  echo "1">/root/.xrayr_node
+	  fi
 elif [[ $Install_status == "1" ]]; then
 echo "当前已安装主程序，请直接对接节点"
 fi
