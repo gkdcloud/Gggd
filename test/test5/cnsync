@@ -231,6 +231,58 @@ else
 	echo "通信中断或已关闭同步，请手动操作"
 fi
 }
+function crontab_t2sgkd(){
+#首先定义文件位置
+tcp2ws_gkd_Conf="/usr/local/tcp2ws/config.conf"
+tcp2ws_gkd_Name="gkd-client"
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+	#tcp2ws-gkd监控
+	rm -rf $tcp2ws_gkd_Conf.new
+	wget --no-check-certificate $Github/tcp2ws/$tcp2ws_gkd_Name/config.conf -O $tcp2ws_gkd_Conf.new
+	tcp2ws_gkd_md5=`md5sum $tcp2ws_gkd_Conf  | cut -d ' ' -f1`
+	tcp2ws_gkd_md5_n=`md5sum $tcp2ws_gkd_Conf.new  | cut -d ' ' -f1`	
+	if [[ $tcp2ws_gkd_md5 != $tcp2ws_gkd_md5_n ]]; then
+		echo "tcp2ws-gkd与远端文件不符，正在同步"
+		rm -rf $tcp2ws_gkd_Conf
+		mv $tcp2ws_gkd_Conf.new $tcp2ws_gkd_Conf
+		chmod +x $tcp2ws_gkd_Conf
+		systemctl restart tcp2ws
+		echo -e "\033[32m tcp2ws-gkd文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME tcp2ws-gkd 于 $DA 自动同步配置文件"
+        TG_BOT
+	else
+		echo "所有文件与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
+function crontab_t2smj(){
+#首先定义文件位置
+tcp2ws_mj_Conf="/usr/local/tcp2ws/config.conf"
+tcp2ws_mj_Name="mj-client"
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+	#tcp2ws-mj监控
+	rm -rf $tcp2ws_mj_Conf.new
+	wget --no-check-certificate $Github/tcp2ws/$tcp2ws_mj_Name/config.conf -O $tcp2ws_mj_Conf.new
+	tcp2ws_mj_md5=`md5sum $tcp2ws_mj_Conf  | cut -d ' ' -f1`
+	tcp2ws_mj_md5_n=`md5sum $tcp2ws_mj_Conf.new  | cut -d ' ' -f1`	
+	if [[ $tcp2ws_mj_md5 != $tcp2ws_mj_md5_n ]]; then
+		echo "tcp2ws-mj与远端文件不符，正在同步"
+		rm -rf $tcp2ws_mj_Conf
+		mv $tcp2ws_mj_Conf.new $tcp2ws_mj_Conf
+		chmod +x $tcp2ws_mj_Conf
+		systemctl restart tcp2ws
+		echo -e "\033[32m tcp2ws-mj文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME tcp2ws-mj 于 $DA 自动同步配置文件"
+        TG_BOT
+	else
+		echo "所有文件与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
 function crontab_fq(){
 #首先定义该文件所在位置和远端文件名字
 fqnginx_Conf="/usr/local/nginx/fqnginx.conf"
@@ -427,6 +479,10 @@ if [[ $action == "brook" ]]; then
 	crontab_tcp
   elif [[ $action == "fq" ]]; then
 	crontab_fq
+  elif [[ $action == "t2smj" ]]; then	
+	crontab_t2smj
+  elif [[ $action == "t2sgkd" ]]; then
+  crontab_t2sgkd
   elif [[ $action == "status" ]]; then
 	nginx_status
     #gost_status
