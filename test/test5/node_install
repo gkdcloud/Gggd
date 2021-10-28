@@ -462,6 +462,7 @@ echo "对接完成"
 }
 #安装cnsync
 function install_cnsync() {
+    yum install net-tools -y
 	wget $cndownload/cnsync -O /usr/bin/cnsync
 	chmod +x /usr/bin/cnsync
 	cnsync addcron
