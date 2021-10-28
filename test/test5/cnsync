@@ -246,7 +246,8 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		rm -rf $tcp2ws_gkd_Conf
 		mv $tcp2ws_gkd_Conf.new $tcp2ws_gkd_Conf
 		chmod +x $tcp2ws_gkd_Conf
-		systemctl restart tcp2ws
+		systemctl stop tcp2ws
+		systemctl start tcp2ws
 		echo -e "\033[32m tcp2ws-gkd文件已更新，同步完成 \033[0m"
         TG_MESSAGE="$SERVER_NAME tcp2ws-gkd 于 $DA 自动同步配置文件"
         TG_BOT
@@ -272,7 +273,8 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		rm -rf $tcp2ws_mj_Conf
 		mv $tcp2ws_mj_Conf.new $tcp2ws_mj_Conf
 		chmod +x $tcp2ws_mj_Conf
-		systemctl restart tcp2ws
+		systemctl stop tcp2ws
+		systemctl start tcp2ws
 		echo -e "\033[32m tcp2ws-mj文件已更新，同步完成 \033[0m"
         TG_MESSAGE="$SERVER_NAME tcp2ws-mj 于 $DA 自动同步配置文件"
         TG_BOT
