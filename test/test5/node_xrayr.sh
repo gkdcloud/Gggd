@@ -155,7 +155,7 @@ fi
 	elif [[ $node_web == "dns" ]]; then
 	echo "您将修改系统DNS，可以解决因DNS发送IPv6导致对接失败，尤其是Linode"
 	read -erp "需要您确认执行该操作（Y/n 默认Y）" node_DNS
-        if [[ $node_DNS == "Y" ]] || [[ $node_DNS == "y" ]] || [[ $node_DNS == "y" ]] ; then
+        if [[ $node_DNS == "Y" ]] || [[ $node_DNS == "y" ]] || [[ $node_DNS == "" ]] ; then
 		echo "设置成功，将自动重启节点"
 		xrayr restart
 		else 
