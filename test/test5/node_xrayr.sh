@@ -72,6 +72,11 @@ function install_xrayr() {
 bash <(curl -Ls https://raw.githubusercontent.com/XrayR-project/XrayR-release/master/install.sh)
 install_xrayr_dns
 }
+function install_nameserver() {
+#设置dns为谷歌和cf
+echo "nameserver 8.8.8.8
+nameserver 1.1.1.1">/etc/resolv.conf
+}
 function install_xrayr_node() {
     echo && echo -e "  节点快速对接--XrayR
   节点快速对接，支持设置DNS解锁
@@ -89,6 +94,13 @@ if [[ $Install_status != "1" ]]; then
 	read -erp " 当前系统未识别的XrayR主程序，是否安装（Y/n）:" Install_status_Yn
 	  if [[ $Install_status_Yn == "Y" ]] || [[ $Install_status_Yn == "y" ]]; then
 	  read -erp " 如果主程序启用DNS解锁，请输入DNS解锁地址(回车跳过则主程序无DNS解锁):" dns_nf
+	  read -erp " 是否修改系统DNS为8.8.8.8,如果是Linode等IPv6机器请务必修改（默认Y）:" Install_DNS_NAME
+	    if [[ $Install_status_Yn == "Y" ]] || [[ $Install_status_Yn == "y" ]] || [[ $Install_status_Yn == "" ]]; then
+		    echo "设置DNS为8.8.8.8/1.1.1.1"
+			install_nameserver
+	    else 
+		echo "DNS不做修改，如果对接出错请手动修改"
+		fi
 	  install_iptables
 	  install_xrayr
 	  echo "1">/root/.xrayr_node
@@ -99,7 +111,7 @@ if [[ $Install_status != "1" ]]; then
 elif [[ $Install_status == "1" ]]; then
 echo "当前已安装主程序，请直接对接节点"
 fi
-	read -erp " 现在开始对接节点(pg|dog|cv|fq|tbs|hx|rm):" node_web
+	read -erp " 现在开始对接节点(pg|dog|cv|fq|tbs|hx|rm|dns):" node_web
 	if [[ $node_web == "pg" ]]; then
     node_web="pengui.xyz"
 	node_type="V2ray"
@@ -131,11 +143,21 @@ fi
 	node_panel="SSpanel"
 	node_key="comethuixing"
 	elif [[ $node_web == "rm" ]]; then
-	echo "$Tip 危险警告，这是一个重要操作"
+	echo "[!!!] 危险警告，这是一个重要操作"
 	read -erp "这将删除全部节点对接信息，请确认（Y/n 默认N）" node_rm
         if [[ $node_rm == "Y" ]] || [[ $node_rm == "y" ]] ; then
 		read -erp " 您已决定重置配置信息，请输入DNS解锁地址(回车跳过):" dns_nf
 		install_xrayr_dns
+		else 
+		echo "您已取消操作"
+		fi
+		exit 0;
+	elif [[ $node_web == "dns" ]]; then
+	echo "您将修改系统DNS，可以解决因DNS发送IPv6导致对接失败，尤其是Linode"
+	read -erp "需要您确认执行该操作（Y/n 默认Y）" node_DNS
+        if [[ $node_DNS == "Y" ]] || [[ $node_DNS == "y" ]] || [[ $node_DNS == "y" ]] ; then
+		echo "设置成功，将自动重启节点"
+		xrayr restart
 		else 
 		echo "您已取消操作"
 		fi
