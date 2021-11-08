@@ -81,17 +81,24 @@ function Restart_nginx(){
 	/etc/init.d/nginx restart
 }
 function crontab_add(){
+    #创建监控文件
+	mkdir /usr/local/cron
+	echo "#!/bin/bash
+#
+cnsync status
+cnsync cron
+/bin/bash /root/brook-pf-mod.sh monitor
+#cnsync gkd
+cnsync tcp
+cnsync fq">/usr/local/cron/cnsync_cron
 	#查看是否已经存在监控
-	cron_config=$(crontab -l | grep "cnsync cron")
+	cron_config=$(crontab -l | grep "cnsync_cron")
 	cron_config2=$(crontab -l | grep "cnsync update")
-	cron_config3=$(crontab -l | grep "cnsync status")
-	cron_config4=$(crontab -l | grep "cnsync tcp")
-	cron_config5=$(crontab -l | grep "cnsync fq")
 	#检查并添加自动同步
     if [[ -z ${cron_config} ]]; then
 		rm -r "/root/crontab.bak"
 		crontab -l > "/root/crontab.bak"
-		echo -e "\n*/2 * * * *  cnsync cron" >> "/root/crontab.bak"
+		echo -e "\n*/2 * * * * bash /usr/local/cron/cnsync_cron" >> "/root/crontab.bak"
 		crontab "/root/crontab.bak"
 		rm -r "/root/crontab.bak"
         echo -e "${Info} 已添加cnsync自动同步!"        
@@ -108,39 +115,6 @@ function crontab_add(){
         echo -e "${Info} 已添加cnsync自动更新!"        
     else
 		echo -e "${Error} cnsync自动更新已存在" 
-    fi
-	#检查并添加cnsync守护程序-含TG通知
-	if [[ -z ${cron_config3} ]]; then
-		rm -r "/root/crontab.bak"
-		crontab -l > "/root/crontab.bak"
-		echo -e "\n*/1 * * * *  cnsync status" >> "/root/crontab.bak"
-		crontab "/root/crontab.bak"
-		rm -r "/root/crontab.bak"
-        echo -e "${Info} 已添加cnsync守护程序!"        
-    else
-		echo -e "${Error} cnsync自动守护程序已存在" 
-    fi
-	#检查并添加Nginx TCP自动同步
-    if [[ -z ${cron_config4} ]]; then
-		rm -r "/root/crontab.bak"
-		crontab -l > "/root/crontab.bak"
-		echo -e "\n*/2 * * * *  cnsync tcp" >> "/root/crontab.bak"
-		crontab "/root/crontab.bak"
-		rm -r "/root/crontab.bak"
-        echo -e "${Info} 已添加cnsync TCP自动同步!"        
-    else
-		echo -e "${Error} cnsync tcp自动同步已存在" 
-    fi
-	#检查并添加Nginx FQ自动同步
-    if [[ -z ${cron_config5} ]]; then
-		rm -r "/root/crontab.bak"
-		crontab -l > "/root/crontab.bak"
-		echo -e "\n*/2 * * * *  cnsync fq" >> "/root/crontab.bak"
-		crontab "/root/crontab.bak"
-		rm -r "/root/crontab.bak"
-        echo -e "${Info} 已添加cnsync fq自动同步!"        
-    else
-		echo -e "${Error} cnsync fq自动同步已存在" 
     fi
 }
 function crontab_all(){
