@@ -99,8 +99,7 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		echo "Nginx与远端文件不符，正在同步"
 		rm -rf $nginx_Conf
 		mv $nginx_Conf.new $nginx_Conf
-		systemctl restart nginx
-		/etc/init.d/nginx restart
+		systemctl reload nginx
 		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
 	else
 		echo "所有文件与远端相符，无需同步"
