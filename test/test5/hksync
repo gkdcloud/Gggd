@@ -2,6 +2,21 @@
 #远端文件储存地址
 Github="https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test6"
 Github_shell="https://raw.githubusercontent.com/gao1354184430/Gggd/master/test/test5"
+#定义探针函数
+SERVER_NAME=`sed -n '1p' /root/.status_name`  #请在root目录下创建 .status_name文件并填入机器名称
+NGX=`netstat -anput | grep nginx | wc -l`
+GOST=`netstat -anput | grep gost | wc -l`
+VNETC=`netstat -anput | grep client | wc -l`
+DA=`date "+%Y-%m-%d %H:%M:%S"`   #标准的时间输出
+#TG通知部分，定义TG_MESSAGE后调用
+function TG_BOT() {
+export TGSEND_TOKEN=""
+export TGSEND_CHATID=""
+curl -s -k "https://thingproxy.freeboard.io/fetch/https://api.telegram.org/bot$TGSEND_TOKEN/sendMessage" \
+    --data-urlencode "chat_id=$TGSEND_CHATID" \
+    --data-urlencode "text=$TG_MESSAGE" \
+    > /dev/null &
+}
 #brook/vnet/gost本地文件位置
 brook_Conf="/usr/local/brook-pf/brook.conf"
 vnet_Conf="/usr/local/vnet/server.conf"
@@ -101,6 +116,8 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		mv $nginx_Conf.new $nginx_Conf
 		systemctl reload nginx
 		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="HK_Sync: $SERVER_NAME Nginx 于 $DA 自动同步配置文件"
+        TG_BOT
 	else
 		echo "所有文件与远端相符，无需同步"
 	fi
