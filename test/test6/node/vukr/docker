@@ -1,2 +1,0 @@
-#kapok-kr
-docker run -d --name=kopak159 -e NODE_ID=159 -e API_INTERFACE=modwebapi -e WEBAPI_URL=https://kapok.gkd.wiki -e SPEEDTEST=0 -e WEBAPI_TOKEN=yunyiya -e DNS_1="" -e DNS_2="" --log-opt max-size=50m --log-opt max-file=3 -p 222:80/tcp -p 222:80/udp --restart=always gkdcloud/gkd
