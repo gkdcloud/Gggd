@@ -60,7 +60,8 @@ function crontab_add(){
 	echo "#!/bin/bash
 #
 hksync cron
-#cnsync gkd">/usr/local/cron/hksync_cron
+hksync tbs
+#hksync gkd">/usr/local/cron/hksync_cron
 	#查看是否已经存在监控
 	cron_config=$(crontab -l | grep "cnsync cron")
 	cron_config2=$(crontab -l | grep "cnsync update")
@@ -139,7 +140,32 @@ else
 	echo "通信中断或已关闭同步，请手动操作"
 fi
 }
-#增加nginx：ws/status更新
+function crontab_tbs(){
+#文件定义位置
+tbsnginx_Conf="/usr/local/nginx/tbsaz.conf"
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+	#tbsnginx监控
+	rm -rf $tbsnginx_Conf.new
+	wget $Github/tbs/tbsaz.conf -O $tbsnginx_Conf.new
+	tbsnginx_md5=`md5sum $tbsnginx_Conf  | cut -d ' ' -f1`
+	tbsnginx_md5_n=`md5sum $tbsnginx_Conf.new  | cut -d ' ' -f1`	
+	#检查与远端是否相符
+	if [[ $tbsnginx_md5 != $tbsnginx_md5_n ]]; then
+		echo "TBS_Nginx与远端文件不符，正在同步"
+		rm -rf $tbsnginx_Conf
+		mv $tbsnginx_Conf.new $tbsnginx_Conf
+		systemctl reload nginx
+		echo -e "\033[32m TBS_Nginx文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="HK_Sync: $SERVER_NAME TBS_Nginx 于 $DA 自动同步配置文件"
+        TG_BOT
+	else
+		echo "所有文件与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
+#增加更新
 function hksync_update(){
 new_version=`curl -s $Github_shell/version`
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then	
@@ -173,6 +199,8 @@ if [[ $action == "vnet" ]]; then
     echo -e "\033[32m brook/vnet/gost文件已更新 \033[0m"
   elif [[ $action == "cron" ]]; then
 	crontab_all
+  elif [[ $action == "tbs" ]]; then
+	crontab_tbs
   elif [[ $action == "v" ]]; then
 	echo -e $shell_version
   elif [[ $action == "update" ]]; then
