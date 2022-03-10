@@ -90,7 +90,8 @@ cnsync cron
 /bin/bash /root/brook-pf-mod.sh monitor
 #cnsync gkd
 cnsync tcp
-cnsync fq">/usr/local/cron/cnsync_cron
+cnsync fq
+cnsync tbs">/usr/local/cron/cnsync_cron
 	#查看是否已经存在监控
 	cron_config=$(crontab -l | grep "cnsync_cron")
 	cron_config2=$(crontab -l | grep "cnsync update")
@@ -284,6 +285,31 @@ else
 	echo "通信中断或已关闭同步，请手动操作"
 fi
 }
+function crontab_tbs(){
+#首先定义该文件所在位置和远端文件名字
+tbsnginx_Conf="/usr/local/nginx/tbs.conf"
+tbsnginx_name="/tbs/tbs.conf"
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+	#fqnginx监控
+	rm -rf $tbsnginx_Conf.new
+	wget --no-check-certificate $Github/$tbsnginx_name -O $tbsnginx_Conf.new
+	tbsnginx_md5=`md5sum $tbsnginx_Conf  | cut -d ' ' -f1`
+	tbsnginx_md5_n=`md5sum $tbsnginx_Conf.new  | cut -d ' ' -f1`	
+	if [[ $tbsnginx_md5 != $tbsnginx_md5_n ]]; then
+		echo "TBS-Nginx与远端文件不符，正在同步"
+		rm -rf $tbsnginx_Conf
+		mv $tbsnginx_Conf.new $tbsnginx_Conf
+		systemctl reload nginx
+		echo -e "\033[32m TBS-Nginx文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME TBS-Nginx 于 $DA 自动同步配置文件"
+        TG_BOT
+	else
+		echo "所有文件与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
 function crontab_tcp(){
     #nginx四层同步
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
@@ -455,6 +481,8 @@ if [[ $action == "brook" ]]; then
 	crontab_tcp
   elif [[ $action == "fq" ]]; then
 	crontab_fq
+  elif [[ $action == "tbs" ]]; then
+	crontab_tbs
   elif [[ $action == "t2smj" ]]; then	
 	crontab_t2smj
   elif [[ $action == "t2sgkd" ]]; then
