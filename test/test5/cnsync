@@ -490,7 +490,7 @@ if [[ $action == "brook" ]]; then
   elif [[ $action == "status" ]]; then
 	nginx_status
     #gost_status
-    vnetc_status
+    #vnetc_status
   elif [[ $action == "nginx_status" ]]; then
     nginx_status
   elif [[ $action == "v" ]]; then
