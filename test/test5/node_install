@@ -27,8 +27,30 @@ iptables -P INPUT ACCEPT
 iptables -X
 service iptables save
 }
+#检查系统
+check_sys(){
+	if [[ -f /etc/redhat-release ]]; then
+		release="centos"
+	elif cat /etc/issue | grep -q -E -i "debian"; then
+		release="debian"
+	elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+		release="ubuntu"
+	elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
+		release="centos"
+	elif cat /proc/version | grep -q -E -i "debian"; then
+		release="debian"
+	elif cat /proc/version | grep -q -E -i "ubuntu"; then
+		release="ubuntu"
+	elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
+		release="centos"
+    fi
+}
 function install_vnets(){
-	yum -y install zip unzip vim
+	if [[ "${release}" == "centos" ]]; then
+	yum -y install zip unzip
+	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
+	apt-get install zip unzip -y
+	fi
     mkdir /usr/local/vnet
     cd /usr/local/vnet
     wget -N --no-check-certificate "https://www.isyunyi.com/download/linux/tunnel.zip"
@@ -61,8 +83,13 @@ WantedBy=multi-user.target' >/usr/lib/systemd/system/vnets.service
 	systemctl enable vnets
 	echo -e "\033[42;37mvnet服务端安装完成\033[0m" 
 }
+#支持CentOS7/Debian10/11一键安装
 function install_vnetc(){
+	if [[ "${release}" == "centos" ]]; then
 	yum -y install zip unzip
+	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
+	apt-get install zip unzip -y
+	fi
     mkdir /usr/local/vnet
     cd /usr/local/vnet
     wget -N --no-check-certificate "https://www.isyunyi.com/download/linux/tunnel.zip"
@@ -179,7 +206,9 @@ http {
 	systemctl enable nginx
 	systemctl status nginx
 }
+#Tengine支持CentOS7/Debian10/11一键安装
 function install_tengine() {
+	if [[ "${release}" == "centos" ]]; then
         yum update -y
         yum install epel-release -y
         yum install gcc gcc-c++ autoconf automake -y
@@ -187,11 +216,22 @@ function install_tengine() {
         yum install openssl-devel -y
         yum install libmcrypt libmcrypt-devel mcrypt mhash -y
 		yum install kernel-headers kernel-devel make -y
+	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
+        apt-get update
+		apt-get upgrade -y
+        apt-get install build-essential -y
+        #PCRE
+        apt-get install libpcre3 libpcre3-dev -y
+        apt-get install zlib1g-dev -y
+        apt-get install openssl libssl-dev -y
+        apt-get install gcc make -y
+        apt-get install iperf3 vim -y
+	fi
 		rm -rf /usr/local/nginx
 		cd /root
 		wget http://tengine.taobao.org/download/tengine-2.3.3.tar.gz
 		tar zxvf tengine-2.3.3.tar.gz
-		cd /root/tengine*
+        cd /root/tengine-2.3.3/
 		./configure --with-http_realip_module --without-http_upstream_keepalive_module --with-stream --with-stream_ssl_module --with-stream_sni --add-module=modules/ngx_http_upstream_* --add-module=modules/ngx_debug_* --add-module=modules/ngx_http_slice_module --add-module=modules/ngx_http_user_agent_module --add-module=modules/ngx_http_reqstat_module --add-module=modules/ngx_http_proxy_connect_module --add-module=modules/ngx_http_footer_filter_module
         make
         make install
@@ -560,6 +600,7 @@ if [[ -n $action ]]; then
 #增加一个通信检测，如果与GitHub通信失败则停止脚本
 	if [[ $github_test == "success" ]]; then
 		if [[ $action == "cn" ]]; then
+		    check_sys
 			menu_server2			
 		elif [[ $action == "pengui" ]]; then
 			install_xrayr_pengui
@@ -570,5 +611,6 @@ if [[ -n $action ]]; then
 		echo -e "\033[31m 远端通信失败，程序中止 \033[0m"
 	fi
 else
+    check_sys
 	menu_server
 fi
