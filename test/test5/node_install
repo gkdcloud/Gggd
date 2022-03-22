@@ -257,12 +257,15 @@ WantedBy=multi-user.target" >/lib/systemd/system/nginx.service
         systemctl enable nginx
         echo -e "${Green}done!${Font}"
 }
+#Brook支持CentOS7/Debian10/11一键安装
 function install_brook() {
-		wget -N -P /root $cndownload//brook-pf-mod.sh
+		wget -N -P /root $cndownload/brook-pf-mod.sh
 		chmod +x /root/brook-pf-mod.sh
 		/root/brook-pf-mod.sh install
 		#添加DDNS监控
+	if [[ "${release}" == "centos" ]]; then
 		yum install bind-utils -y
+	fi
     cron_config=$(crontab -l | grep "brook-pf-mod.sh monitor")
     if [[ -z ${cron_config} ]]; then
 		crontab -l > "/root/crontab.bak"
