@@ -23,11 +23,11 @@ nginx_tcp_conf="/usr/local/nginx/tcp/tcp.conf"
 nginx_tcp_name="tcp.conf"
 #是否开启监控
 rm -rf /root/.crontab.txt
-curl -s $Github/crontab > /root/.crontab.txt
+curl -s -k $Github/crontab > /root/.crontab.txt
 github_cron=`sed -n '1p' /root/.crontab.txt`
 #测试与GitHub连通性
 rm -rf /root/.test.txt
-curl -s $Github/test > /root/.test.txt
+curl -s -k $Github/test > /root/.test.txt
 github_test=`sed -n '1p' /root/.test.txt`
 rm -rf /root/.test.txt /root/.crontab.txt
 #版本号
@@ -420,7 +420,7 @@ fi
 #检测程序结束
 #增加nginx：ws/status更新
 function cnsync_update(){
-new_version=`curl -s $Github_shell/version`
+new_version=`curl -s -k $Github_shell/version`
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then	
     #检测nginx的ws/status更新
 	wget --no-check-certificate $Github_shell/download/ws -O $nginx_Conf_ws.new
