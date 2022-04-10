@@ -18,7 +18,7 @@ gkdnginx_Conf="/usr/local/nginx/gkdnginx.conf"
 gkdnginx_name="gkdnginx.conf"
 nginx_Conf_ws="/usr/local/nginx/ws"
 nginx_Conf_status="/usr/local/nginx/status"
-#nginx四层文件位置
+#nginx四层文件位置 
 nginx_tcp_conf="/usr/local/nginx/tcp/tcp.conf"
 nginx_tcp_name="tcp.conf"
 #是否开启监控
