@@ -8,7 +8,7 @@ tcp2ws_download="https://ghproxy.net/https://github.com/zanjie1999/tcp-over-webs
 ct_new_ver="2.11.1"
 #测试与GitHub连通性
 rm -rf /root/.test.txt
-curl -s $Github/test > /root/.test.txt
+curl -s -k $Github/test > /root/.test.txt
 github_test=`sed -n '1p' /root/.test.txt`
 rm -rf /root/.test.txt /root/.crontab.txt
 #颜色文字
