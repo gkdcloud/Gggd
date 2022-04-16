@@ -12,9 +12,9 @@
 #3go开头为胡三狗节点199xx
 #fq开头为番茄
 #cv开头为CV2
-#test5
+#test3
 upstream jp{
-        #ip_hash;  #MJ-JP AZ承载
+        #ip_hash;  #BGP承载，AZ备用
         server 52.229.189.157:16617;
         server 20.239.67.211:16617;
         server 20.187.109.80:16617;
