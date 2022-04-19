@@ -89,6 +89,7 @@ cnsync status
 cnsync cron
 /bin/bash /root/brook-pf-mod.sh monitor
 #cnsync gkd
+#cnsync yp
 cnsync tcp
 cnsync fq
 cnsync tbs">/usr/local/cron/cnsync_cron
@@ -277,6 +278,31 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		systemctl reload nginx
 		echo -e "\033[32m FQ-Nginx文件已更新，同步完成 \033[0m"
         TG_MESSAGE="$SERVER_NAME FQ-Nginx 于 $DA 自动同步配置文件"
+        TG_BOT
+	else
+		echo "所有文件与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
+function crontab_yp(){
+#首先定义该文件所在位置和远端文件名字
+ypnginx_Conf="/usr/local/nginx/ypnginx.conf"
+ypnginx_name="ypnginx.conf"
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+	#fqnginx监控
+	rm -rf $ypnginx_Conf.new
+	wget --no-check-certificate $Github/$ypnginx_name -O $ypnginx_Conf.new
+	ypnginx_md5=`md5sum $ypnginx_Conf  | cut -d ' ' -f1`
+	ypnginx_md5_n=`md5sum $ypnginx_Conf.new  | cut -d ' ' -f1`	
+	if [[ $ypnginx_md5 != $ypnginx_md5_n ]]; then
+		echo "YP-Nginx与远端文件不符，正在同步"
+		rm -rf $ypnginx_Conf
+		mv $ypnginx_Conf.new $ypnginx_Conf
+		systemctl reload nginx
+		echo -e "\033[32m YP-Nginx文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME YP-Nginx 于 $DA 自动同步配置文件"
         TG_BOT
 	else
 		echo "所有文件与远端相符，无需同步"
@@ -481,6 +507,8 @@ if [[ $action == "brook" ]]; then
 	crontab_tcp
   elif [[ $action == "fq" ]]; then
 	crontab_fq
+  elif [[ $action == "yp" ]]; then
+	crontab_yp
   elif [[ $action == "tbs" ]]; then
 	crontab_tbs
   elif [[ $action == "t2smj" ]]; then	
