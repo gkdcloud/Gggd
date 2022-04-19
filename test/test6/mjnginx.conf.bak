@@ -14,7 +14,7 @@
 #cv开头为CV2
 #test5
 upstream jp{
-        #ip_hash;  #BGP承载，AZ备用
+        #ip_hash;  #MJ-JP AZ承载
         server 52.229.189.157:16617;
         server 20.239.67.211:16617;
         server 20.187.109.80:16617;
@@ -148,9 +148,9 @@ upstream br{
         server 216.238.103.47:6616;
 		#check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
-upstream mx{
+upstream mjmx{
         ip_hash;	#vu墨西哥负载
-        server 216.238.76.65:6616;
+        server 216.238.81.179:6616;	
 		#check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream hkntt{	
@@ -477,7 +477,7 @@ server {
 server {
     listen 26609; #香港 HKBN
     location / {
-		proxy_pass http://101.78.155.122:8818;   
+		proxy_pass http://101.78.155.118:8818;   
 		include /usr/local/nginx/ws; 
         }
 }
@@ -569,7 +569,7 @@ server {
 server {
     listen 16636;
     location / {
-		proxy_pass http://mx;
+		proxy_pass http://mjmx;
 		include /usr/local/nginx/ws; 
         }
 }
