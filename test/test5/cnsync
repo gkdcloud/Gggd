@@ -90,7 +90,7 @@ cnsync cron
 /bin/bash /root/brook-pf-mod.sh monitor
 #cnsync gkd
 #cnsync yp
-cnsync tcp
+#cnsync tcp
 cnsync fq
 cnsync tbs">/usr/local/cron/cnsync_cron
 	#查看是否已经存在监控
