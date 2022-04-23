@@ -503,15 +503,24 @@ systemctl restart XrayR
 systemctl status XrayR
 echo "对接完成"
 }
-#安装cnsync
+#安装cnsync-支持CentOS7/Debian10/11一键安装
 function install_cnsync() {
+	if [[ "${release}" == "centos" ]]; then
     yum install net-tools -y
+	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
+    apt-get install net-tools -y
+	fi
 	wget $cndownload/cnsync -O /usr/bin/cnsync
 	chmod +x /usr/bin/cnsync
 	cnsync addcron
 }
-#安装hksync
+#安装hksync-支持CentOS7/Debian10/11一键安装
 function install_hksync() {
+	if [[ "${release}" == "centos" ]]; then
+    yum install net-tools -y
+	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
+    apt-get install net-tools -y
+	fi
 	wget $cndownload/hksync -O /usr/bin/hksync	
 	chmod +x /usr/bin/hksync
 	hksync addcron
