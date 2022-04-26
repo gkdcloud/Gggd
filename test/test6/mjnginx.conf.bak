@@ -62,7 +62,7 @@ upstream cvhk{
 }
 upstream kr{
         ip_hash;	#vu+aws负载
-        server 15.165.10.216:6616;    #kr1
+        server 13.209.2.176:6616;    #kr1
         server 54.180.2.30:6616;        #kr2
         #server 141.164.41.110:6624 weight=6;     #kr2
         #server 141.164.39.232:6624 weight=2;     #kr3
@@ -71,7 +71,7 @@ upstream kr{
 }
 upstream cvkr{
         ip_hash;	#vu+aws负载
-        server 15.165.10.216:8818 weight=6;
+        server 13.209.2.176:8818 weight=6;
         server 54.180.2.30:8818 weight=6;
         #server 141.164.41.110:8818 weight=6;
         #server 141.164.56.181:8818 weight=6;
@@ -121,8 +121,8 @@ upstream hkt2{
         server 20.187.109.80:16631;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
-upstream mjyuenan{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
-        server 137.116.161.188:6620;
+upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
+        server 20.205.45.59:6620;
         server 20.187.108.196:26633 backup;
         server 20.205.32.166:26633 backup;
         server 52.229.189.157:26633 backup;
@@ -353,7 +353,7 @@ server {
 server {
     listen 16627;
     location / {
-		proxy_pass http://mjyuenan;  #魔戒越南
+		proxy_pass http://mjazhk;  #魔戒AZHK落地
 		include /usr/local/nginx/ws; 
         }
 }
