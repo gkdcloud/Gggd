@@ -21,7 +21,7 @@ Crontab_file="/usr/bin/crontab"
 
 Github="https://ghproxy.com/https://github.com"
 rawGithub="https://ghproxy.com/https://raw.githubusercontent.com"
-brook_new_ver="v20200801"
+brook_new_ver=$(wget -qO- https://api.github.com/repos/txthinking/brook/releases| grep "tag_name"| head -n 1| awk -F ":" '{print $2}'| sed 's/\"//g;s/,//g;s/ //g')
 
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
 Info="${Green_font_prefix}[信息]${Font_color_suffix}"
