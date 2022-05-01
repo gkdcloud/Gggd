@@ -162,7 +162,7 @@ upstream uk{
 upstream fr{
         ip_hash;	#vu法国负载
         server 199.247.15.242:6616 weight=6;
-        server 217.69.7.87:6616 weight=6;
+        server 95.179.213.2:6616 weight=6;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream br{
