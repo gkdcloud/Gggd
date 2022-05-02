@@ -18,14 +18,18 @@ Error="${Red_font_prefix}[错误]${Font_color_suffix}"
 Tip="${Green_font_prefix}[注意]${Font_color_suffix}"
 #开放防火墙
 function install_iptables(){
-systemctl stop firewalld
-systemctl mask firewalld
-yum install -y iptables
-yum install iptables-services -y
-iptables -F
-iptables -P INPUT ACCEPT
-iptables -X
-service iptables save
+	if [[ "${release}" == "centos" ]]; then
+	systemctl stop firewalld
+	systemctl mask firewalld
+	yum install -y iptables
+	yum install iptables-services -y
+	iptables -F
+	iptables -P INPUT ACCEPT
+	iptables -X
+	service iptables save
+	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
+	echo "debian无需操作"
+	fi
 }
 #检查系统
 check_sys(){
