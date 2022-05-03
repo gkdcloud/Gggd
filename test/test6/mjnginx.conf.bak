@@ -71,17 +71,17 @@ upstream cvhk{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream kr{
-        ip_hash;	#vu+aws负载
-        server 3.38.148.234:6616;    #kr1
-        server 54.180.2.30:6616;        #kr2
-        #server 141.164.41.110:6624 weight=6;     #kr2
+        #ip_hash;	#vu+aws负载
+        server 158.247.217.194:6616 backup;    #kr1-backup
+        server 3.35.172.6:6616;        #kr2
+        server 3.36.15.121:6616;     #kr4
         #server 141.164.39.232:6624 weight=2;     #kr3
         #server 3.35.164.82:6624 weight=100;       #kr4
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream cvkr{
         ip_hash;	#vu+aws负载
-        server 3.38.148.234:8818 weight=6;
+        server 158.247.217.194:8818 weight=6;
         server 54.180.2.30:8818 weight=6;
         #server 141.164.41.110:8818 weight=6;
         #server 141.164.56.181:8818 weight=6;
