@@ -16,7 +16,7 @@ Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_p
 Info="${Green_font_prefix}[信息]${Font_color_suffix}"
 Error="${Red_font_prefix}[错误]${Font_color_suffix}"
 Tip="${Green_font_prefix}[注意]${Font_color_suffix}"
-#开放防火墙
+#开放防火墙/Debian开启BBR
 function install_iptables(){
 	if [[ "${release}" == "centos" ]]; then
 	systemctl stop firewalld
@@ -28,7 +28,10 @@ function install_iptables(){
 	iptables -X
 	service iptables save
 	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
-	echo "debian无需操作"
+	echo "debian开启BBR"
+    echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+    echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+    sysctl -p 
 	fi
 }
 #检查系统
@@ -126,7 +129,7 @@ WantedBy=multi-user.target' >/usr/lib/systemd/system/vnetc.service
 	cd /root
 	systemctl start vnetc
 	systemctl enable vnetc
-	systemctl status vnetc
+	#systemctl status vnetc
 	echo -e "\033[42;37mvnet服务端安装完成\033[0m" 
 }
 function install_docker(){
@@ -561,7 +564,7 @@ function menu_server2() {
  ${Green_font_prefix} 5:${Font_color_suffix} 安装brook转发
  ${Green_font_prefix} 6:${Font_color_suffix} 安装cnsync同步
  ${Green_font_prefix} 7.${Font_color_suffix} 安装vnets+hksync(只需要vnet落地)
- ${Green_font_prefix} 8.${Font_color_suffix} 安装vnets+tengine+hksync(香港跳板安装)
+ ${Green_font_prefix} 8.${Font_color_suffix} 安装vnets+tengine+hksync(香港/日本承载安装)
 ————————————
  ${Green_font_prefix} 0.${Font_color_suffix} 安装国内3件套(中转一键部署)" &&echo 
   echo
