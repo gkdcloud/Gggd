@@ -574,7 +574,6 @@ function menu_server2() {
     install_tcp2ws
     ;;
   2)
-	yum update -y
     install_tengine
     ;;
   3)
@@ -597,6 +596,7 @@ function menu_server2() {
   8)
     install_vnets
 	install_tengine
+	install_iptables
 	install_hksync
 	hksync all
     ;;
