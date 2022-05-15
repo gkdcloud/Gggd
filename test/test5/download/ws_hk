@@ -1,14 +1,19 @@
-set_real_ip_from   116.162.0.0/16; #长沙双线-联通
-set_real_ip_from   101.67.8.0/24; #杭州双线-联通
+#cu
+set_real_ip_from   120.72.57.0/24; #无锡-联通
+set_real_ip_from   116.162.33.0/24; #长沙-联通
+#cm
+set_real_ip_from   183.240.124.0/24; #深圳移动
+#ct
+set_real_ip_from   116.162.32.0/24; #长沙双线-联通
+set_real_ip_from   101.67.7.0/24; #杭州双线-联通
 set_real_ip_from   113.56.187.0/24; #武汉双线-联通
-set_real_ip_from   183.36.24.26/24; #广州电信-艾可
-set_real_ip_from   61.128.145.11/24; #重庆电信-艾可
-set_real_ip_from   116.153.81.0/24; #郑州联通-内网两台机器
-set_real_ip_from   157.122.214.0/24; #广州联通
+set_real_ip_from   119.188.29.0/24; #济南联通
+#other
+#set_real_ip_from   116.153.81.0/24; #郑州联通-内网两台机器
+#set_real_ip_from   157.122.214.0/24; #广州联通
 #set_real_ip_from   36.248.14.0/24; #福州联通
-#set_real_ip_from   119.188.28.0/24; #济南联通
 #set_real_ip_from   183.232.48.0/24; #广州移动-
-set_real_ip_from   111.29.42.0/24; #海南移动
+#over
 proxy_http_version 1.1;
 proxy_set_header Upgrade $http_upgrade;
 proxy_set_header Connection "upgrade";
