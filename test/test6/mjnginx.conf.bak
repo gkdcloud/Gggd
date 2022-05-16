@@ -71,17 +71,17 @@ upstream cvhk{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream kr{
-        #ip_hash;	#vu+aws负载
-        server 158.247.217.194:6616 backup;    #kr1-backup
-        server 141.164.51.121:6616;        #kr2
-        server 13.125.197.223:6616;     #kr4
+        ip_hash;	#vu+aws负载
+        server 158.247.222.189:6616;        #kr2
+        server 158.247.197.238:6616;    #kr3
+        server 158.247.230.29:6616;     #kr4
         #server 141.164.39.232:6624 weight=2;     #kr3
         #server 3.35.164.82:6624 weight=100;       #kr4
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream cvkr{
         ip_hash;	#vu+aws负载
-        server 141.164.51.121:8818 weight=6;
+        server 3.34.182.139:8818 weight=6;
         server 54.180.2.30:8818 weight=6;
         #server 141.164.41.110:8818 weight=6;
         #server 141.164.56.181:8818 weight=6;
@@ -190,13 +190,22 @@ upstream mjkh{
 		#check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream hkntt{	
-        server 164.70.90.243:6616;  #HK-NTT负载
+        server 20.89.43.125:16621;
+        server 20.205.114.209:16621;
+        server 20.187.109.80:16621;
+        server 20.187.108.196:16621;
+        server 20.222.113.106:16621;
 		server 203.184.132.168:7777 backup;  #当NTT出现故障转移至HGC
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream hgc{
-        server 203.184.132.168:7777;  #交给隧道处理
-		#check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
+        server 20.89.43.125:16621;
+        server 20.205.114.209:16621;
+        server 20.187.109.80:16621;
+        server 20.187.108.196:16621;
+        server 20.222.113.106:16621;
+        #server 203.184.132.168:7777;  #交给隧道处理
+		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream cvhgc{
         server 203.184.132.168:8817;
