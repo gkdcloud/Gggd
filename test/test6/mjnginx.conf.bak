@@ -141,11 +141,22 @@ upstream hkt2{
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
         server 20.205.2.155:6620;
+		server 20.239.140.165:6622;
         server 20.205.106.158:26633 backup;
         server 20.27.55.48:26633 backup;
         server 20.205.158.216:26633 backup;
         server 20.187.93.74:26633 backup;
         server 40.115.203.72:26633 backup;
+		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
+}
+upstream mjtr{
+        server 20.205.106.158:16630;
+        server 20.27.55.48:16630;
+        server 20.205.158.216:16630;
+        server 20.187.93.74:16630;
+        server 40.115.203.72:16630;
+        server 20.24.27.0:16630; #azhk9
+        server 20.222.116.237:16630; #azjp10
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream de{
@@ -415,7 +426,7 @@ server {
 server {
     listen 16630;
     location / {
-		proxy_pass http://185.219.133.108:6616;  #魔戒土耳其
+		proxy_pass http://mjtr;  #魔戒土耳其
 		include /usr/local/nginx/ws; 
         }
 }
