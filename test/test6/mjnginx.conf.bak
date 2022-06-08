@@ -71,12 +71,17 @@ upstream cvhk{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream kr{
-        ip_hash;	#vu+aws负载
-        server 158.247.195.145:6616;        #kr2
+        ip_hash;	#vu负载
+        server 158.247.195.145:6616;    #kr2
         server 158.247.197.238:6616;    #kr3
         server 158.247.230.29:6616;     #kr4
-        #server 141.164.39.232:6624 weight=2;     #kr3
-        #server 3.35.164.82:6624 weight=100;       #kr4
+		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
+}
+upstream cvkr{
+        ip_hash;	#vu+aws负载
+        server 158.247.195.145:8818;    #kr2
+        server 158.247.197.238:8818;    #kr3
+        #server 158.247.230.29:8818;     #kr4
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream tw_n{
@@ -136,7 +141,7 @@ upstream hkt2{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
-        server 104.208.83.216:6620;
+        server 20.187.73.77:6620;
 		server 20.239.166.108:6622;
         server 20.205.106.158:16620 backup;
         server 20.222.49.75:16620 backup;
@@ -157,7 +162,7 @@ upstream mjtr{
 }
 upstream de{
         ip_hash;	#de德国负载
-        server 170.187.185.195:6616;
+        server 89.163.224.151:6616;  #直连IP 37.157.255.188
 		#check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream uk{
@@ -202,7 +207,7 @@ upstream hkntt{
         server 40.115.203.72:16621;
         server 20.205.106.158:16621;
         server 20.222.49.75:16621;
-		server 203.184.132.168:7777 backup;  #当NTT出现故障转移至HGC
+		server 210.0.158.101:7777 backup;  #当NTT出现故障转移至HGC
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream hgc{
@@ -211,15 +216,15 @@ upstream hgc{
         server 40.115.203.72:16621;
         server 20.205.106.158:16621;
         server 20.222.49.75:16621;
-        #server 203.184.132.168:7777;  #交给隧道处理
+        #server 210.0.158.101:7777;  #交给隧道处理
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream cvhgc{
-        server 203.184.132.168:8817;
+        server 210.0.158.101:8817;
 		#check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream fqhgc{
-        server 203.184.132.168:7711;
+        server 210.0.158.101:7711;
 		#check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 #此处开始为AZ中转，三机器负载，换IP可进行查找替换
@@ -496,6 +501,27 @@ server {
 		include /usr/local/nginx/ws; 
         }
 }
+server {
+    listen 16641;   #加拿大东海岸
+    location / {
+		proxy_pass http://192.99.193.179:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16642;   #荷兰
+    location / {
+		proxy_pass http://62.4.14.33:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16643;   #芬兰-经德国中转
+    location / {
+		proxy_pass http://89.163.224.151:16643;
+		include /usr/local/nginx/ws; 
+        }
+}
 #MJ嵌套区域-az-266弃用，魔戒仅用166端口
 server {
     listen 26622;
@@ -516,6 +542,13 @@ server {
     listen 26601;
     location / {
 		proxy_pass http://cvjp;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 26602;
+    location / {
+		proxy_pass http://cvkr;
 		include /usr/local/nginx/ws; 
         }
 }
