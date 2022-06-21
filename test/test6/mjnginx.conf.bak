@@ -142,6 +142,7 @@ upstream hkt2{
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
         server 20.205.32.35:6620;
+		server 168.63.243.33:6620;
 		server 20.24.200.52:6622;
         server 52.140.195.252:16620 backup;
         server 20.222.49.75:16620 backup;
