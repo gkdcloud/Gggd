@@ -28,10 +28,15 @@ function install_iptables(){
 	iptables -X
 	service iptables save
 	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
-	echo "debian开启BBR"
-    echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
-    echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
-    sysctl -p 
+	run_status=$(cat /proc/sys/net/ipv4/tcp_congestion_control | awk '{print $1}')
+      if [[ ${run_status} == "bbr" ]]; then
+        echo "BBR启动已开启状态，无需启动BBR"
+      else
+        echo "正在开启BBR"
+	    echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+        echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+        sysctl -p 
+      fi
 	fi
 }
 #检查系统
