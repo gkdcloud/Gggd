@@ -484,7 +484,7 @@ server {
 server {
     listen 16638;   #澳洲-悉尼
     location / {
-		proxy_pass http://45.76.123.221:6616;
+		proxy_pass http://172.105.174.208:6616;
 		include /usr/local/nginx/ws; 
         }
 }
@@ -545,9 +545,9 @@ server {
         }
 }
 server {
-    listen 16647;
+    listen 16647;  #RU2
     location / {
-		proxy_pass http://194.87.49.14:6616;
+		proxy_pass http://194.147.85.61:6616;
 		include /usr/local/nginx/ws; 
         }
 }
@@ -555,6 +555,13 @@ server {
     listen 16648;
     location / {
 		proxy_pass http://104.149.166.172:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16649;
+    location / {
+		proxy_pass http://45.144.3.172:6616;
 		include /usr/local/nginx/ws; 
         }
 }
