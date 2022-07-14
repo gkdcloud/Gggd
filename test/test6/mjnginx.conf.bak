@@ -1,7 +1,7 @@
 #魔戒负载均衡dynamic_resolve fallback=stale fail_timeout=60s; 
 #azure承载节点-直接查找替换：
-#azsg1-f4s   20.24.87.32  
-#azhk2-f4s   20.187.80.88  
+#azsg1-f4s   20.247.118.65  
+#azhk2-f4s   20.247.124.241 
 #azhk5-f4s   52.253.109.226  
 #azjp6-f4s   20.222.17.126
 #azjp7-f4s   20.239.158.222
@@ -17,7 +17,7 @@
 #test5
 upstream jp{
         #ip_hash;  #MJ-JP AZ承载
-        server 20.24.87.32:16617;
+        server 20.247.118.65:16617;
         server 20.187.80.88:16617;
         server 52.253.109.226:16617;
         server 20.222.17.126:16617;
@@ -28,7 +28,7 @@ upstream jp{
 }
 upstream cvjp{
         #ip_hash;
-        server 20.24.87.32:26601;
+        server 20.247.118.65:26601;
         server 20.187.80.88:26601;
         server 52.253.109.226:26601;
         server 20.222.17.126:26601;
@@ -40,7 +40,7 @@ upstream cvjp{
 upstream sg{  
         #ip_hash;  #BGP承载，AZ备用
         server 20.222.17.126:16618;
-        server 20.24.87.32:16618;
+        server 20.247.118.65:16618;
         server 20.187.80.88:16618;
         server 52.253.109.226:16618;
         server 20.239.158.222:16618;
@@ -52,7 +52,7 @@ upstream cvsg{
         #ip_hash;  #BGP承载，AZ备用
         server 20.222.17.126:26603;
         server 20.239.158.222:26603;
-        server 20.24.87.32:26603;
+        server 20.247.118.65:26603;
         server 20.187.80.88:26603;
         server 52.253.109.226:26603;
         server 20.210.222.41:26603;
@@ -63,7 +63,7 @@ upstream cvhk{
         #ip_hash;  #BGP承载，AZ备用
         server 20.222.17.126:26607;
         server 20.239.158.222:26607;
-        server 20.24.87.32:26607;
+        server 20.247.118.65:26607;
         server 20.187.80.88:26607;
         server 52.253.109.226:26607;
         server 20.210.222.41:26607; #azhk9
@@ -85,7 +85,7 @@ upstream cvkr{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream tw_n{
-        server 20.24.87.32:16616;
+        server 20.247.118.65:16616;
         server 20.187.80.88:16616;
         server 52.253.109.226:16616;
         server 20.222.17.126:16616;
@@ -99,7 +99,7 @@ upstream tw_n{
 upstream cvtw{
         server 20.222.17.126:26604;
         server 20.239.158.222:26604;
-        server 20.24.87.32:26604;  #二次反代-包含BGP
+        server 20.247.118.65:26604;  #二次反代-包含BGP
         server 20.187.80.88:26604;
         server 52.253.109.226:26604;
         server 20.210.222.41:26604; #azhk9
@@ -109,7 +109,7 @@ upstream cvtw{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream fqtw{
-        server 20.24.87.32:23330;  #二次反代
+        server 20.247.118.65:23330;  #二次反代
         server 20.187.80.88:23330;
         server 52.253.109.226:23330;
         server 20.222.17.126:23330;
@@ -123,7 +123,7 @@ upstream fqtw{
 upstream mjhk{
         server 20.222.17.126:16620;   #HKT
         server 20.239.158.222:16620;
-        server 20.24.87.32:16620;
+        server 20.247.118.65:16620;
         server 20.187.80.88:16620;
         server 52.253.109.226:16620;
         server 20.210.222.41:16620; #azhk9
@@ -133,7 +133,7 @@ upstream mjhk{
 upstream hkt2{
         server 20.222.17.126:16631;
         server 20.239.158.222:16631;
-        server 20.24.87.32:16631;
+        server 20.247.118.65:16631;
         server 20.187.80.88:16631;
         server 52.253.109.226:16631;
         server 20.210.222.41:16631; #azhk9
@@ -146,15 +146,26 @@ upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落�
 		server 20.187.114.44:6622;
         server 20.222.17.126:16620 backup;
         server 20.239.158.222:16620 backup;
-        server 20.24.87.32:16620 backup;
+        server 20.247.118.65:16620 backup;
         server 20.187.80.88:16620 backup;
         server 52.253.109.226:16620 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
+upstream mjazusd{
+        #ip_hash;
+        server 20.24.87.32:16650;
+        server 20.187.80.88:16650;
+        server 52.253.109.226:16650;
+        server 20.222.17.126:16650;
+        server 20.239.158.222:16650;
+        server 20.210.222.41:16650;
+        #server 20.222.116.237:16650;
+		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
+}
 upstream mjtr{
         server 20.222.17.126:16630;
         server 20.239.158.222:16630;
-        server 20.24.87.32:16630;
+        server 20.247.118.65:16630;
         server 20.187.80.88:16630;
         server 52.253.109.226:16630;
         server 20.210.222.41:16630; #azhk9
@@ -209,7 +220,7 @@ upstream mjkh{
 		#check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream hkntt{	
-        server 20.24.87.32:16621;
+        server 20.247.118.65:16621;
         server 20.187.80.88:16621;
         server 52.253.109.226:16621;
         server 20.222.17.126:16621;
@@ -218,7 +229,7 @@ upstream hkntt{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream hgc{
-        server 20.24.87.32:16621;
+        server 20.247.118.65:16621;
         server 20.187.80.88:16621;
         server 52.253.109.226:16621;
         server 20.222.17.126:16621;
@@ -228,7 +239,7 @@ upstream hgc{
 }
 upstream cvhgc{
         #ip_hash;  # AZ承载
-        server 20.24.87.32:26608;
+        server 20.247.118.65:26608;
         server 20.187.80.88:26608;
         server 52.253.109.226:26608;
         server 20.222.17.126:26608;
@@ -243,7 +254,7 @@ upstream fqhgc{
 }
 #此处开始为AZ中转，三机器负载，换IP可进行查找替换
 upstream hk_az{   #交给隧道处理-az-fdc
-        server 20.24.87.32:26633;
+        server 20.247.118.65:26633;
         server 20.187.80.88:26633;
         server 52.253.109.226:26633;
         server 20.222.17.126:26633;
@@ -255,7 +266,7 @@ upstream hk_az{   #交给隧道处理-az-fdc
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream hk_hgc_n_az{   #交给隧道处理-az-fdc
-        server 20.24.87.32:26622;
+        server 20.247.118.65:26622;
         server 20.187.80.88:26622;
         server 52.253.109.226:26622;
         server 20.222.17.126:26622;
@@ -267,7 +278,7 @@ upstream hk_hgc_n_az{   #交给隧道处理-az-fdc
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream malai_vnet{ 
-		server 20.24.87.32:26623;#交给隧道处理
+		server 20.247.118.65:26623;#交给隧道处理
         server 20.187.80.88:26623;
         server 52.253.109.226:26623;
         server 20.222.17.126:26623;
@@ -279,7 +290,7 @@ upstream malai_vnet{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream cvmalai_vnet{
-		server 20.24.87.32:26610;  #交给隧道处理
+		server 20.247.118.65:26610;  #交给隧道处理
         server 20.187.80.88:26610;
         server 52.253.109.226:26610;
         server 20.222.17.126:26610;
@@ -289,7 +300,7 @@ upstream cvmalai_vnet{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream fqmalai_vnet{
-		server 20.24.87.32:10044;  #交给隧道处理
+		server 20.247.118.65:10044;  #交给隧道处理
         server 20.187.80.88:10044;
         server 52.253.109.226:10044;
         server 20.222.17.126:10044;
@@ -300,7 +311,7 @@ upstream fqmalai_vnet{
 }
 #结束
 upstream mjar{
-        server 20.24.87.32:16628;
+        server 20.247.118.65:16628;
         server 20.187.80.88:16628;
         server 52.253.109.226:16628;
         server 20.222.17.126:16628;
@@ -313,7 +324,7 @@ upstream mjar{
 }
 #狗子的
 upstream xy_hgc_vnet{
-		server 20.24.87.32:22383;  #交给隧道处理-xinyun_vnet负载
+		server 20.247.118.65:22383;  #交给隧道处理-xinyun_vnet负载
         server 20.187.80.88:22383;
         server 104.208.89.249:22383;
         server 20.222.17.126:22383;
@@ -323,7 +334,7 @@ upstream xy_hgc_vnet{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream dog_sg_vnet{
-		server 20.24.87.32:10650;  #交给隧道处理
+		server 20.247.118.65:10650;  #交给隧道处理
         server 20.187.80.88:10650;
         server 104.208.89.249:10650;
         server 20.222.17.126:10650;
@@ -333,7 +344,7 @@ upstream dog_sg_vnet{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream dog_tw_vnet{
-		server 20.24.87.32:10651;  #交给隧道处理
+		server 20.247.118.65:10651;  #交给隧道处理
         server 20.187.80.88:10651;
         server 104.208.89.249:10651;
         server 20.222.17.126:10651;
@@ -575,6 +586,13 @@ server {
     listen 16649;
     location / {
 		proxy_pass http://45.144.3.172:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16650;
+    location / {
+		proxy_pass http://mjazusd;
 		include /usr/local/nginx/ws; 
         }
 }
