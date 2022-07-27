@@ -142,7 +142,6 @@ upstream hkt2{
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
         server 20.239.55.196:6620 weight=1;
-		server 20.205.47.151:6622 backup;
 		server 20.187.112.243:6622 weight=10;  #AZHK10 F8S test
         server 20.222.17.126:16620 backup;
         server 20.89.47.48:16620 backup;
@@ -578,7 +577,7 @@ server {
 server {
     listen 16648;
     location / {
-		proxy_pass http://104.149.166.172:6616;
+		proxy_pass http://45.82.251.79:6616;
 		include /usr/local/nginx/ws; 
         }
 }
@@ -593,6 +592,13 @@ server {
     listen 16650;
     location / {
 		proxy_pass http://mjazusd;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16651;
+    location / {
+		proxy_pass http://185.203.6.195:6616;
 		include /usr/local/nginx/ws; 
         }
 }
@@ -650,7 +656,7 @@ server {
 server {
     listen 26606;
     location / {
-		proxy_pass http://104.149.166.172:8818; #美国圣何塞
+		proxy_pass http://45.82.251.79:8818; #美国圣何塞
 		include /usr/local/nginx/ws; 
         }
 }
