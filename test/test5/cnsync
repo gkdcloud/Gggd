@@ -154,12 +154,21 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	####这里开始验证首尾行是否正常####
     nginx_check_start=`cat $nginx_Conf| head -n 1`
 	nginx_check_end=`cat $nginx_Conf| tail -n 1`
+	nginx_check_start_end
     ####结束首尾行验证####
+	#MD5
 	nginx_md5=`md5sum $nginx_Conf  | cut -d ' ' -f1`
 	nginx_md5_n=`md5sum $nginx_Conf.new  | cut -d ' ' -f1`	
-	nginx_check_start_end
 	#检查与远端是否相符
-	if [[ $vnet_md5 != $vnet_md5_n ]]; then
+	if [[ $nginx_md5 != $nginx_md5_n ]]; then
+		echo "Nginx与远端文件不符，正在同步"
+		rm -rf $nginx_Conf
+		mv $nginx_Conf.new $nginx_Conf
+		systemctl reload nginx
+		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="$SERVER_NAME Nginx 于 $DA 自动同步配置文件"
+        TG_BOT
+	elif [[ $vnet_md5 != $vnet_md5_n ]]; then
 		echo "vnet与远端文件不符，正在同步"
 		rm -rf $vnet_Conf
 		mv $vnet_Conf.new $vnet_Conf
@@ -176,14 +185,6 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 #		echo -e "\033[32m gost文件已更新，同步完成 \033[0m"
 #       TG_MESSAGE="$SERVER_NAME gost 于 $DA 自动同步配置文件"
 #        TG_BOT
-	elif [[ $nginx_md5 != $nginx_md5_n ]]; then
-		echo "Nginx与远端文件不符，正在同步"
-		rm -rf $nginx_Conf
-		mv $nginx_Conf.new $nginx_Conf
-		systemctl reload nginx
-		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="$SERVER_NAME Nginx 于 $DA 自动同步配置文件"
-        TG_BOT
 	elif [[ $brook_md5 != $brook_md5_n ]]; then
 		echo "brook与远端文件不符，正在同步"
 		rm -rf $brook_Conf
@@ -310,6 +311,11 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#fqnginx监控
 	rm -rf $ypnginx_Conf.new
 	wget --no-check-certificate $Github/$ypnginx_name -O $ypnginx_Conf.new
+	####这里开始验证首尾行是否正常####
+    nginx_check_start=`cat $nginx_Conf| head -n 1`
+	nginx_check_end=`cat $nginx_Conf| tail -n 1`
+	nginx_check_start_end
+    ####结束首尾行验证####
 	ypnginx_md5=`md5sum $ypnginx_Conf  | cut -d ' ' -f1`
 	ypnginx_md5_n=`md5sum $ypnginx_Conf.new  | cut -d ' ' -f1`	
 	if [[ $ypnginx_md5 != $ypnginx_md5_n ]]; then
@@ -335,6 +341,11 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#fqnginx监控
 	rm -rf $tbsnginx_Conf.new
 	wget --no-check-certificate $Github/$tbsnginx_name -O $tbsnginx_Conf.new
+	####这里开始验证首尾行是否正常####
+    nginx_check_start=`cat $nginx_Conf| head -n 1`
+	nginx_check_end=`cat $nginx_Conf| tail -n 1`
+	nginx_check_start_end
+    ####结束首尾行验证####
 	tbsnginx_md5=`md5sum $tbsnginx_Conf  | cut -d ' ' -f1`
 	tbsnginx_md5_n=`md5sum $tbsnginx_Conf.new  | cut -d ' ' -f1`	
 	if [[ $tbsnginx_md5 != $tbsnginx_md5_n ]]; then
