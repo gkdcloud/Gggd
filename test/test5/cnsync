@@ -140,6 +140,18 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#nginx监控
 	rm -rf $nginx_Conf.new
 	wget --no-check-certificate $Github/mjnginx.conf -O $nginx_Conf.new
+	####这里开始验证首尾行是否正常####
+    nginx_check_start=`cat $nginx_Conf| head -n 1`
+	nginx_check_end=`cat $nginx_Conf| tail -n 1`
+    if [[ $nginx_check_start == "#start" ]] && [[ $nginx_check_end == "#end" ]]; then
+    echo "文件检查首位行无异常，继续执行"
+    else
+	echo "无法验证文件首尾行，可能是下载出错，请人工检查"
+        TG_MESSAGE="错误：$SERVER_NAME nginx 于 $DA 无法验证文件首尾行，可能是下载出错，请人工检查"
+        TG_BOT
+	exit 6
+    fi
+    ####结束首尾行验证####
 	nginx_md5=`md5sum $nginx_Conf  | cut -d ' ' -f1`
 	nginx_md5_n=`md5sum $nginx_Conf.new  | cut -d ' ' -f1`	
 	#检查与远端是否相符
