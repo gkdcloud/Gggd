@@ -152,8 +152,8 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	rm -rf $nginx_Conf.new
 	wget --no-check-certificate $Github/mjnginx.conf -O $nginx_Conf.new
 	####这里开始验证首尾行是否正常####
-    nginx_check_start=`cat $nginx_Conf| head -n 1`
-	nginx_check_end=`cat $nginx_Conf| tail -n 1`
+    nginx_check_start=`cat $nginx_Conf.new| head -n 1`
+	nginx_check_end=`cat $nginx_Conf.new| tail -n 1`
 	nginx_check_start_end
     ####结束首尾行验证####
 	#MD5
@@ -286,6 +286,11 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#fqnginx监控
 	rm -rf $fqnginx_Conf.new
 	wget --no-check-certificate $Github/$fqnginx_name -O $fqnginx_Conf.new
+	####这里开始验证首尾行是否正常####
+    nginx_check_start=`cat $fqnginx_Conf.new| head -n 1`
+	nginx_check_end=`cat $fqnginx_Conf.new| tail -n 1`
+	nginx_check_start_end
+    ####结束首尾行验证####
 	fqnginx_md5=`md5sum $fqnginx_Conf  | cut -d ' ' -f1`
 	fqnginx_md5_n=`md5sum $fqnginx_Conf.new  | cut -d ' ' -f1`	
 	if [[ $fqnginx_md5 != $fqnginx_md5_n ]]; then
@@ -311,11 +316,6 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#fqnginx监控
 	rm -rf $ypnginx_Conf.new
 	wget --no-check-certificate $Github/$ypnginx_name -O $ypnginx_Conf.new
-	####这里开始验证首尾行是否正常####
-    nginx_check_start=`cat $nginx_Conf| head -n 1`
-	nginx_check_end=`cat $nginx_Conf| tail -n 1`
-	nginx_check_start_end
-    ####结束首尾行验证####
 	ypnginx_md5=`md5sum $ypnginx_Conf  | cut -d ' ' -f1`
 	ypnginx_md5_n=`md5sum $ypnginx_Conf.new  | cut -d ' ' -f1`	
 	if [[ $ypnginx_md5 != $ypnginx_md5_n ]]; then
@@ -342,8 +342,8 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	rm -rf $tbsnginx_Conf.new
 	wget --no-check-certificate $Github/$tbsnginx_name -O $tbsnginx_Conf.new
 	####这里开始验证首尾行是否正常####
-    nginx_check_start=`cat $nginx_Conf| head -n 1`
-	nginx_check_end=`cat $nginx_Conf| tail -n 1`
+    nginx_check_start=`cat $tbsnginx_Conf.new| head -n 1`
+	nginx_check_end=`cat $tbsnginx_Conf.new| tail -n 1`
 	nginx_check_start_end
     ####结束首尾行验证####
 	tbsnginx_md5=`md5sum $tbsnginx_Conf  | cut -d ' ' -f1`
