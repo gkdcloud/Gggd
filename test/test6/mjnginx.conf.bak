@@ -137,7 +137,7 @@ upstream hkt2{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
-        server 20.239.129.7805:6620 ;     #AZHK4F8s 
+        server 20.239.48.34:6620 ;     #AZHK9F8s 
 		server 104.208.102.141:6622 ;  #AZHK10 
         server 20.48.16.224:16620 backup;
         server 20.222.76.223:16620 backup;
