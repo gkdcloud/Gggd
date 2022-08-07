@@ -133,16 +133,16 @@ cnsync tbs">/usr/local/cron/cnsync_cron
 function crontab_all(){
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#brook监控(暂不启用，需将brook中的动态域名清除，否则将重复同步)
-	rm -rf $brook_Conf.new 
-	wget --no-check-certificate $Github/brook.conf -O $brook_Conf.new
-	brook_md5=`md5sum $brook_Conf  | cut -d ' ' -f1`
-	brook_md5_n=`md5sum $brook_Conf.new  | cut -d ' ' -f1`
+	#rm -rf $brook_Conf.new 
+	#wget --no-check-certificate $Github/brook.conf -O $brook_Conf.new
+	#brook_md5=`md5sum $brook_Conf  | cut -d ' ' -f1`
+	#brook_md5_n=`md5sum $brook_Conf.new  | cut -d ' ' -f1`
 	#注释结束(目前已经启用)
 	#vnet监控
-	rm -rf $vnet_Conf.new
-	wget --no-check-certificate $Github/client.conf -O $vnet_Conf.new
-	vnet_md5=`md5sum $vnet_Conf  | cut -d ' ' -f1`
-	vnet_md5_n=`md5sum $vnet_Conf.new  | cut -d ' ' -f1`
+	#rm -rf $vnet_Conf.new
+	#wget --no-check-certificate $Github/client.conf -O $vnet_Conf.new
+	#vnet_md5=`md5sum $vnet_Conf  | cut -d ' ' -f1`
+	#vnet_md5_n=`md5sum $vnet_Conf.new  | cut -d ' ' -f1`
 	#gost监控
 	#rm -rf $gost_Conf.new
 	#wget --no-check-certificate $Github/config.json -O $gost_Conf.new
@@ -168,15 +168,15 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 		echo -e "\033[32m Nginx文件已更新，同步完成 \033[0m"
         TG_MESSAGE="$SERVER_NAME Nginx 于 $DA 自动同步配置文件"
         TG_BOT
-	elif [[ $vnet_md5 != $vnet_md5_n ]]; then
-		echo "vnet与远端文件不符，正在同步"
-		rm -rf $vnet_Conf
-		mv $vnet_Conf.new $vnet_Conf
-		chmod +x $vnet_Conf
-		systemctl restart vnetc
-		echo -e "\033[32m vnet文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="$SERVER_NAME vnet 于 $DA 自动同步配置文件"
-        TG_BOT
+#	elif [[ $vnet_md5 != $vnet_md5_n ]]; then
+#		echo "vnet与远端文件不符，正在同步"
+#		rm -rf $vnet_Conf
+#		mv $vnet_Conf.new $vnet_Conf
+#		chmod +x $vnet_Conf
+#		systemctl restart vnetc
+#		echo -e "\033[32m vnet文件已更新，同步完成 \033[0m"
+#        TG_MESSAGE="$SERVER_NAME vnet 于 $DA 自动同步配置文件"
+#        TG_BOT
 #	elif [[ $gost_md5 != $gost_md5_n ]]; then
 #		echo "gost与远端文件不符，正在同步"
 #		rm -rf $gost_Conf
@@ -185,16 +185,16 @@ if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 #		echo -e "\033[32m gost文件已更新，同步完成 \033[0m"
 #       TG_MESSAGE="$SERVER_NAME gost 于 $DA 自动同步配置文件"
 #        TG_BOT
-	elif [[ $brook_md5 != $brook_md5_n ]]; then
-		echo "brook与远端文件不符，正在同步"
-		rm -rf $brook_Conf
-		mv $brook_Conf.new $brook_Conf
-		PID=$(ps -ef| grep "brook relays"| grep -v grep| grep -v ".sh"| grep -v "init.d"| grep -v "service"| awk '{print $2}')
-		[[ ! -z ${PID} ]] && /etc/init.d/brook-pf stop
-		/etc/init.d/brook-pf start > /dev/null 2>&1 
-		echo -e "\033[32m brook文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="$SERVER_NAME brook 于 $DA 自动同步配置文件"
-        TG_BOT
+#	elif [[ $brook_md5 != $brook_md5_n ]]; then
+#		echo "brook与远端文件不符，正在同步"
+#		rm -rf $brook_Conf
+#		mv $brook_Conf.new $brook_Conf
+#		PID=$(ps -ef| grep "brook relays"| grep -v grep| grep -v ".sh"| grep -v "init.d"| grep -v "service"| awk '{print $2}')
+#		[[ ! -z ${PID} ]] && /etc/init.d/brook-pf stop
+#		/etc/init.d/brook-pf start > /dev/null 2>&1 
+#		echo -e "\033[32m brook文件已更新，同步完成 \033[0m"
+#        TG_MESSAGE="$SERVER_NAME brook 于 $DA 自动同步配置文件"
+#        TG_BOT
 	else
 		echo "所有文件与远端相符，无需同步"
 	fi
