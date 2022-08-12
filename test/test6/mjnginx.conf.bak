@@ -20,8 +20,8 @@ upstream jp{
         server 52.140.215.70:16617;
         server 20.89.94.86:16617 backup;
         server 20.187.79.133:16617 backup; #azhk9临时
-        server 20.187.101.144:16617 ; 
-		server 20.239.57.176:16617 ; 
+        server 20.187.101.144:16617 backup; 
+		server 20.239.57.176:16617 backup; 
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream cvjp{
@@ -32,8 +32,8 @@ upstream cvjp{
         server 52.140.215.70:26601;
         server 20.89.94.86:26601 backup;
         server 20.187.79.133:26601 backup;
-        server 20.187.101.144:26601 ;
-		server 20.239.57.176:26601 ;
+        server 20.187.101.144:26601 backup;
+		server 20.239.57.176:26601 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream sg{  
@@ -148,7 +148,7 @@ upstream hkt2{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
-        server 20.205.61.210:6620 weight=5;     #AZHK9F8s 
+        server 20.187.123.159:6620 weight=5;     #AZHK9F8s 
 		server 104.208.102.70:6622;  #AZHK10 
         server 52.140.215.70:16620 backup; #weight=5
         server 20.89.94.86:16620 backup;
