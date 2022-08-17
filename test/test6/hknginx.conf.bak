@@ -86,7 +86,7 @@ upstream dogtw{
 upstream mjhkjp{
         ip_hash;
         server 50.7.14.77:6617 weight=1;      #日本2-FDC
-        server 172.104.109.79:6617 weight=10;   #日本3-Linode-月抛
+        server 172.104.83.181:6617 weight=10;   #日本3-Linode-月抛
         server 139.162.115.245:6617 weight=10;    #日本4-linode
         server 172.104.98.110:6617 weight=10;  #日本5-Linode
         server 139.162.85.145:6617 weight=10;   #日本6-Linode-月抛####nodeID=229
