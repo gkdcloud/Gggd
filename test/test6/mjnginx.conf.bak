@@ -72,20 +72,6 @@ upstream cvhk{
 		server 20.239.130.69:26607; #az14
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
-upstream kr{
-        ip_hash;	#vu负载
-        server 20.214.174.28:6616;    #kr2
-        server 20.214.171.7:6616;    #kr3
-        #server 158.247.230.29:6616;     #kr4
-		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
-}
-upstream cvkr{
-        ip_hash;	#vu+aws负载
-        server 20.214.174.28:8818;    #kr2--id47
-        server 20.214.171.7:8818;    #kr3--id48
-        #server 158.247.230.29:8818;     #kr4
-		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
-}
 upstream tw_n{
         server 20.187.118.101:16616;
         server 20.239.173.237:16616;
@@ -149,7 +135,7 @@ upstream hkt2{
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
         server 20.24.85.228:6620 weight=3;     #AZHK9F8s 
-		server 20.187.104.239:6622;  #AZHK10 
+		server 20.24.92.248:6622;  #AZHK10 
 		server 104.208.111.157:6622 weight=3;  #AZHK15F8S
         server 20.89.102.83:16620 backup; #weight=5
         server 20.89.94.86:16620 backup;
@@ -397,7 +383,7 @@ server {
 server {
     listen 16619;
     location / {
-		proxy_pass http://kr;
+		proxy_pass http://203.210.16.70:6616;
 		include /usr/local/nginx/ws; 
         }
 }
@@ -419,6 +405,13 @@ server {
     listen 16622;   #缺失16623分配亚洲
     location / {
 		proxy_pass http://210.0.159.89:6616; #新HGC
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16623;   #越南
+    location / {
+		proxy_pass http://156.59.142.105:6616; #新HGC
 		include /usr/local/nginx/ws; 
         }
 }
@@ -625,6 +618,20 @@ server {
 		include /usr/local/nginx/ws; 
         }
 }
+server {
+    listen 16653;
+    location / {
+		proxy_pass http://15.204.175.62:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16654;  #夏威夷
+    location / {
+		proxy_pass http://208.72.154.177:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
 #MJ嵌套区域-az-266弃用，魔戒仅用166端口
 server {
     listen 26622;   #计划下线
@@ -651,7 +658,7 @@ server {
 server {
     listen 26602;
     location / {
-		proxy_pass http://cvkr;
+		proxy_pass http://203.210.16.70:8818;
 		include /usr/local/nginx/ws; 
         }
 }
@@ -700,7 +707,7 @@ server {
 server {
     listen 26609; #香港 HKBN
     location / {
-		proxy_pass http://46.20.99.186:8818;   
+		proxy_pass http://46.20.99.58:8818;   
 		include /usr/local/nginx/ws; 
         }
 }
