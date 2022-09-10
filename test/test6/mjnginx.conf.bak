@@ -36,14 +36,14 @@ upstream cvjp{
 		server 20.239.130.69:26601 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
-upstream sg{  
+upstream sg{
         #ip_hash;  #BGP承载，AZ备用
-        server 20.89.102.83:16618;
         server 20.187.118.101:16618;
         server 20.239.173.237:16618;
         server 20.222.55.119:16618;
+        server 20.89.102.83:16618;
         server 20.89.94.86:16618;
-        server 20.187.79.133:16618; #azhk9
+        server 20.187.79.133:16618; #
         server 20.187.81.33:16618; #az13
 		server 20.239.130.69:16618; #az14
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
@@ -134,8 +134,8 @@ upstream hkt2{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
-        server 20.24.85.228:6620 weight=3;     #AZHK9F8s 
-		server 20.24.92.248:6622;  #AZHK10 
+        server 20.205.43.151:6620 weight=3;     #AZHK9F8s 
+		server 20.24.203.132:6622;  #AZHK10 
 		server 104.208.111.157:6622 weight=3;  #AZHK15F8S
         server 20.89.102.83:16620 backup; #weight=5
         server 20.89.94.86:16620 backup;
@@ -167,6 +167,42 @@ upstream mjtr{
 		server 20.239.130.69:16630; #az13
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
+upstream mjazth{   #泰国
+        #ip_hash; 
+        server 20.187.118.101:16658;
+        server 20.239.173.237:16658;
+        server 20.222.55.119:16658;
+        server 20.89.102.83:16658;
+        server 20.89.94.86:16658;
+        server 20.187.79.133:16658; #
+        server 20.187.81.33:16658; #az13
+		server 20.239.130.69:16658; #az14
+		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
+}
+upstream mjazph{   #菲律宾
+        #ip_hash; 
+        server 20.187.118.101:16656;
+        server 20.239.173.237:16656;
+        server 20.222.55.119:16656;
+        server 20.89.102.83:16656;
+        server 20.89.94.86:16656;
+        server 20.187.79.133:16656; #
+        server 20.187.81.33:16656; #az13
+		server 20.239.130.69:16656; #az14
+		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
+}
+upstream mjazidn{   #印度尼西亚IDN
+        #ip_hash; 
+        server 20.187.118.101:16660;
+        server 20.239.173.237:16660;
+        server 20.222.55.119:16660;
+        server 20.89.102.83:16660;
+        server 20.89.94.86:16660;
+        server 20.187.79.133:16660; #
+        server 20.187.81.33:16660; #az13
+		server 20.239.130.69:16660; #az14
+		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
+}
 upstream mjeufi{  #欧洲承载（DE）目的地芬兰
         server 89.163.224.151:16643;  #直连IP 37.157.255.188
         server 54.38.220.90:16643;  #直连 54.37.203.19
@@ -176,6 +212,12 @@ upstream mjde{
         ip_hash;	#de德国
         server 89.163.224.151:6616;  #直连IP 37.157.255.188
         server 54.38.220.90:6616; #直连 54.37.203.19
+		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
+}
+upstream mjvn{
+        ip_hash;	#越南
+        server 156.59.142.111:6616; #越南1
+        server 156.59.142.105:6616;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream uk{
@@ -411,7 +453,7 @@ server {
 server {
     listen 16623;   #越南
     location / {
-		proxy_pass http://156.59.142.105:6616; #新HGC
+		proxy_pass http://mjvn; #新HGC
 		include /usr/local/nginx/ws; 
         }
 }
@@ -629,6 +671,48 @@ server {
     listen 16654;  #夏威夷
     location / {
 		proxy_pass http://208.72.154.177:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16655;  #菲律宾PH
+    location / {
+		proxy_pass http://156.59.109.103:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16656;  #菲律宾az承载方向
+    location / {
+		proxy_pass http://mjazph;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16657;  #泰国TH
+    location / {
+		proxy_pass http://129.227.231.204:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16658;  #泰国az承载方向
+    location / {
+		proxy_pass http://mjazth;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16659;  #印度尼西亚IDN
+    location / {
+		proxy_pass http://156.59.160.19:6616;
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 16660;  #印度尼西亚az承载方向
+    location / {
+		proxy_pass http://mjazidn;
 		include /usr/local/nginx/ws; 
         }
 }
