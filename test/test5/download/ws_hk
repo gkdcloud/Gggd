@@ -11,7 +11,7 @@ set_real_ip_from   120.241.144.0/24; #广州碳云
 #高防服务器
 set_real_ip_from   153.99.234.0/24; #扬州联通-高防
 set_real_ip_from   221.131.165.0/24; #宿迁移动-高防
-set_real_ip_from   43.248.139.0/24; #江苏BGP-高防
+set_real_ip_from   43.248.134.0/24; #江苏BGP-高防
 set_real_ip_from   101.67.15.0/24; #温州三线-联通
 set_real_ip_from   61.164.154.0/24; #温州三线-电信
 #月抛机器保持更新
