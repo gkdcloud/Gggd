@@ -298,6 +298,16 @@ function install_hksync() {
 	chmod +x /usr/bin/hksync
 	hksync addcron
 }
+function install_hksync_t() {
+	if [[ "${release}" == "centos" ]]; then
+    yum install net-tools -y
+	elif [[ "${release}" == "debian" || "${release}" == "ubuntu" ]]; then
+    apt-get install net-tools -y
+	fi
+	wget --no-check-certificate $cndownload/hksync -O /usr/bin/hksync	
+	chmod +x /usr/bin/hksync
+	hksync mjtaddcron
+}
 #xrayr一键下发配置，实现快速部署
 # node xrayrconf 1 api.mojie.best heihuamojie666666 V2Board 139.162.76.14 80 Trojan
 function xrayr_config() {
@@ -382,7 +392,7 @@ function menu_server2() {
  ${Green_font_prefix} 6:${Font_color_suffix} 安装cnsync同步
  ${Green_font_prefix} 7.${Font_color_suffix} 安装vnets+hksync(只需要vnet落地)
  ${Green_font_prefix} 8.${Font_color_suffix} 安装tengine+hksync(香港/日本承载安装)
- ${Green_font_prefix} 9.${Font_color_suffix} 安装tengine+hksync(实验性功能Trojan入口)
+ ${Green_font_prefix} 9.${Font_color_suffix} 安装tengine+hksync-T(实验性功能Trojan入口)
 ————————————
  ${Green_font_prefix} 0.${Font_color_suffix} 安装国tengine+cnsync(国内中转一键部署)" &&echo 
   echo
@@ -415,19 +425,18 @@ function menu_server2() {
 	install_tengine
 	install_iptables
 	install_hksync
-	hksync all
+	hksync cron
     ;;
   9)
-    install_iptables
 	install_tengine
-	install_hksync
-	hksync all
+    install_iptables
+	install_hksync_t
+	hksync mjt
     ;;
   0)
-	yum update -y
+	install_tengine
 	install_iptables
     install_cnsync
-	install_tengine
 	cnsync all
     ;;
   *)
@@ -448,7 +457,25 @@ if [[ -n $action ]]; then
 	if [[ $github_test == "success" ]]; then
 		if [[ $action == "cn" ]]; then
 		    check_sys
-			menu_server2			
+			menu_server2
+		elif [[ $action == "cn0" ]]; then
+		    check_sys
+	        install_tengine
+	        install_iptables
+	        install_cnsync
+	        cnsync all
+		elif [[ $action == "cn8" ]]; then
+		    check_sys
+	        install_tengine
+	        install_iptables
+	        install_hksync
+	        hksync cron
+		elif [[ $action == "cn9" ]]; then
+		    check_sys
+	        install_tengine
+	        install_iptables
+	        install_hksync_t
+	        hksync mjt
 		elif [[ $action == "xrayrconf" ]]; then
 			xrayr_config
 		elif [[ $action == "cron" ]]; then
