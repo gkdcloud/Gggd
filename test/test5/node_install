@@ -204,6 +204,7 @@ function install_tengine() {
 		./configure --with-http_realip_module --without-http_upstream_keepalive_module --with-stream --with-stream_ssl_module --with-stream_sni --add-module=modules/ngx_http_upstream_* --add-module=modules/ngx_debug_* --add-module=modules/ngx_http_slice_module --add-module=modules/ngx_http_user_agent_module --add-module=modules/ngx_http_reqstat_module --add-module=modules/ngx_http_proxy_connect_module --add-module=modules/ngx_http_footer_filter_module
         make
         make install
+        mkdir /usr/local/nginx/tcp
         wget --no-check-certificate --no-check-certificate -N -P /usr/local/nginx/ $cndownload/download/ws
 		wget --no-check-certificate -N -P /usr/local/nginx/conf/ $cndownload/download/nginx.conf
 		echo "[Unit]
@@ -381,6 +382,7 @@ function menu_server2() {
  ${Green_font_prefix} 6:${Font_color_suffix} 安装cnsync同步
  ${Green_font_prefix} 7.${Font_color_suffix} 安装vnets+hksync(只需要vnet落地)
  ${Green_font_prefix} 8.${Font_color_suffix} 安装tengine+hksync(香港/日本承载安装)
+ ${Green_font_prefix} 9.${Font_color_suffix} 安装tengine+hksync(实验性功能Trojan入口)
 ————————————
  ${Green_font_prefix} 0.${Font_color_suffix} 安装国tengine+cnsync(国内中转一键部署)" &&echo 
   echo
@@ -412,6 +414,12 @@ function menu_server2() {
   8)
 	install_tengine
 	install_iptables
+	install_hksync
+	hksync all
+    ;;
+  9)
+    install_iptables
+	install_tengine
 	install_hksync
 	hksync all
     ;;
