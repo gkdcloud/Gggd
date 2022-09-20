@@ -431,6 +431,7 @@ function menu_server2() {
 	install_tengine
     install_iptables
 	install_hksync_t
+	hksync mjtls
 	hksync mjt
     ;;
   0)
