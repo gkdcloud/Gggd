@@ -344,7 +344,7 @@ function xrayr_config() {
 .*bank.*
 (.*\.)(gash)\.(com|tw)
 (.*\.)(mycard)\.(com|tw)
-(.*\.)(dafahao|minghui|dongtaiwang|epochtimes|ntdtv|falundafa|wujieliulan)\.(org|com|net)
+(.*\.)(dafahao|minghui|dongtaiwang|epochtimes|ntdtv|falundafa|wujieliulan|wforum)\.(org|com|net)
 (.?)(xunlei|sandai|Thunder|XLLiveUD|IDM|IDMan)(.)
 (api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
 (.*\.)(mycard|gash)\.(com|tw)
