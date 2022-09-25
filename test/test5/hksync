@@ -220,7 +220,7 @@ dog_Conf="/usr/local/nginx/tcp/dog.conf"
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
 	#mjt监控
 	rm -rf $dog_Conf.new
-	wget $Github/tcp/mjt.conf -O $dog_Conf.new
+	wget $Github/tcp/dog.conf -O $dog_Conf.new
 	dog_md5=`md5sum $dog_Conf  | cut -d ' ' -f1`
 	dog_md5_n=`md5sum $dog_Conf.new  | cut -d ' ' -f1`	
 	#检查与远端是否相符
