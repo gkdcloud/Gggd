@@ -112,6 +112,28 @@ hksync dogtls
 		echo -e "${Error} mjtsync_cron 自动同步已存在" 
     fi
 }
+function crontab_gkdt_addcron(){
+    #创建监控文件
+	mkdir /usr/local/cron
+	echo "#!/bin/bash
+#
+hksync gkdt
+hksync gkdtls
+">/usr/local/cron/gkdtsync_cron
+	#查看是否已经存在监控
+	cron_config=$(crontab -l | grep "gkdtsync_cron")
+	#检查并添加自动同步
+    if [[ -z ${cron_config} ]]; then
+		rm -r "/root/crontab.bak"
+		crontab -l > "/root/crontab.bak"
+		echo -e "\n*/2 * * * * bash /usr/local/cron/gkdtsync_cron" >> "/root/crontab.bak"
+		crontab "/root/crontab.bak"
+		rm -r "/root/crontab.bak"
+        echo -e "${Info} 已添加 gkdtsync_cron 自动同步!"        
+    else
+		echo -e "${Error} gkdtsync_cron 自动同步已存在" 
+    fi
+}
 function crontab_all(){
 #文件定义位置
 nginx_Conf="/usr/local/nginx/hknginx.conf"
@@ -259,12 +281,6 @@ Tcp_Conf_Name="mjt.conf"
 Tcp_Conf="/usr/local/nginx/tcp"
 tcp_cron
 }
-function crontab_dog(){
-#定义文件名称和目录
-Tcp_Conf_Name="dog.conf"
-Tcp_Conf="/usr/local/nginx/tcp"
-tcp_cron
-}
 function crontab_mjt_tls(){  #2022/10/20到期
 #定义文件名称和目录
 cert_pem="mjtls.pem"
@@ -272,10 +288,30 @@ cert_key="mjtls.key"
 cert_path="/usr/local/nginx/cert"
 cert_cron
 }
+
+function crontab_dog(){
+#定义文件名称和目录
+Tcp_Conf_Name="dog.conf"
+Tcp_Conf="/usr/local/nginx/tcp"
+tcp_cron
+}
 function crontab_dog_tls(){  #2022/10/20到期
 #定义文件名称和目录
 cert_pem="dogcntls.pem"
 cert_key="dogcntls.key"
+cert_path="/usr/local/nginx/cert"
+cert_cron
+}
+function crontab_gkdt(){
+#定义文件名称和目录
+Tcp_Conf_Name="gkdt.conf"
+Tcp_Conf="/usr/local/nginx/tcp"
+tcp_cron
+}
+function crontab_gkd_tls(){  #2022/10/20到期
+#定义文件名称和目录
+cert_pem="gkdtls.pem"
+cert_key="gkdtls.key"
 cert_path="/usr/local/nginx/cert"
 cert_cron
 }
@@ -323,7 +359,13 @@ if [[ $action == "vnet" ]]; then
 	crontab_dog
   elif [[ $action == "dogtls" ]]; then
     crontab_dog_tls
+  elif [[ $action == "gkdt" ]]; then
+	crontab_gkdt
+  elif [[ $action == "gkdtls" ]]; then
+    crontab_gkd_tls
   elif [[ $action == "mjtaddcron" ]]; then
+	crontab_mjt_addcron
+  elif [[ $action == "gkdtaddcron" ]]; then
 	crontab_mjt_addcron
   elif [[ $action == "v" ]]; then
 	echo -e $shell_version
