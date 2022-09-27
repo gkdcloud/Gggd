@@ -205,6 +205,7 @@ function install_tengine() {
         make
         make install
         mkdir /usr/local/nginx/tcp
+		mkdir /usr/local/nginx/cert
         wget --no-check-certificate --no-check-certificate -N -P /usr/local/nginx/ $cndownload/download/ws
         echo "user  root;
 worker_processes auto;
