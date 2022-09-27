@@ -189,139 +189,95 @@ else
 	echo "通信中断或已关闭同步，请手动操作"
 fi
 }
-function crontab_mjt(){
-#文件定义位置
-mjt_Conf="/usr/local/nginx/tcp/mjt.conf"
+#TCP通用监控程序
+function tcp_cron(){ 
 if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
-	#mjt监控
-	rm -rf $mjt_Conf.new
-	wget $Github/tcp/mjt.conf -O $mjt_Conf.new
-	mjt_md5=`md5sum $mjt_Conf  | cut -d ' ' -f1`
-	mjt_md5_n=`md5sum $mjt_Conf.new  | cut -d ' ' -f1`	
+	#同步监控
+	rm -rf $Tcp_Conf/$Tcp_Conf_Name.new
+	wget $Github/tcp/$Tcp_Conf_Name -O $Tcp_Conf/$Tcp_Conf_Name.new
+	md5=`md5sum $Tcp_Conf/$Tcp_Conf_Name  | cut -d ' ' -f1`
+	md5_n=`md5sum $Tcp_Conf/$Tcp_Conf_Name.new  | cut -d ' ' -f1`	
 	#检查与远端是否相符
-	if [[ $mjt_md5 != $mjt_md5_n ]]; then
-		echo "MJT_Nginx与远端文件不符，正在同步"
-		rm -rf $mjt_Conf
-		mv $mjt_Conf.new $mjt_Conf
+	if [[ $md5 != $md5_n ]]; then
+		echo "$Tcp_Conf_Name 与远端文件不符，正在同步"
+		rm -rf $Tcp_Conf/$Tcp_Conf_Name
+		mv $Tcp_Conf/$Tcp_Conf_Name.new $Tcp_Conf/$Tcp_Conf_Name
 		systemctl reload nginx
-		echo -e "\033[32m MJT_Nginx文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="HK_Sync: $SERVER_NAME TBS_Nginx 于 $DA 自动同步配置文件"
+		echo -e "\033[32m $Tcp_Conf_Name 文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="HK_Sync: $SERVER_NAME $Tcp_Conf_Name 于 $DA 自动同步配置文件"
         TG_BOT
 	else
-		echo "所有文件与远端相符，无需同步"
+		echo "$Tcp_Conf_Name 文件与远端相符，无需同步"
 	fi
 else
 	echo "通信中断或已关闭同步，请手动操作"
 fi
+}
+#证书通用监控程序
+function cert_cron(){ 
+if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
+	#cert监控
+    rm -rf $cert_path/$cert_pem.new
+    rm -rf $cert_path/$cert_key.new
+    wget $Github/cert/$cert_pem -O $cert_path/$cert_pem.new
+    wget $Github/cert/$cert_key -O $cert_path/$cert_key.new
+    cert_pem_md5=`md5sum $cert_path/$cert_pem  | cut -d ' ' -f1`
+    cert_pem_md5_n=`md5sum $cert_path/$cert_pem.new  | cut -d ' ' -f1`	
+    cert_key_md5=`md5sum $cert_path/$cert_key  | cut -d ' ' -f1`
+    cert_key_md5_n=`md5sum $cert_path/$cert_key.new  | cut -d ' ' -f1`	
+	#检查PEM与远端是否相符
+	if [[ $cert_pem_md5 != $cert_pem_md5_n ]]; then
+		echo "$cert_pem 与远端文件不符，正在同步"
+		rm -rf $cert_path/$cert_pem
+		mv $cert_path/$cert_pem.new $cert_path/$cert_pem
+		systemctl reload nginx
+		echo -e "\033[32m $cert_pem 文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="HK_Sync: $SERVER_NAME $cert_pem 于 $DA 自动同步配置文件"
+        TG_BOT
+	else
+		echo "$cert_pem 与远端相符，无需同步"
+	fi
+	#检查KEY与远端是否相符
+	if [[ $cert_key_md5 != $cert_key_md5_n ]]; then
+		echo "$cert_key 与远端文件不符，正在同步"
+		rm -rf $cert_path/$cert_key
+		mv $cert_path/$cert_key.new $cert_path/$cert_key
+		systemctl reload nginx
+		echo -e "\033[32m $cert_key 文件已更新，同步完成 \033[0m"
+        TG_MESSAGE="HK_Sync: $SERVER_NAME $cert_key 于 $DA 自动同步配置文件"
+        TG_BOT
+	else
+		echo "$cert_key 与远端相符，无需同步"
+	fi
+else
+	echo "通信中断或已关闭同步，请手动操作"
+fi
+}
+function crontab_mjt(){
+#定义文件名称和目录
+Tcp_Conf_Name="mjt.conf"
+Tcp_Conf="/usr/local/nginx/tcp"
+tcp_cron
 }
 function crontab_dog(){
-#文件定义位置
-dog_Conf="/usr/local/nginx/tcp/dog.conf"
-if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
-	#mjt监控
-	rm -rf $dog_Conf.new
-	wget $Github/tcp/dog.conf -O $dog_Conf.new
-	dog_md5=`md5sum $dog_Conf  | cut -d ' ' -f1`
-	dog_md5_n=`md5sum $dog_Conf.new  | cut -d ' ' -f1`	
-	#检查与远端是否相符
-	if [[ $dog_md5 != $dog_md5_n ]]; then
-		echo "dog_Conf 与远端文件不符，正在同步"
-		rm -rf $dog_Conf
-		mv $dog_Conf.new $dog_Conf
-		systemctl reload nginx
-		echo -e "\033[32m dog_Conf 文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="HK_Sync: $SERVER_NAME dog_Conf 于 $DA 自动同步配置文件"
-        TG_BOT
-	else
-		echo "所有文件与远端相符，无需同步"
-	fi
-else
-	echo "通信中断或已关闭同步，请手动操作"
-fi
+#定义文件名称和目录
+Tcp_Conf_Name="dog.conf"
+Tcp_Conf="/usr/local/nginx/tcp"
+tcp_cron
 }
 function crontab_mjt_tls(){  #2022/10/20到期
-#文件定义位置
-mjtls_pem="/usr/local/nginx/mjtls.pem"
-mjtls_key="/usr/local/nginx/mjtls.key"
-if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
-	#mjtls监控
-    rm -rf $mjtls_pem.new
-    rm -rf $mjtls_key.new
-    wget $Github/tls/mjtls.pem -O $mjtls_pem.new
-    wget $Github/tls/mjtls.key -O $mjtls_key.new
-    mjtls_pem_md5=`md5sum $mjtls_pem  | cut -d ' ' -f1`
-    mjtls_pem_md5_n=`md5sum $mjtls_pem.new  | cut -d ' ' -f1`	
-    mjtls_key_md5=`md5sum $mjtls_key  | cut -d ' ' -f1`
-    mjtls_key_md5_n=`md5sum $mjtls_key.new  | cut -d ' ' -f1`	
-	#检查PEM与远端是否相符
-	if [[ $mjtls_pem_md5 != $mjtls_pem_md5_n ]]; then
-		echo "MJTLS_pem与远端文件不符，正在同步"
-		rm -rf $mjtls_pem
-		mv $mjtls_pem.new $mjtls_pem
-		systemctl reload nginx
-		echo -e "\033[32m MJTLS_Pem文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="HK_Sync: $SERVER_NAME MJTLS_Pem 于 $DA 自动同步配置文件"
-        TG_BOT
-	else
-		echo "MJTLS_Pem 与远端相符，无需同步"
-	fi
-	#检查KEY与远端是否相符
-	if [[ $mjtls_key_md5 != $mjtls_key_md5_n ]]; then
-		echo "mjtls_key 与远端文件不符，正在同步"
-		rm -rf $mjtls_key
-		mv $mjtls_key.new $mjtls_key
-		systemctl reload nginx
-		echo -e "\033[32m mjtls_key 文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="HK_Sync: $SERVER_NAME mjtls_key 于 $DA 自动同步配置文件"
-        TG_BOT
-	else
-		echo "mjtls_key 与远端相符，无需同步"
-	fi
-else
-	echo "通信中断或已关闭同步，请手动操作"
-fi
+#定义文件名称和目录
+cert_pem="mjtls.pem"
+cert_key="mjtls.key"
+cert_path="/usr/local/nginx/cert"
+cert_cron
 }
 function crontab_dog_tls(){  #2022/10/20到期
-#文件定义位置
-dogcntls_pem="/usr/local/nginx/dogcntls.pem"
-dogcntls_key="/usr/local/nginx/dogcntls.key"
-if [[ $github_test == "success" ]] && [[ $github_cron == "true" ]]; then
-	#dogcntls 监控
-    rm -rf $dogcntls_pem.new
-    rm -rf $dogcntls_key.new
-    wget $Github/tls/dogcntls.pem -O $dogcntls_pem.new
-    wget $Github/tls/dogcntls.key -O $dogcntls_key.new
-    dogcntls_pem_md5=`md5sum $dogcntls_pem  | cut -d ' ' -f1`
-    dogcntls_pem_md5_n=`md5sum $dogcntls_pem.new  | cut -d ' ' -f1`	
-    dogcntls_key_md5=`md5sum $dogcntls_key  | cut -d ' ' -f1`
-    dogcntls_key_md5_n=`md5sum $dogcntls_key.new  | cut -d ' ' -f1`	
-	#检查PEM与远端是否相符
-	if [[ $dogcntls_pem_md5 != $dogcntls_pem_md5_n ]]; then
-		echo "dogcntls_pem 与远端文件不符，正在同步"
-		rm -rf $dogcntls_pem
-		mv $dogcntls_pem.new $dogcntls_pem
-		systemctl reload nginx
-		echo -e "\033[32m dogcntls_Pem 文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="HK_Sync: $SERVER_NAME dogcntls_Pem 于 $DA 自动同步配置文件"
-        TG_BOT
-	else
-		echo "dogcntls_Pem 与远端相符，无需同步"
-	fi
-	#检查KEY与远端是否相符
-	if [[ $dogcntls_key_md5 != $dogcntls_key_md5_n ]]; then
-		echo "dogcntls_key 与远端文件不符，正在同步"
-		rm -rf $dogcntls_key
-		mv $dogcntls_key.new $dogcntls_key
-		systemctl reload nginx
-		echo -e "\033[32m dogcntls_key 文件已更新，同步完成 \033[0m"
-        TG_MESSAGE="HK_Sync: $SERVER_NAME dogcntls_key 于 $DA 自动同步配置文件"
-        TG_BOT
-	else
-		echo "dogcntls_key 与远端相符，无需同步"
-	fi
-else
-	echo "通信中断或已关闭同步，请手动操作"
-fi
+#定义文件名称和目录
+cert_pem="dogcntls.pem"
+cert_key="dogcntls.key"
+cert_path="/usr/local/nginx/cert"
+cert_cron
 }
 #增加更新
 function hksync_update(){
