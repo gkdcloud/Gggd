@@ -72,20 +72,3 @@ server {
     proxy_protocol    on; # 获取真实ip
     proxy_pass gkdtus;
 }
-upstream awtsg{
-    hash $remote_addr;
-    server 159.223.75.30:2330 max_fails=3 fail_timeout=30s; 
-    server 159.223.69.19:2330 max_fails=3 fail_timeout=30s;
-    server 128.199.208.54:2330 max_fails=3 fail_timeout=30s; 
-}
-server {
-    listen  443 ssl;
-    server_name sg01.awcloud.top;
-    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
-    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
-    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
-    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
-    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
-    proxy_protocol    on; # 获取真实ip
-    proxy_pass awtsg;
-}	
