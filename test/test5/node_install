@@ -16,7 +16,7 @@ Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_p
 Info="${Green_font_prefix}[信息]${Font_color_suffix}"
 Error="${Red_font_prefix}[错误]${Font_color_suffix}"
 Tip="${Green_font_prefix}[注意]${Font_color_suffix}"
-#开放防火墙/Debian开启BBR
+#CentOS7开放防火墙 or Debian10/11开启BBR
 function install_iptables(){
 	if [[ "${release}" == "centos" ]]; then
 	systemctl stop firewalld
@@ -333,6 +333,73 @@ function install_hksync_t() {
 #xrayr一键下发配置，实现快速部署
 # node xrayrconf 1 api.mojie.best heihuamojie666666 V2Board 139.162.76.14 80 Trojan
 function xrayr_config() {
+xrayrnodestatus=`sed -n '$p' /etc/XrayR/config.yml`  #获取节点状态是否对接
+xrayrnodestatus2=${xrayrnodestatus##*#}  #获取节点状态是否对接
+#判断是否首次对接
+	if [[ "$xrayrnodestatus2" == "nodeisdone" ]]; then
+    #非首次对接，风险较低，直接执行
+    echo "${Green_font_prefix}开始对接XrayR节点${Font_color_suffix}"
+    xrayr_node_n
+    xrayrnodenum=`grep -o "nodeisdone" /etc/XrayR/config.yml | wc -l`  #获取节点对接数量
+    echo "对接完成，当前XrayR对接了 $xrayrnodenum 个节点"
+	elif [[ "$xrayrnodestatus2" != "nodeisdone" ]]; then
+    #此次为首次对接，会覆盖配置文件，发出警告并停留5s
+    echo -e "${Red_font_prefix}识别为首次对接，会覆盖配置文件。${Font_color_suffix}"
+      echo -e "即将开始对接...如果识别错误请使用 ${Red_font_prefix}Ctrl + C${Font_color_suffix} 中断"
+        echo -ne "\r5"
+        sleep 1
+        echo -ne "\r4"
+        sleep 1
+        echo -ne "\r3"
+        sleep 1
+        echo -ne "\r2"
+        sleep 1
+        echo -ne "\r1"
+        sleep 1
+        echo -e '\r0'
+        echo -e "${Green_font_prefix}开始对接XrayR节点${Font_color_suffix}"
+        sleep 1
+    xrayr_node_fast
+	fi
+}
+function xrayr_node_n() {
+#输出配置文件
+    echo "  -
+    PanelType: \"$xrPanel\" # Panel type: SSpanel, V2board
+    ApiConfig:
+      ApiHost: \"https://$xrApi\"
+      ApiKey: \"$xrKey\"
+      NodeID: $xrID
+      NodeType: $xrNode # Node type: V2ray, Shadowsocks, Trojan
+      Timeout: 30 # Timeout for the api request
+      EnableVless: false # Enable Vless for V2ray Type, Prefer remote configuration
+      EnableXTLS: false # Enable XTLS for V2ray and Trojan， Prefer remote configuration
+      RuleListPath: /etc/XrayR/rulelist
+    ControllerConfig:
+      ListenIP: 0.0.0.0 # IP address you want to listen
+      UpdatePeriodic: 120 # Time to update the nodeinfo, how many sec.
+      EnableDNS: false # Enable custom DNS config, Please ensure that you set the dns.json well
+      EnableProxyProtocol: true 
+      EnableFallback: true # Only support for Trojan and Vless
+      FallBackConfigs:  # Support multiple fallbacks
+        -
+          SNI: # TLS SNI(Server Name Indication), Empty for any
+          Path: # HTTP PATH, Empty for any
+          Dest: $xrDest:$xrDestPort # Required, Destination of fallback, check https://xtls.github.io/config/fallback/ for details.
+          ProxyProtocolVer: 0 # Send PROXY protocol version, 0 for dsable
+      CertConfig:
+        CertMode: none # Option about how to get certificate: none, file, http, dns. Choose \"none\" will forcedly disable the tls config.
+        CertDomain: \"node2.test.com\" # Domain to cert
+        CertFile: /etc/XrayR/cert/node2.test.com.cert # Provided if the CertMode is file
+        KeyFile: /etc/XrayR/cert/node2.test.com.key
+        Provider: alidns # DNS cert provider, Get the full support list here: https://go-acme.github.io/lego/dns/
+        Email: test@me.com
+        DNSEnv: # DNS ENV option used by DNS provider
+          ALICLOUD_ACCESS_KEY: aaa
+          ALICLOUD_SECRET_KEY: bbb #nodeisdone">>/etc/XrayR/config.yml
+}
+function xrayr_node_fast() {
+##首次对接：会输出配置文件，审计规则，封禁BT协议
 #输出审计规则
     echo "(torrent|\.torrent|peer_id=|info_hash|get_peers|find_node|BitTorrent|announce_peer|announce\.php\?passkey=)
 (api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com
@@ -431,7 +498,7 @@ Nodes:
         Email: test@me.com
         DNSEnv: # DNS ENV option used by DNS provider
           ALICLOUD_ACCESS_KEY: aaa
-          ALICLOUD_SECRET_KEY: bbb">/etc/XrayR/config.yml
+          ALICLOUD_SECRET_KEY: bbb #nodeisdone">/etc/XrayR/config.yml
 }
 #菜单选项
 function menu_server() {
