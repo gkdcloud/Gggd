@@ -338,7 +338,7 @@ xrayrnodestatus2=${xrayrnodestatus##*#}  #获取节点状态是否对接
 #判断是否首次对接
 	if [[ "$xrayrnodestatus2" == "nodeisdone" ]]; then
     #非首次对接，风险较低，直接执行
-    echo "${Green_font_prefix}开始对接XrayR节点${Font_color_suffix}"
+    echo -e "${Green_font_prefix}开始对接第N个XrayR节点${Font_color_suffix}"
     xrayr_node_n
     xrayrnodenum=`grep -o "nodeisdone" /etc/XrayR/config.yml | wc -l`  #获取节点对接数量
     echo "对接完成，当前XrayR对接了 $xrayrnodenum 个节点"
@@ -357,7 +357,7 @@ xrayrnodestatus2=${xrayrnodestatus##*#}  #获取节点状态是否对接
         echo -ne "\r1"
         sleep 1
         echo -e '\r0'
-        echo -e "${Green_font_prefix}开始对接XrayR节点${Font_color_suffix}"
+        echo -e "${Green_font_prefix}开始对接首个个XrayR节点${Font_color_suffix}"
         sleep 1
     xrayr_node_fast
 	fi
