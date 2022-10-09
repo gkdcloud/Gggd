@@ -344,21 +344,24 @@ xrayrnodestatus2=${xrayrnodestatus##*#}  #获取节点状态是否对接
     echo "对接完成，当前XrayR对接了 $xrayrnodenum 个节点"
 	elif [[ "$xrayrnodestatus2" != "nodeisdone" ]]; then
     #此次为首次对接，会覆盖配置文件，发出警告并停留5s
+#    echo -e "${Red_font_prefix}识别为首次对接，会覆盖配置文件。${Font_color_suffix}"
+#      echo -e "即将开始对接...如果识别错误请使用 ${Red_font_prefix}Ctrl + C${Font_color_suffix} 中断"
+#        echo -ne "\r5"
+#        sleep 1
+#        echo -ne "\r4"
+#        sleep 1
+#        echo -ne "\r3"
+#        sleep 1
+#        echo -ne "\r2"
+#        sleep 1
+#        echo -ne "\r1"
+#        sleep 1
+#        echo -e '\r0'
+#        echo -e "${Green_font_prefix}开始对接首个个XrayR节点${Font_color_suffix}"
+#        sleep 1
+###取消倒计时，改用输入任意键继续
     echo -e "${Red_font_prefix}识别为首次对接，会覆盖配置文件。${Font_color_suffix}"
-      echo -e "即将开始对接...如果识别错误请使用 ${Red_font_prefix}Ctrl + C${Font_color_suffix} 中断"
-        echo -ne "\r5"
-        sleep 1
-        echo -ne "\r4"
-        sleep 1
-        echo -ne "\r3"
-        sleep 1
-        echo -ne "\r2"
-        sleep 1
-        echo -ne "\r1"
-        sleep 1
-        echo -e '\r0'
-        echo -e "${Green_font_prefix}开始对接首个个XrayR节点${Font_color_suffix}"
-        sleep 1
+    read -s -n1 -p "按任意键继续...或使用Ctrl+C中断 "
     xrayr_node_fast
 	fi
 }
