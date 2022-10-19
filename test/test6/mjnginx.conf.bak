@@ -145,7 +145,7 @@ upstream hkt2{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
-        server 20.187.78.235:6620 weight=3;     #AZHK9F8s 
+        server 20.239.248.118:6620 weight=3;     #AZHK9F8s 
 		server 20.187.80.64:6622;  #AZHK10   ID167
 		server 104.208.86.191:6622 weight=3;  #AZHK15F8S   ID238
         server 20.89.102.83:16620 backup; #weight=5
@@ -167,18 +167,6 @@ upstream mjazusd{
 		server 20.239.71.221:16650;
 		server 20.24.213.197:16650;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
-}
-upstream mjtr{
-        server 20.89.102.83:16630;
-        server 20.89.94.86:16630;
-        server 20.210.203.155:16630;
-        server 20.222.29.199:16630;
-        server 20.89.140.126:16630;
-        server 20.187.79.133:16630; #azhk9
-        server 20.24.151.187:16630; #az13
-		server 20.239.71.221:16630; #az13
-		server 20.24.213.197:16630; #az13
-		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream mjazth{   #泰国
         #ip_hash; 
@@ -525,13 +513,6 @@ server {
         }
 }
 server {
-    listen 16630;
-    location / {
-		proxy_pass http://mjtr;  #魔戒土耳其
-		include /usr/local/nginx/ws; 
-        }
-}
-server {
     listen 16631;
     location / {
 		proxy_pass http://hkt2;  #蒙古
@@ -672,13 +653,6 @@ server {
         }
 }
 server {
-    listen 16651;
-    location / {
-		proxy_pass http://185.203.6.195:6616;
-		include /usr/local/nginx/ws; 
-        }
-}
-server {
     listen 16652;
     location / {
 		proxy_pass http://45.159.250.42:6616;
@@ -742,13 +716,6 @@ server {
         }
 }
 #MJ嵌套区域-az-266弃用，魔戒仅用166端口
-server {
-    listen 26622;   #计划下线
-    location / {
-		proxy_pass http://hk_hgc_n_az;  #az到hgc_n
-		include /usr/local/nginx/ws; 
-        }
-}
 server {
     listen 26633;
     location / {
