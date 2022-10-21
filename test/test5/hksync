@@ -288,7 +288,6 @@ cert_key="mjtls.key"
 cert_path="/usr/local/nginx/cert"
 cert_cron
 }
-
 function crontab_dog(){
 #定义文件名称和目录
 Tcp_Conf_Name="dog.conf"
@@ -301,7 +300,7 @@ cert_pem="dogcntls.pem"
 cert_key="dogcntls.key"
 cert_path="/usr/local/nginx/cert"
 cert_cron
-}
+}	
 function crontab_gkdt(){
 #定义文件名称和目录
 Tcp_Conf_Name="gkdt.conf"
@@ -312,6 +311,13 @@ function crontab_gkd_tls(){  #2022/10/20到期
 #定义文件名称和目录
 cert_pem="gkdtls.pem"
 cert_key="gkdtls.key"
+cert_path="/usr/local/nginx/cert"
+cert_cron
+}
+function crontab_aw_tls(){  #2022/10/20到期
+#定义文件名称和目录
+cert_pem="awtls.pem"
+cert_key="awtls.key"
 cert_path="/usr/local/nginx/cert"
 cert_cron
 }
@@ -363,10 +369,11 @@ if [[ $action == "vnet" ]]; then
 	crontab_gkdt
   elif [[ $action == "gkdtls" ]]; then
     crontab_gkd_tls
+    crontab_aw_tls
   elif [[ $action == "mjtaddcron" ]]; then
 	crontab_mjt_addcron
   elif [[ $action == "gkdtaddcron" ]]; then
-	crontab_mjt_addcron
+	crontab_gkdt_addcron
   elif [[ $action == "v" ]]; then
 	echo -e $shell_version
   elif [[ $action == "update" ]]; then
