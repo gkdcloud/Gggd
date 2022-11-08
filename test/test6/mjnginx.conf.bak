@@ -146,9 +146,9 @@ upstream hkt2{
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
         #server 20.255.146.54:6620;  #由椰子添加的临时备用，无需理会，正常对接，ID106
-        server 20.187.114.38:6620 weight=3;     #AZHK9F8s 
+        server 20.205.8.129:6620 weight=3;     #AZHK9F8s 
 		server 20.187.73.234:6622;  #AZHK10   ID167
-		server 20.239.94.197:6622 weight=3;  #AZHK15F8S   ID238
+		server 20.239.131.192:6622 weight=3;  #AZHK15F8S   ID238
         server 20.222.68.184:16620 backup; #weight=5
         server 52.187.126.180:16620 backup;
         server 20.222.97.21:16620 backup;
