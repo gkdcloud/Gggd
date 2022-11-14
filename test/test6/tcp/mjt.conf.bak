@@ -1,22 +1,22 @@
 ########这里是Trojan线路入口配置########
 ####负载均衡放在在前
 upstream mjtsg{
-    hash $remote_addr;
-    server 15.235.163.186:6626 max_fails=3 fail_timeout=30s;
+    #hash $remote_addr;
+    #server 15.235.163.186:6626 max_fails=3 fail_timeout=30s;
     server 15.235.171.180:6626 max_fails=3 fail_timeout=30s;
 }
-upstream cvtsg{
-    hash $remote_addr;
-    server 15.235.163.186:8828 max_fails=3 fail_timeout=30s;
+upstream cvtsg{ 
+    #hash $remote_addr;
+    #server 15.235.163.186:8828 max_fails=3 fail_timeout=30s;
     server 15.235.171.180:8828 max_fails=3 fail_timeout=30s;
 }
 upstream mjtjp{
     #hash $remote_addr;
-    server 139.162.119.178:6626 max_fails=3 fail_timeout=30s; #T11  ID7
-    server 172.104.115.86:6626 max_fails=3 fail_timeout=30s;  #T12  ID8
-    server 172.104.115.224:6626 max_fails=3 fail_timeout=30s; #T13  ID12
-    server 139.162.113.202:6626 max_fails=3 fail_timeout=30s; #T14  ID14
-    server 172.105.221.100:6626 max_fails=3 fail_timeout=30s; #T15  ID15
+    server 172.104.105.205:6626 max_fails=3 fail_timeout=30s; #T11  NodeID7
+    #server 172.104.115.224:6626 max_fails=3 fail_timeout=30s;  #T12  ID8
+    server 103.29.70.173:6626 max_fails=3 fail_timeout=30s; #T13  ID12
+    server 172.105.235.144:6626 max_fails=3 fail_timeout=30s; #T14  ID14
+    server 172.105.212.73:6626 max_fails=3 fail_timeout=30s; #T15  ID15
     server 139.162.67.222:6626 max_fails=3 fail_timeout=30s backup;
 }
 upstream mjttw{
@@ -91,7 +91,7 @@ server {
     ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
-    proxy_pass 220.246.250.193:6626;
+    proxy_pass 220.246.250.241:6626;
 }
 server {
     listen  443 ssl;
@@ -102,7 +102,7 @@ server {
     ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
-    proxy_pass 220.246.250.193:8828;
+    proxy_pass 220.246.250.241:8828;
 }
 server {
     listen  443 ssl;
