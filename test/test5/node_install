@@ -380,7 +380,7 @@ function xrayr_node_n() {
       RuleListPath: /etc/XrayR/rulelist
     ControllerConfig:
       ListenIP: 0.0.0.0 # IP address you want to listen
-      UpdatePeriodic: 120 # Time to update the nodeinfo, how many sec.
+      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
       EnableDNS: false # Enable custom DNS config, Please ensure that you set the dns.json well
       EnableProxyProtocol: true 
       EnableFallback: true # Only support for Trojan and Vless
@@ -482,7 +482,7 @@ Nodes:
       RuleListPath: /etc/XrayR/rulelist
     ControllerConfig:
       ListenIP: 0.0.0.0 # IP address you want to listen
-      UpdatePeriodic: 120 # Time to update the nodeinfo, how many sec.
+      UpdatePeriodic: 60 # Time to update the nodeinfo, how many sec.
       EnableDNS: false # Enable custom DNS config, Please ensure that you set the dns.json well
       EnableProxyProtocol: true 
       EnableFallback: true # Only support for Trojan and Vless
