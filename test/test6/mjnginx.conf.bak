@@ -156,9 +156,9 @@ upstream hkt2{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
-        server 20.187.85.40:6622 weight=3;     #AZHK9F8s   ID268
+        server 20.187.85.82:6622 weight=3;     #AZHK9F8s   ID268
 		server 20.239.177.89:6622;  #AZHK10   ID167
-		server 20.247.116.18:6622 weight=3;  #AZHK15F8S   ID238
+		server 20.24.65.101:6622 weight=3;  #AZHK15F8S   ID238
         server 18.166.58.141:6622;  #由椰子添加AWS1-测试，ID267
         server 20.212.162.192:16620 backup; #weight=5
         server 20.212.6.61:16620 backup;
