@@ -8,9 +8,9 @@
 #azsg6-f4s   20.24.98.229
 #azsg7-f4s   20.212.6.61
 #azsg8-f2s   20.212.63.117
-#azhk13-f4s  20.239.168.103
+#azhk13-f4s  20.24.99.120
 #azhk14-f4s  20.239.94.152
-#azhk16-f4s  20.239.199.54
+#azhk16-f4s  20.24.71.183
 #azhk-backup 153.122.102.51 gmo日本1
 #azhk-backup 153.122.173.25 gmo日本2
 #azbackup 日本NTT 164.70.90.243   香港103.166.247.35
@@ -23,9 +23,9 @@ upstream jp{
         server 20.24.98.229:16617 backup;
         server 20.212.6.61:16617 backup;
         server 20.212.63.117:16617 backup; #azhk9临时
-        server 20.239.168.103:16617 backup; 
+        server 20.24.99.120:16617 backup; 
 		server 20.239.94.152:16617 backup; 
-		server 20.239.199.54:16617 backup; 
+		server 20.24.71.183:16617 backup; 
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream cvjp{
@@ -37,9 +37,9 @@ upstream cvjp{
         server 20.24.98.229:26601 backup;
         server 20.212.6.61:26601 backup;
         server 20.212.63.117:26601 backup;
-        server 20.239.168.103:26601 backup;
+        server 20.24.99.120:26601 backup;
 		server 20.239.94.152:26601 backup;
-		server 20.239.199.54:26601 backup;
+		server 20.24.71.183:26601 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream sg{
@@ -51,9 +51,9 @@ upstream sg{
         server 20.24.98.229:16618;
         server 20.212.6.61:16618;
         server 20.212.63.117:16618; #
-        server 20.239.168.103:16618 backup; #az13
+        server 20.24.99.120:16618 backup; #az13
 		server 20.239.94.152:16618 backup; #az14
-		server 20.239.199.54:16618 backup; #az16
+		server 20.24.71.183:16618 backup; #az16
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream cvsg{
@@ -65,9 +65,9 @@ upstream cvsg{
         server 20.210.99.120:26603;
         server 20.210.227.94:26603;
         server 20.212.63.117:26603;
-        server 20.239.168.103:26603 backup;
+        server 20.24.99.120:26603 backup;
 		server 20.239.94.152:26603 backup;
-		server 20.239.199.54:26603 backup;
+		server 20.24.71.183:26603 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream cvhk{
@@ -79,9 +79,9 @@ upstream cvhk{
         server 20.210.99.120:26607;
         server 20.210.227.94:26607;
         server 20.212.63.117:26607; #azhk9
-        server 20.239.168.103:26607; #az13
+        server 20.24.99.120:26607; #az13
 		server 20.239.94.152:26607; #az14
-		server 20.239.199.54:26607; #az16
+		server 20.24.71.183:26607; #az16
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream tw_n{
@@ -92,9 +92,9 @@ upstream tw_n{
         server 20.24.98.229:16616;
         server 20.212.6.61:16616;
         server 20.212.63.117:16616; #azhk9
-        server 20.239.168.103:16616; #azjp13
+        server 20.24.99.120:16616; #azjp13
 		server 20.239.94.152:16616; #azjp14
-		server 20.239.199.54:16616; #azjp16
+		server 20.24.71.183:16616; #azjp16
         server 153.122.102.51:16616 backup;
         server 153.122.173.25:16616 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
@@ -107,9 +107,9 @@ upstream cvtw{
         server 20.210.99.120:26604;
         server 20.210.227.94:26604;
         server 20.212.63.117:26604; #azhk9
-        server 20.239.168.103:26604; #azjp13
+        server 20.24.99.120:26604; #azjp13
 		server 20.239.94.152:26604; #azjp14
-		server 20.239.199.54:26604; #azjp16
+		server 20.24.71.183:26604; #azjp16
         server 153.122.102.51:26604 backup;
         server 153.122.173.25:26604 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
@@ -122,9 +122,9 @@ upstream fqtw{
         server 20.24.98.229:23330;
         server 20.212.6.61:23330;
         server 20.212.63.117:23330; #azhk9
-        server 20.239.168.103:23330; #azjp13
+        server 20.24.99.120:23330; #azjp13
 		server 20.239.94.152:23330; #azjp14
-		server 20.239.199.54:23330; #azjp16
+		server 20.24.71.183:23330; #azjp16
         server 153.122.102.51:23330 backup;
         server 153.122.173.25:23330 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
@@ -137,9 +137,9 @@ upstream mjhk{
         server 20.210.99.120:16620 backup;
         server 20.210.227.94:16620 backup;
         server 20.212.63.117:16620 backup; #azhk9
-        server 20.239.168.103:16620; #az13
+        server 20.24.99.120:16620; #az13
 		server 20.239.94.152:16620; #az14
-		server 20.239.199.54:16620; #az16
+		server 20.24.71.183:16620; #az16
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream hkt2{
@@ -150,9 +150,9 @@ upstream hkt2{
         server 20.210.99.120:16631;
         server 20.210.227.94:16631;
         server 20.212.63.117:16631; #azhk9
-        server 20.239.168.103:16631; #az13
+        server 20.24.99.120:16631; #az13
 		server 20.239.94.152:16631; #az14
-		server 20.239.199.54:16631; #az16
+		server 20.24.71.183:16631; #az16
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
@@ -179,9 +179,9 @@ upstream mjazusd{
         server 20.24.98.229:16650;
         server 20.212.6.61:16650;
         server 20.212.63.117:16650;
-        server 20.239.168.103:16650;
+        server 20.24.99.120:16650;
 		server 20.239.94.152:16650;
-		server 20.239.199.54:16650;
+		server 20.24.71.183:16650;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream mjazth{   #泰国
@@ -193,9 +193,9 @@ upstream mjazth{   #泰国
         server 20.24.98.229:16658;
         server 20.212.6.61:16658;
         server 20.212.63.117:16658; #
-        server 20.239.168.103:16658; #az13
+        server 20.24.99.120:16658; #az13
 		server 20.239.94.152:16658; #az14
-		server 20.239.199.54:16658; #az16
+		server 20.24.71.183:16658; #az16
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream mjazph{   #菲律宾
@@ -207,9 +207,9 @@ upstream mjazph{   #菲律宾
         server 20.24.98.229:16656;
         server 20.212.6.61:16656;
         server 20.212.63.117:16656; #
-        server 20.239.168.103:16656; #az13
+        server 20.24.99.120:16656; #az13
 		server 20.239.94.152:16656; #az14
-		server 20.239.199.54:16656; #az14
+		server 20.24.71.183:16656; #az14
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream mjazidn{   #印度尼西亚IDN
@@ -221,9 +221,9 @@ upstream mjazidn{   #印度尼西亚IDN
         server 20.24.98.229:16660;
         server 20.212.6.61:16660;
         server 20.212.63.117:16660; #
-        server 20.239.168.103:16660; #az13
+        server 20.24.99.120:16660; #az13
 		server 20.239.94.152:16660; #az14
-		server 20.239.199.54:16660; #az16
+		server 20.24.71.183:16660; #az16
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream mjeufi{  #欧洲承载（DE）目的地芬兰
@@ -296,9 +296,9 @@ upstream hgc{
         server 20.210.99.120:16621;
         server 20.210.227.94:16621;
         server 20.212.63.117:16621; #azhk9
-        server 20.239.168.103:16621; #azjp13
+        server 20.24.99.120:16621; #azjp13
 		server 20.239.94.152:16621; #azjp14
-		server 20.239.199.54:16621; #azjp16
+		server 20.24.71.183:16621; #azjp16
         server 153.122.102.51:16621 backup;
         server 153.122.173.25:16621 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
@@ -312,9 +312,9 @@ upstream cvhgc{
         server 20.24.98.229:26608;
         server 20.212.6.61:26608;
         server 20.212.63.117:26608; 
-        server 20.239.168.103:26608; 
+        server 20.24.99.120:26608; 
 		server 20.239.94.152:26608;
-		server 20.239.199.54:26608;
+		server 20.24.71.183:26608;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 upstream fqhgc{
@@ -330,9 +330,9 @@ upstream hk_az{   #交给隧道处理-az-fdc
         server 20.24.98.229:26633;
         server 20.212.6.61:26633;
         server 20.212.63.117:26633; #azhk9
-        server 20.239.168.103:26633; #az13
+        server 20.24.99.120:26633; #az13
 		server 20.239.94.152:26633; #az14
-		server 20.239.199.54:26633; #az16
+		server 20.24.71.183:26633; #az16
         server 153.122.102.51:26633 backup;
         server 153.122.173.25:26633 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
@@ -345,9 +345,9 @@ upstream hk_hgc_n_az{   #交给隧道处理-az-fdc
         server 20.24.98.229:26622;
         server 20.212.6.61:26622;
         server 20.212.63.117:26622; #azhk9
-        server 20.239.168.103:26622; #az13
+        server 20.24.99.120:26622; #az13
 		server 20.239.94.152:26622; #az14
-		server 20.239.199.54:26622; #az16
+		server 20.24.71.183:26622; #az16
         server 153.122.102.51:26622 backup;
         server 153.122.173.25:26622 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
@@ -360,9 +360,9 @@ upstream malai_vnet{
         server 20.24.98.229:26623;
         server 20.212.6.61:26623;
         server 20.212.63.117:26623; #azhk9
-        server 20.239.168.103:26623; #az13
+        server 20.24.99.120:26623; #az13
 		server 20.239.94.152:26623; #az14
-		server 20.239.199.54:26623; #az16
+		server 20.24.71.183:26623; #az16
         server 153.122.102.51:26623 backup;
         server 153.122.173.25:26623 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
@@ -398,9 +398,9 @@ upstream mjar{
         server 20.24.98.229:16628;
         server 20.212.6.61:16628;
         server 20.212.63.117:16628; #azhk9
-        server 20.239.168.103:16628; #az13
+        server 20.24.99.120:16628; #az13
 		server 20.239.94.152:16628; #az14
-		server 20.239.199.54:16628; #az16
+		server 20.24.71.183:16628; #az16
         server 153.122.102.51:16628 backup;
         server 153.122.173.25:16628 backup;
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
