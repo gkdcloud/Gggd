@@ -1,3 +1,10 @@
+upstream gkdthk01{
+    #hash $remote_addr;
+    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s; 
+    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s backup;
+}
 server {
     listen  443 ssl;
     server_name hk01.trojanyyds.top;
@@ -7,8 +14,62 @@ server {
     ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
-    proxy_pass 219.78.7.219:23000;
-}	
+    proxy_pass gkdthk01;
+}
+upstream gkdthk02{
+    #hash $remote_addr;
+    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s backup; 
+    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s;
+    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s backup;
+}
+server {
+    listen  443 ssl;
+    server_name hk02.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass gkdthk02;
+}
+upstream gkdthk03{
+    #hash $remote_addr;
+    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s backup; 
+    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s;
+    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s backup;
+}
+server {
+    listen  443 ssl;
+    server_name hk03.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass gkdthk03;
+}
+upstream gkdthk04{
+    #hash $remote_addr;
+    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s backup; 
+    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s;
+}
+server {
+    listen  443 ssl;
+    server_name hk04.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass gkdthk04;
+}
 upstream gkdtsg{
     hash $remote_addr;
     server 51.79.251.244:23000 max_fails=3 fail_timeout=30s; 
@@ -270,4 +331,109 @@ server {
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
     proxy_pass kapokjp;
+}
+server {
+    listen  443 ssl;
+    server_name in10.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass 139.59.44.51:23100;
+}
+server {
+    listen  443 ssl;
+    server_name de10.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass 165.22.84.215:23100;
+}
+server {
+    listen  443 ssl;
+    server_name uk10.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass 159.65.50.159:23100;
+}
+upstream kapokthk01{
+    #hash $remote_addr;
+    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s; 
+    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s backup;
+}
+server {
+    listen  443 ssl;
+    server_name kapokhk01.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass kapokthk01;
+}
+upstream kapokthk02{
+    #hash $remote_addr;
+    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s backup; 
+    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s;
+    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s backup;
+}
+server {
+    listen  443 ssl;
+    server_name kapokhk02.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass kapokthk02;
+}
+upstream kapokthk03{
+    #hash $remote_addr;
+    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s backup; 
+    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s;
+    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s backup;
+}
+server {
+    listen  443 ssl;
+    server_name kapokhk03.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass kapokthk03;
+}
+upstream kapokthk04{
+    #hash $remote_addr;
+    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s backup; 
+    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s backup;
+    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s;
+}
+server {
+    listen  443 ssl;
+    server_name kapokhk04.trojanyyds.top;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass kapokthk04;
 }
