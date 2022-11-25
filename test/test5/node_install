@@ -582,6 +582,8 @@ function menu_server2() {
     hksync mjtaddcron
 	hksync mjtls
 	hksync mjt
+    systemctl restart nginx
+    systemctl status nginx
     ;;
   0)
 	install_tengine
@@ -637,6 +639,8 @@ if [[ -n $action ]]; then
             hksync mjtaddcron
 	        hksync mjtls
 	        hksync mjt
+            systemctl restart nginx
+            systemctl status nginx
 		elif [[ $action == "xrayrconf" ]]; then
 			xrayr_config
 		elif [[ $action == "cron" ]]; then
