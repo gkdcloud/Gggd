@@ -198,6 +198,7 @@ upstream awtmy{
     hash $remote_addr;
     server 115.134.128.25:2335 max_fails=3 fail_timeout=30s; 
     server 58.26.140.43:2335 max_fails=3 fail_timeout=30s;
+	server 58.26.140.36:2335 max_fails=3 fail_timeout=30s;
 	}
 server {
     listen  443 ssl;
