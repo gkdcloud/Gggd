@@ -13,11 +13,17 @@ upstream cvtsg{
 upstream mjtjp{
     #hash $remote_addr;
     server 172.104.118.194:6626 max_fails=3 fail_timeout=30s; #T11  NodeID7
-    #server 103.29.69.62:6626 max_fails=3 fail_timeout=30s;  #T12  ID8
-    #server 139.162.120.51:6626 max_fails=3 fail_timeout=30s; #T13  ID12
-    #server 172.105.235.144:6626 max_fails=3 fail_timeout=30s; #T14  ID14
-    #server 172.105.212.73:6626 max_fails=3 fail_timeout=30s; #T15  ID15
+    server 172.105.236.43:6626 max_fails=3 fail_timeout=30s;  #T12  ID8
+    server 139.162.91.219:6626 max_fails=3 fail_timeout=30s; #T13  ID12
+    server 172.104.79.13:6626 max_fails=3 fail_timeout=30s; #T14  ID14
+    server 139.162.114.213:6626 max_fails=3 fail_timeout=30s; #T15  ID15
     server 139.162.67.222:6626 max_fails=3 fail_timeout=30s backup;
+}
+upstream mjtvn{
+    hash $remote_addr;
+    server 103.187.168.45:6626 max_fails=3 fail_timeout=30s weight=1; #T0到期后删除
+    server 103.187.168.155:6626 max_fails=3 fail_timeout=30s weight=3; #T1
+    server 103.187.168.162:6626 max_fails=3 fail_timeout=30s weight=3;  #T2
 }
 upstream mjttw{
     hash $remote_addr;
@@ -191,7 +197,7 @@ server {
     ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
-    proxy_pass 165.154.229.161:6626;
+    proxy_pass mjtvn;
 }
 server {
     listen  443 ssl;
@@ -236,7 +242,7 @@ server {
     ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
-    proxy_pass 208.115.243.44:6626;
+    proxy_pass 104.149.133.211:6626;
 }
 server {
     listen  443 ssl;
@@ -247,7 +253,7 @@ server {
     ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
-    proxy_pass 208.115.243.44:8828;
+    proxy_pass 104.149.133.211:8828;   #cvt id=82
 }
 server {
     listen  443 ssl;
@@ -282,6 +288,17 @@ server {
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
     proxy_pass 54.37.203.19:6626;
+}
+server {
+    listen  443 ssl;
+    server_name uk.iamnotagoodman.com;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/mjtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/mjtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass 198.244.241.217:6626;
 }
 server {
     listen  443 ssl;
