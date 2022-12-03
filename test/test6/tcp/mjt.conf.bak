@@ -12,11 +12,11 @@ upstream cvtsg{
 }
 upstream mjtjp{
     #hash $remote_addr;
-    server 172.104.118.194:6626 max_fails=3 fail_timeout=30s; #T11  NodeID7
+    server 172.105.200.90:6626 max_fails=3 fail_timeout=30s; #T11  NodeID7
     server 172.105.236.43:6626 max_fails=3 fail_timeout=30s;  #T12  ID8
-    server 139.162.91.219:6626 max_fails=3 fail_timeout=30s; #T13  ID12
-    server 172.104.79.13:6626 max_fails=3 fail_timeout=30s; #T14  ID14
-    server 139.162.114.213:6626 max_fails=3 fail_timeout=30s; #T15  ID15
+    server 172.105.234.26:6626 max_fails=3 fail_timeout=30s; #T13  ID12
+    server 172.105.234.113:6626 max_fails=3 fail_timeout=30s; #T14  ID14
+    server 172.104.107.111:6626 max_fails=3 fail_timeout=30s; #T15  ID15
     server 139.162.67.222:6626 max_fails=3 fail_timeout=30s backup;
 }
 upstream mjtvn{
@@ -140,6 +140,23 @@ server {
 }
 server {
     listen  443 ssl;
+    server_name hinet.iamnotagoodman.com;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_certificate /usr/local/nginx/cert/mjtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/mjtls.key;
+    ssl_session_cache   shared:SSL:10m;
+    ssl_session_timeout 10m;
+    proxy_connect_timeout 5s;  # 与被代理服务器建立连接的超时时间为5s
+    proxy_timeout 20s;   # 获取被代理服务器的响应最大超时时间为10s
+    proxy_next_upstream on;  # 当被代理的服务器返回错误或超时时，将未返回响应的客户端连接请求传递给upstream中的下一个服务器
+    proxy_next_upstream_tries 3;   # 转发尝试请求最多3次
+    proxy_next_upstream_timeout 10s;    # 总尝试超时时间为10s
+    proxy_socket_keepalive on;  # 开启SO_KEEPALIVE选项进行心跳检测
+    proxy_protocol    on; 
+    proxy_pass  59.120.251.8:6626; # 后端T监听端口
+}
+server {
+    listen  443 ssl;
     server_name kr.iamnotagoodman.com;
     ssl_protocols       TLSv1.2 TLSv1.3;
     ssl_certificate /usr/local/nginx/cert/mjtls.pem;
@@ -231,6 +248,17 @@ server {
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
     proxy_pass 45.159.250.41:6626;
+}
+server {
+    listen  443 ssl;
+    server_name iran.iamnotagoodman.com;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/mjtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/mjtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass 188.121.105.60:6626;
 }
 ##北美洲NA
 server {
