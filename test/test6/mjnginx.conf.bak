@@ -163,7 +163,7 @@ upstream mjhk{
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
-        server 104.208.83.76:6622;     #AZHK9F8s   ID268
+        server 20.205.59.144:6622;     #AZHK9F8s   ID268
 		server 20.24.211.64:6622;     #AZHK17F8s   ID269
 		server 104.208.108.79:6622 weight=3;     #AZHK18F8s   ID270
 		server 20.24.211.134:6622;  #AZHK19   ID271
