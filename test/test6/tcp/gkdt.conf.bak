@@ -139,7 +139,7 @@ upstream awtsg{
 }
 server {
     listen  443 ssl;
-    server_name sg01.awcloud.top;
+    server_name sg01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -156,7 +156,7 @@ upstream awtjp{
 }
 server {
     listen  443 ssl;
-    server_name jp01.awcloud.top;
+    server_name jp01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -174,7 +174,7 @@ upstream awtus{
 }
 server {
     listen  443 ssl;
-    server_name us01.awcloud.top;
+    server_name us01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -185,7 +185,7 @@ server {
 }	
 server {
     listen  443 ssl;
-    server_name in01.awcloud.top;
+    server_name in01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -196,7 +196,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name my01.awcloud.top;
+    server_name my01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -207,7 +207,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name de01.awcloud.top;
+    server_name de01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -218,7 +218,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name uk01.awcloud.top;
+    server_name uk01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -229,7 +229,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name hk01.awcloud.top;
+    server_name hk01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -240,7 +240,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name sk01.awcloud.top;
+    server_name sk01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -251,7 +251,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name ru01.awcloud.top;
+    server_name ru01.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -268,7 +268,7 @@ upstream awt1sg{
 }
 server {
     listen  443 ssl;
-    server_name sg02.awcloud.top;
+    server_name sg02.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -286,7 +286,7 @@ upstream awthk10{
 }
 server {
     listen  443 ssl;
-    server_name hk02.awcloud.top;
+    server_name hk02.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -304,7 +304,7 @@ upstream awthk11{
 }
 server {
     listen  443 ssl;
-    server_name hk03.awcloud.top;
+    server_name hk03.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -322,7 +322,7 @@ upstream awthk12{
 }
 server {
     listen  443 ssl;
-    server_name hk04.awcloud.top;
+    server_name hk04.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -340,7 +340,7 @@ upstream awthk13{
 }
 server {
     listen  443 ssl;
-    server_name hk05.awcloud.top;
+    server_name hk05.trojanyyds,xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
