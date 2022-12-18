@@ -1,13 +1,13 @@
 upstream gkdthk01{
     #hash $remote_addr;
-    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s; 
-    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:28233 max_fails=3 fail_timeout=30s; 
+    server 127.0.0.1:28234 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:28235 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:28236 max_fails=3 fail_timeout=30s backup;
 }
 server {
     listen  443 ssl;
-    server_name hk01.trojanyyds.top;
+    server_name hk01.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -18,14 +18,14 @@ server {
 }
 upstream gkdthk02{
     #hash $remote_addr;
-    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s backup; 
-    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s;
-    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:28233 max_fails=3 fail_timeout=30s backup; 
+    server 127.0.0.1:28234 max_fails=3 fail_timeout=30s;
+    server 127.0.0.1:28235 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:28236 max_fails=3 fail_timeout=30s backup;
 }
 server {
     listen  443 ssl;
-    server_name hk02.trojanyyds.top;
+    server_name hk02.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -36,14 +36,14 @@ server {
 }
 upstream gkdthk03{
     #hash $remote_addr;
-    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s backup; 
-    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s;
-    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:28233 max_fails=3 fail_timeout=30s backup; 
+    server 127.0.0.1:28234 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:28235 max_fails=3 fail_timeout=30s;
+    server 127.0.0.1:28236 max_fails=3 fail_timeout=30s backup;
 }
 server {
     listen  443 ssl;
-    server_name hk03.trojanyyds.top;
+    server_name hk03.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -54,14 +54,14 @@ server {
 }
 upstream gkdthk04{
     #hash $remote_addr;
-    server 27.0.232.236:23000 max_fails=3 fail_timeout=30s backup; 
-    server 27.0.232.238:23000 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.240:23000 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.247:23000 max_fails=3 fail_timeout=30s;
+    server 127.0.0.1:28233 max_fails=3 fail_timeout=30s backup; 
+    server 127.0.0.1:28234 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:28235 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:28236 max_fails=3 fail_timeout=30s;
 }
 server {
     listen  443 ssl;
-    server_name hk04.trojanyyds.top;
+    server_name hk04.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -70,23 +70,57 @@ server {
     proxy_protocol    on; # 获取真实ip
     proxy_pass gkdthk04;
 }
-upstream gkdtsg{
-    hash $remote_addr;
+upstream gkdtsg01{
+    #hash $remote_addr;
     server 51.79.251.244:23000 max_fails=3 fail_timeout=30s; 
-    server 51.79.250.250:23000 max_fails=3 fail_timeout=30s;
-    server 51.79.250.225:23000 max_fails=3 fail_timeout=30s; 
+    server 51.79.250.250:23000 max_fails=3 fail_timeout=30s backup;
+    server 51.79.250.225:23000 max_fails=3 fail_timeout=30s backup; 
 }
 server {
     listen  443 ssl;
-    server_name sg01.trojanyyds.top;
+    server_name sg01.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
     ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
-    proxy_pass gkdtsg;
+    proxy_pass gkdtsg01;
 }	
+upstream gkdtsg02{
+    #hash $remote_addr;
+    server 51.79.251.244:23000 max_fails=3 fail_timeout=30s backup; 
+    server 51.79.250.250:23000 max_fails=3 fail_timeout=30s;
+    server 51.79.250.225:23000 max_fails=3 fail_timeout=30s backup; 
+}
+server {
+    listen  443 ssl;
+    server_name sg01.trojanyyds.com;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass gkdtsg02;
+}
+upstream gkdtsg03{
+    #hash $remote_addr;
+    server 51.79.251.244:23000 max_fails=3 fail_timeout=30s backup; 
+    server 51.79.250.250:23000 max_fails=3 fail_timeout=30s backup;
+    server 51.79.250.225:23000 max_fails=3 fail_timeout=30s; 
+}
+server {
+    listen  443 ssl;
+    server_name sg03.trojanyyds.com;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass gkdtsg03;
+}
 upstream gkdtjp{
     hash $remote_addr;
     server 153.122.175.116:23000 max_fails=3 fail_timeout=30s; 
@@ -95,7 +129,7 @@ upstream gkdtjp{
 }
 server {
     listen  443 ssl;
-    server_name jp01.trojanyyds.top;
+    server_name jp01.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -106,14 +140,14 @@ server {
 }	
 server {
     listen  443 ssl;
-    server_name my01.trojanyyds.top;
+    server_name my01.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
     ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
-    proxy_pass 58.26.140.36:23000;
+    proxy_pass 58.26.140.36:23100;
 }
 upstream gkdtus{
     hash $remote_addr;
@@ -122,7 +156,7 @@ upstream gkdtus{
 }
 server {
     listen  443 ssl;
-    server_name us01.trojanyyds.top;
+    server_name us01.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -130,6 +164,38 @@ server {
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
     proxy_pass gkdtus;
+}
+upstream gkdttw01{
+    #hash $remote_addr;
+    server 127.0.0.1:28237 max_fails=3 fail_timeout=30s; 
+    server 127.0.0.1:28238 max_fails=3 fail_timeout=30s backup;
+}
+server {
+    listen  443 ssl;
+    server_name tw01.trojanyyds.com;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass gkdttw01;
+}
+upstream gkdttw02{
+    #hash $remote_addr;
+    server 127.0.0.1:28237 max_fails=3 fail_timeout=30s backup; 
+    server 127.0.0.1:28238 max_fails=3 fail_timeout=30s;
+}
+server {
+    listen  443 ssl;
+    server_name tw02.trojanyyds.com;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass gkdttw02;
 }
 upstream awtsg{
     hash $remote_addr;
@@ -139,7 +205,7 @@ upstream awtsg{
 }
 server {
     listen  443 ssl;
-    server_name sg01.trojanyyds,xyz;
+    server_name sg01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -156,7 +222,7 @@ upstream awtjp{
 }
 server {
     listen  443 ssl;
-    server_name jp01.trojanyyds,xyz;
+    server_name jp01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -174,7 +240,7 @@ upstream awtus{
 }
 server {
     listen  443 ssl;
-    server_name us01.trojanyyds,xyz;
+    server_name us01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -185,7 +251,7 @@ server {
 }	
 server {
     listen  443 ssl;
-    server_name in01.trojanyyds,xyz;
+    server_name in01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -196,7 +262,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name my01.trojanyyds,xyz;
+    server_name my01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -207,7 +273,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name de01.trojanyyds,xyz;
+    server_name de01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -218,7 +284,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name uk01.trojanyyds,xyz;
+    server_name uk01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -229,7 +295,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name hk01.trojanyyds,xyz;
+    server_name hk01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -240,7 +306,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name sk01.trojanyyds,xyz;
+    server_name sk01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -251,7 +317,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name ru01.trojanyyds,xyz;
+    server_name ru01.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -268,7 +334,7 @@ upstream awt1sg{
 }
 server {
     listen  443 ssl;
-    server_name sg02.trojanyyds,xyz;
+    server_name sg02.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -286,7 +352,7 @@ upstream awthk10{
 }
 server {
     listen  443 ssl;
-    server_name hk02.trojanyyds,xyz;
+    server_name hk02.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -304,7 +370,7 @@ upstream awthk11{
 }
 server {
     listen  443 ssl;
-    server_name hk03.trojanyyds,xyz;
+    server_name hk03.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -322,7 +388,7 @@ upstream awthk12{
 }
 server {
     listen  443 ssl;
-    server_name hk04.trojanyyds,xyz;
+    server_name hk04.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -340,7 +406,7 @@ upstream awthk13{
 }
 server {
     listen  443 ssl;
-    server_name hk05.trojanyyds,xyz;
+    server_name hk05.trojanyyds.xyz;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/awtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/awtls.key; 
@@ -356,7 +422,7 @@ upstream kapokmy{
 }
 server {
     listen  443 ssl;
-    server_name my10.trojanyyds.top;
+    server_name my10.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -365,32 +431,66 @@ server {
     proxy_protocol    on; # 获取真实ip
     proxy_pass kapokmy;
 }
-upstream kapoksg{
-    hash $remote_addr;
+upstream kapoksg10{
+    #hash $remote_addr;
     server 51.79.251.244:23100 max_fails=3 fail_timeout=30s; 
-    server 51.79.250.225:23100 max_fails=3 fail_timeout=30s;
-	server 51.79.250.250:23100 max_fails=3 fail_timeout=30s;
+    server 51.79.250.225:23100 max_fails=3 fail_timeout=30s backup;
+    server 51.79.250.250:23100 max_fails=3 fail_timeout=30s backup;
 }
 server {
     listen  443 ssl;
-    server_name sg10.trojanyyds.top;
+    server_name sg10.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
     ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
     ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
     proxy_protocol    on; # 获取真实ip
-    proxy_pass kapoksg;
+    proxy_pass kapoksg10;
 }
-upstream kapokjp{
-    hash $remote_addr;
-    server 153.122.120.47:23100 max_fails=3 fail_timeout=30s; 
-    server 153.122.109.217:23100 max_fails=3 fail_timeout=30s;
-	server 153.122.66.227:23100 max_fails=3 fail_timeout=30s;
+upstream kapoksg11{
+    #hash $remote_addr;
+    server 51.79.251.244:23100 max_fails=3 fail_timeout=30s backup; 
+    server 51.79.250.225:23100 max_fails=3 fail_timeout=30s;
+    server 51.79.250.250:23100 max_fails=3 fail_timeout=30s backup;
 }
 server {
     listen  443 ssl;
-    server_name jp10.trojanyyds.top;
+    server_name sg11.trojanyyds.com;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass kapoksg11;
+}
+upstream kapoksg12{
+    #hash $remote_addr;
+    server 51.79.251.244:23100 max_fails=3 fail_timeout=30s backup; 
+    server 51.79.250.225:23100 max_fails=3 fail_timeout=30s backup;
+    server 51.79.250.250:23100 max_fails=3 fail_timeout=30s;
+}
+server {
+    listen  443 ssl;
+    server_name sg12.trojanyyds.com;
+    ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
+    ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
+    ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
+    ssl_session_cache   shared:SSL:10m;             # SSL TCP会话缓存设置共享内存区域名为# SSL，区域大小为10MB                                                   
+    ssl_session_timeout 10m;                        # SSL TCP会话缓存超时时间为10分钟
+    proxy_protocol    on; # 获取真实ip
+    proxy_pass kapoksg12;
+}
+upstream kapokjp{
+    hash $remote_addr;
+    server 153.122.98.49:23100 max_fails=3 fail_timeout=30s; 
+    server 153.122.109.217:23100 max_fails=3 fail_timeout=30s;
+    server 153.122.175.8:23100 max_fails=3 fail_timeout=30s;
+}
+server {
+    listen  443 ssl;
+    server_name jp10.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -401,7 +501,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name in10.trojanyyds.top;
+    server_name in10.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -412,7 +512,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name de10.trojanyyds.top;
+    server_name de10.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -423,7 +523,7 @@ server {
 }
 server {
     listen  443 ssl;
-    server_name uk10.trojanyyds.top;
+    server_name uk10.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -434,14 +534,14 @@ server {
 }
 upstream kapokthk01{
     #hash $remote_addr;
-    server 27.0.232.236:23100 max_fails=3 fail_timeout=30s; 
-    server 27.0.232.238:23100 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.240:23100 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.247:23100 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:21824 max_fails=3 fail_timeout=30s; 
+    server 127.0.0.1:21825 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:21826 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:21827 max_fails=3 fail_timeout=30s backup;
 }
 server {
     listen  443 ssl;
-    server_name kapokhk01.trojanyyds.top;
+    server_name kapokhk01.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -452,14 +552,14 @@ server {
 }
 upstream kapokthk02{
     #hash $remote_addr;
-    server 27.0.232.236:23100 max_fails=3 fail_timeout=30s backup; 
-    server 27.0.232.238:23100 max_fails=3 fail_timeout=30s;
-    server 27.0.232.240:23100 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.247:23100 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:21824 max_fails=3 fail_timeout=30s backup; 
+    server 127.0.0.1:21825 max_fails=3 fail_timeout=30s;
+    server 127.0.0.1:21826 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:21827 max_fails=3 fail_timeout=30s backup;
 }
 server {
     listen  443 ssl;
-    server_name kapokhk02.trojanyyds.top;
+    server_name kapokhk02.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -470,14 +570,14 @@ server {
 }
 upstream kapokthk03{
     #hash $remote_addr;
-    server 27.0.232.236:23100 max_fails=3 fail_timeout=30s backup; 
-    server 27.0.232.238:23100 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.240:23100 max_fails=3 fail_timeout=30s;
-    server 27.0.232.247:23100 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:21824 max_fails=3 fail_timeout=30s backup; 
+    server 127.0.0.1:21825 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:21826 max_fails=3 fail_timeout=30s;
+    server 127.0.0.1:21827 max_fails=3 fail_timeout=30s backup;
 }
 server {
     listen  443 ssl;
-    server_name kapokhk03.trojanyyds.top;
+    server_name kapokhk03.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
@@ -488,14 +588,14 @@ server {
 }
 upstream kapokthk04{
     #hash $remote_addr;
-    server 27.0.232.236:23100 max_fails=3 fail_timeout=30s backup; 
-    server 27.0.232.238:23100 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.240:23100 max_fails=3 fail_timeout=30s backup;
-    server 27.0.232.247:23100 max_fails=3 fail_timeout=30s;
+    server 127.0.0.1:21824 max_fails=3 fail_timeout=30s backup; 
+    server 127.0.0.1:21825 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:21826 max_fails=3 fail_timeout=30s backup;
+    server 127.0.0.1:21827 max_fails=3 fail_timeout=30s;
 }
 server {
     listen  443 ssl;
-    server_name kapokhk04.trojanyyds.top;
+    server_name kapokhk04.trojanyyds.com;
     ssl_protocols   TLSv1.2 TLSv1.3;     #SSL协议版本
     ssl_certificate /usr/local/nginx/cert/gkdtls.pem;
     ssl_certificate_key /usr/local/nginx/cert/gkdtls.key; 
