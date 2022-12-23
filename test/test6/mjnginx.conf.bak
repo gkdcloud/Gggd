@@ -167,8 +167,8 @@ upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落�
 		server 20.205.35.148:6622 weight=3;     #AZHK17F8s   ID269
 		server 20.239.185.100:6622 weight=3;     #AZHK18F8s   ID270
 		server 20.239.155.170:6622 weight=3;  #AZHK19   ID271
-		server 20.187.67.151:6622;  #AZHK10   ID167
-		server 20.205.11.32:6622;  #AZHK15F8S   ID238
+		server 104.208.71.147:6622;  #AZHK10   ID167
+		server 104.208.69.78:6622;  #AZHK15F8S   ID238
         #server 20.24.64.119:6622 weight=3;  #由椰子添加AWS1-测试，ID267
         server 4.193.106.238:16620 backup; #weight=5
         server 4.193.65.86:16620 backup;
