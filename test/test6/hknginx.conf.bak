@@ -82,7 +82,7 @@ upstream mjhkjp{
         server 172.104.105.231:6617;      #日本2-Linode
         server 172.105.232.29:6617;   #日本3-Linode-月抛
         server 172.104.83.187:6617;    #日本4-linode
-        server 172.105.232.153:6617;  #日本5-Linode
+        server 139.162.110.221:6617;  #日本5-Linode
         server 172.105.232.42:6617;   #日本6-Linode-月抛####nodeID=229
         server 172.105.216.192:6617;   #日本7-Linode-月抛####nodeID=230
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
@@ -117,8 +117,8 @@ upstream mjazhgc{
 }
 upstream cvazhgc{
         ip_hash;
-        server 210.0.158.101:8818;   #HGC-要饭
-        server 210.0.159.89:8818;    #HGC-N
+        server 210.3.147.111:8818;   #老板要饭HGC
+        #server 210.0.159.89:8818;    #HGC-N
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
 }
 server {
@@ -460,6 +460,20 @@ server {
 		include /usr/local/nginx/ws; 
         }
 }
+server {
+    listen 10003; #日本 V1 B
+    location / {
+		proxy_pass http://172.105.239.52:7717;   
+		include /usr/local/nginx/ws; 
+        }
+}
+server {
+    listen 10008; #日本 V3 A （167.179.104.222）
+    location / {
+		proxy_pass http://172.104.91.161:7715;   
+		include /usr/local/nginx/ws; 
+        }
+}
 ####################悦跑香港负载均衡###################
 upstream yptw{
         #ip_hash;  #台湾
@@ -474,7 +488,7 @@ upstream yphkt{
         #ip_hash;  #香港HKT
         server kcdhgc.ddns.me:5519;   #香港HGC
 	server kcdhkt.ddns.me:5519;   #香港HKT
-	server wzhkt.ddns.me:5519;   #香港HKT
+	server 210.3.147.111:5519;   #老板要饭云香港HGC
 	server wzhkt2.ddns.me:5519;   #香港HKT
 	server jzhkt.ddns.me:5519;   #香港HKT
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
