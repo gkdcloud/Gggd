@@ -164,9 +164,9 @@ upstream mjhk{
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
         server 20.24.80.26:6622;     #AZHK9     ID268
-		server 20.187.118.231:6622;     #AZHK17F8s   ID269
+		server 20.24.77.146:6622;     #AZHK17F8s   ID269
 		server 20.24.90.19:6622;     #AZHK18F8s   ID270
-		server 20.239.66.42:6622;  #AZHK19   ID271
+		server 20.205.44.26:6622;  #AZHK19   ID271
 		server 20.24.66.28:6622;  #AZHK22   ID274
 		server 20.24.68.70:6622;  #AZHK10   ID167
 		server 20.24.89.141:6622;  #AZHK15F8S   ID238
