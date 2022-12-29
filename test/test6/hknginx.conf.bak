@@ -82,7 +82,7 @@ upstream mjhkjp{
         server 172.104.105.231:6617;      #日本2-Linode
         server 172.105.232.29:6617;   #日本3-Linode-月抛
         server 172.104.83.187:6617;    #日本4-linode
-        server 139.162.110.221:6617;  #日本5-Linode
+        server 172.104.85.206:6617;  #日本5-Linode
         server 172.104.85.62:6617;   #日本6-Linode-月抛####nodeID=229
         server 172.105.216.192:6617;   #日本7-Linode-月抛####nodeID=230
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
@@ -456,7 +456,7 @@ server {
 server {
     listen 10014; #台湾 V3
     location / {
-		proxy_pass http://kcdtw2.ddns.me:7516;   
+		proxy_pass http://kcdtw2.ddns.me:7788;   
 		include /usr/local/nginx/ws; 
         }
 }
