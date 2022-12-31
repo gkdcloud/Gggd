@@ -13,7 +13,7 @@
 #azhk13-f4s  20.239.48.15
 #azhk14-f4s  104.208.109.99
 #azhk16-f4s  20.24.67.154
-#azhk23-f4s  20.239.63.39
+#azhk23-f4s  20.239.50.0
 #azhk-backup 153.122.102.51 gmo日本1
 #azhk-backup 153.122.173.25 gmo日本2
 #azbackup 日本NTT 164.70.90.243   香港103.166.247.35
@@ -28,7 +28,7 @@ upstream jp{
         server 4.193.125.160:16617 backup;
         server 20.205.152.95:16617 backup;
         server 4.193.97.242:16617 backup; #azhk9临时
-        server 20.239.63.39:16617 backup; 
+        server 20.239.50.0:16617 backup; 
 		server 20.239.48.15:16617 backup;
 		server 104.208.109.99:16617 backup; 
 		server 20.24.67.154:16617 backup; 
@@ -45,7 +45,7 @@ upstream cvjp{
         server 4.193.125.160:26601 backup;
         server 20.205.152.95:26601 backup;
         server 4.193.97.242:26601 backup;
-        server 20.239.63.39:26601 backup;
+        server 20.239.50.0:26601 backup;
 		server 20.239.48.15:26601 backup;
 		server 104.208.109.99:26601 backup;
 		server 20.24.67.154:26601 backup;
@@ -63,7 +63,7 @@ upstream sg{
         server 20.205.152.95:16618;
         server 4.193.97.242:16618; #
         server 20.239.48.15:16618 backup; #az13
-		server 20.239.63.39:16618 backup; #az23
+		server 20.239.50.0:16618 backup; #az23
 		server 104.208.109.99:16618 backup; #az14
 		server 20.24.67.154:16618 backup; #az16
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
@@ -79,7 +79,7 @@ upstream cvsg{
         server 52.253.116.104:26603;
         server 20.89.155.245:26603;
         server 4.193.97.242:26603;
-        server 20.239.63.39:26603 backup;
+        server 20.239.50.0:26603 backup;
 		server 20.239.48.15:26603 backup;
 		server 104.208.109.99:26603 backup;
 		server 20.24.67.154:26603 backup;
@@ -97,7 +97,7 @@ upstream cvhk{
         server 20.89.155.245:26607;
         server 4.193.97.242:26607; #azhk9
         server 20.239.48.15:26607; #az13
-		server 20.239.63.39:26607; #az23
+		server 20.239.50.0:26607; #az23
 		server 104.208.109.99:26607; #az14
 		server 20.24.67.154:26607; #az16
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp; #健康检测
@@ -113,7 +113,7 @@ upstream tw_n{
         server 20.205.152.95:16616;
         server 4.193.97.242:16616; #azhk9
         server 20.239.48.15:16616; #azjp13
-		server 20.239.63.39:16616; #azjp23
+		server 20.239.50.0:16616; #azjp23
 		server 104.208.109.99:16616; #azjp14
 		server 20.24.67.154:16616; #azjp16
         server 153.122.102.51:16616 backup;
@@ -131,7 +131,7 @@ upstream cvtw{
         server 20.89.155.245:26604;
         server 4.193.97.242:26604; #azhk9
         server 20.239.48.15:26604; #azjp13
-		server 20.239.63.39:26604; #azjp23
+		server 20.239.50.0:26604; #azjp23
 		server 104.208.109.99:26604; #azjp14
 		server 20.24.67.154:26604; #azjp16
         server 153.122.102.51:26604 backup;
@@ -149,7 +149,7 @@ upstream fqtw{
         server 20.205.152.95:23330;
         server 4.193.97.242:23330; #azhk9
         server 20.239.48.15:23330; #azjp13
-		server 20.239.63.39:23330; #azjp23
+		server 20.239.50.0:23330; #azjp23
 		server 104.208.109.99:23330; #azjp14
 		server 20.24.67.154:23330; #azjp16
         server 153.122.102.51:23330 backup;
@@ -167,7 +167,7 @@ upstream mjhk{
         server 20.89.155.245:16620 backup;
         server 4.193.97.242:16620 backup; #azhk9
         server 20.239.48.15:16620; #az13
-		server 20.239.63.39:16620; #az23
+		server 20.239.50.0:16620; #az23
 		server 104.208.109.99:16620; #az14
 		server 20.24.67.154:16620; #az16
 		check interval=5000 rise=2 fall=2 timeout=3000 type=tcp;
@@ -251,7 +251,7 @@ upstream cvhgc{
         server 4.193.125.160:26608;
         server 20.205.152.95:26608;
         server 4.193.97.242:26608; 
-        server 20.239.63.39:26608; 
+        server 20.239.50.0:26608; 
 		server 20.239.48.15:26608;
 		server 104.208.109.99:26608;
 		server 20.24.67.154:26608;
@@ -300,7 +300,7 @@ upstream mjar{
         server 20.205.152.95:16628;
         server 4.193.97.242:16628; #azhk9
         server 20.239.48.15:16628; #az13
-		server 20.239.63.39:16628; #az23
+		server 20.239.50.0:16628; #az23
 		server 104.208.109.99:16628; #az14
 		server 20.24.67.154:16628; #az16
         server 153.122.102.51:16628 backup;
