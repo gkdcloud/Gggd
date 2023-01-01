@@ -103,7 +103,7 @@ cnsync cron
 #cnsync yp
 #cnsync tcp
 cnsync fq
-cnsync tbs">/usr/local/cron/cnsync_cron
+#cnsync tbs">/usr/local/cron/cnsync_cron
 	#查看是否已经存在监控
 	cron_config=$(crontab -l | grep "cnsync_cron")
 	cron_config2=$(crontab -l | grep "cnsync update")
