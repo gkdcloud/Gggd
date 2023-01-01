@@ -60,7 +60,7 @@ function crontab_add(){
 	echo "#!/bin/bash
 #
 hksync cron
-hksync tbs
+#hksync tbs
 #hksync gkd">/usr/local/cron/hksync_cron
 	#查看是否已经存在监控
 	cron_config=$(crontab -l | grep "hksync_cron")
