@@ -224,11 +224,11 @@ upstream mjhk{
 }
 upstream mjazhk{  #MJ-az-默认直接azhk4落地，故障转移az承载-FDC落地
         server 20.187.97.185:6622;     #AZHK9     ID268
-		server 20.187.67.24:6622;     #AZHK17F8s   ID269
-		server 20.24.69.81:6622;     #AZHK18F8s   ID270
-		server 20.205.110.237:6622;  #AZHK19   ID271
+		server 20.239.156.49:6622;     #AZHK17F8s   ID269
+		server 20.187.72.5:6622;     #AZHK18F8s   ID270
+		server 20.24.75.96:6622;  #AZHK19   ID271
 		server 20.24.219.174:6622;    #AZHK24  ID275
-		server 20.187.115.234:6622 weight=3;  #AZHK22   ID274
+		server 20.239.158.179:6622;  #AZHK22   ID274
 		server 20.24.79.88:6622;  #AZHK10   ID167
 		server 20.24.194.221:6622;  #AZHK15F8S   ID238
         #server 20.24.64.119:6622 weight=3;  #由椰子添加AWS1-测试，ID267
